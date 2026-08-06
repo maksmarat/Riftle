@@ -118,12 +118,20 @@ button:disabled {
 }
 
 .mode {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-height: 36px;
   border: 1px solid var(--line);
   border-radius: 999px;
   padding: 0 14px;
   background: rgba(11, 13, 18, 0.72);
   color: var(--muted);
+  text-decoration: none;
+  transition:
+    border-color 0.16s ease,
+    color 0.16s ease,
+    transform 0.16s ease;
 }
 
 .mode-active {
@@ -171,7 +179,8 @@ button:disabled {
 .hero-panel,
 .guess-panel,
 .board-shell,
-.moreless-shell {
+.moreless-shell,
+.random-panel {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
@@ -219,6 +228,16 @@ body[data-mode="moreLess"] h1,
 body[data-mode="spellDuel"] h1 {
   max-width: none;
   white-space: nowrap;
+}
+
+body[data-page="random"] h1 {
+  max-width: none;
+}
+
+.random-hero::before {
+  background:
+    linear-gradient(90deg, rgba(7, 8, 12, 0.78), rgba(7, 8, 12, 0.22)),
+    url("https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Taliyah_0.jpg") center 30% / cover;
 }
 
 .guess-panel {
@@ -737,6 +756,388 @@ input[type="search"]:focus {
   margin-top: 0;
 }
 
+.random-layout {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  align-items: start;
+}
+
+.random-panel {
+  min-width: 0;
+  padding: clamp(14px, 2vw, 20px);
+}
+
+.random-panel-wide {
+  grid-column: 1 / -1;
+}
+
+.panel-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.panel-title-row h2 {
+  margin: 0;
+  font-size: clamp(1.18rem, 2vw, 1.52rem);
+  font-weight: 950;
+  line-height: 1.05;
+}
+
+.random-action {
+  flex: 0 0 auto;
+  min-height: 42px;
+  border: 1px solid rgba(240, 207, 133, 0.76);
+  border-radius: var(--radius);
+  padding: 0 16px;
+  background: linear-gradient(180deg, #e2c275, #8b6225);
+  color: #15100a;
+  font-size: 0.9rem;
+  font-weight: 950;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.34);
+  transition:
+    filter 0.16s ease,
+    transform 0.16s ease;
+}
+
+.random-action:hover:not(:disabled),
+.random-action:focus-visible:not(:disabled) {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.random-action:disabled {
+  opacity: 0.54;
+}
+
+.role-table-wrap {
+  overflow-x: auto;
+}
+
+.role-table {
+  width: 100%;
+  min-width: 420px;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  table-layout: fixed;
+}
+
+.role-table th {
+  border-bottom: 2px solid rgba(248, 243, 231, 0.7);
+  padding: 0 10px 10px 0;
+  color: var(--text);
+  font-size: 0.78rem;
+  font-weight: 950;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.role-table td {
+  padding-right: 10px;
+}
+
+.player-input {
+  width: 100%;
+  min-height: 46px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  outline: none;
+  padding: 0 12px;
+  background: rgba(4, 5, 8, 0.72);
+  color: var(--text);
+}
+
+.player-input::placeholder {
+  color: rgba(248, 243, 231, 0.42);
+}
+
+.player-input:focus {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 3px rgba(104, 217, 255, 0.15);
+}
+
+.role-badge {
+  display: grid;
+  min-height: 46px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius);
+  padding: 0 10px;
+  background: rgba(255, 255, 255, 0.045);
+  color: var(--muted);
+  font-weight: 950;
+  text-align: center;
+}
+
+.role-badge-filled {
+  border-color: rgba(240, 207, 133, 0.64);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 42%),
+    linear-gradient(180deg, rgba(215, 181, 109, 0.42), rgba(86, 58, 18, 0.6));
+  color: var(--text);
+  animation: roleSettle 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.role-badge-rolling {
+  border-color: rgba(104, 217, 255, 0.48);
+  color: var(--text);
+  animation: rolePulse 0.14s ease both;
+}
+
+.role-picker {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.role-chip {
+  min-width: 0;
+  min-height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0 12px;
+  background: rgba(7, 9, 14, 0.7);
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 950;
+  transition:
+    border-color 0.16s ease,
+    color 0.16s ease,
+    transform 0.16s ease;
+}
+
+.role-chip:hover,
+.role-chip:focus-visible {
+  border-color: rgba(240, 207, 133, 0.58);
+  color: var(--text);
+  transform: translateY(-1px);
+}
+
+.role-chip-active {
+  border-color: var(--gold);
+  background: linear-gradient(180deg, rgba(215, 181, 109, 0.26), rgba(98, 70, 24, 0.34));
+  color: var(--text);
+}
+
+.random-output-group {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.random-output-group h3 {
+  margin: 0;
+  color: var(--gold-strong);
+  font-size: 0.78rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.loot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 10px;
+}
+
+.loot-card,
+.summoner-card,
+.roulette-card {
+  min-width: 0;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(145deg, rgba(215, 181, 109, 0.12), transparent 42%),
+    rgba(7, 9, 14, 0.72);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.loot-card {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: 4px 10px;
+  align-items: center;
+  min-height: 78px;
+  padding: 10px;
+}
+
+.loot-icon,
+.summoner-icon,
+.roulette-icon {
+  position: relative;
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid rgba(240, 207, 133, 0.48);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background:
+    linear-gradient(145deg, rgba(240, 207, 133, 0.12), rgba(6, 8, 12, 0.82)),
+    rgba(0, 0, 0, 0.34);
+  color: rgba(240, 207, 133, 0.86);
+  font-size: 1.15rem;
+  font-weight: 950;
+}
+
+.loot-icon img,
+.summoner-icon img,
+.roulette-icon img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.16s ease;
+}
+
+.icon-loaded img {
+  opacity: 1;
+}
+
+.icon-loaded .icon-fallback {
+  opacity: 0;
+}
+
+.icon-fallback {
+  transition: opacity 0.16s ease;
+}
+
+.loot-icon {
+  grid-row: 1 / span 2;
+  width: 56px;
+  height: 56px;
+}
+
+.loot-card strong,
+.summoner-card strong,
+.roulette-card strong {
+  min-width: 0;
+  color: var(--text);
+  font-weight: 950;
+  line-height: 1.12;
+  overflow-wrap: anywhere;
+}
+
+.loot-card strong {
+  font-size: 0.88rem;
+}
+
+.loot-card span,
+.roulette-card span {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 850;
+}
+
+.summoner-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.summoner-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 64px;
+  padding: 10px;
+}
+
+.summoner-icon {
+  width: 44px;
+  height: 44px;
+}
+
+.roulette-window {
+  position: relative;
+  min-height: 146px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius);
+  padding: 16px 0;
+  background:
+    linear-gradient(90deg, rgba(7, 8, 12, 0.84), rgba(7, 8, 12, 0.28), rgba(7, 8, 12, 0.84)),
+    rgba(4, 5, 8, 0.76);
+}
+
+.roulette-track {
+  display: flex;
+  gap: 10px;
+  padding: 0 calc(50% - 62px);
+  will-change: transform;
+}
+
+.roulette-card {
+  display: grid;
+  flex: 0 0 124px;
+  gap: 6px;
+  justify-items: center;
+  align-content: start;
+  min-height: 114px;
+  padding: 10px;
+}
+
+.roulette-icon {
+  width: 56px;
+  height: 56px;
+}
+
+.roulette-card strong {
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.roulette-card span {
+  font-size: 0.7rem;
+}
+
+.roulette-marker {
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  left: 50%;
+  width: 132px;
+  pointer-events: none;
+  border: 1px solid rgba(240, 207, 133, 0.7);
+  border-radius: var(--radius);
+  transform: translateX(-50%);
+  box-shadow:
+    0 0 0 1px rgba(215, 181, 109, 0.16),
+    0 18px 44px rgba(215, 181, 109, 0.12),
+    inset 0 0 22px rgba(215, 181, 109, 0.1);
+}
+
+.buy-result {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  min-height: 34px;
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.buy-result strong {
+  color: var(--text);
+}
+
+.random-status {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 12px;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.random-status-error {
+  color: #ffb4b4;
+}
+
 .hidden {
   display: none !important;
 }
@@ -822,6 +1223,30 @@ input[type="search"]:focus {
   }
 }
 
+@keyframes rolePulse {
+  from {
+    transform: translateY(2px);
+    filter: brightness(1.35);
+  }
+
+  to {
+    transform: translateY(0);
+    filter: brightness(1);
+  }
+}
+
+@keyframes roleSettle {
+  from {
+    opacity: 0.7;
+    transform: scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 @media (max-width: 860px) {
   .topbar,
   .hero-panel {
@@ -844,6 +1269,18 @@ input[type="search"]:focus {
   .moreless-stage {
     grid-template-columns: 1fr;
   }
+
+  .random-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .random-panel-wide {
+    grid-column: auto;
+  }
+
+  .loot-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 560px) {
@@ -860,6 +1297,10 @@ input[type="search"]:focus {
   body[data-mode="moreLess"] h1,
   body[data-mode="spellDuel"] h1 {
     font-size: clamp(2rem, 8.6vw, 2.3rem);
+  }
+
+  body[data-page="random"] h1 {
+    font-size: clamp(2.35rem, 12vw, 3.2rem);
   }
 
   .board-shell {
@@ -894,5 +1335,27 @@ input[type="search"]:focus {
   .item-head img {
     width: 68px;
     height: 68px;
+  }
+
+  .panel-title-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .random-action {
+    width: 100%;
+  }
+
+  .role-picker {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .loot-grid,
+  .summoner-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .roulette-window {
+    min-height: 138px;
   }
 }

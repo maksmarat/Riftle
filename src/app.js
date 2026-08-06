@@ -131,6 +131,7 @@ const translations = {
       classic: "Classic",
       moreLess: "Item Duel",
       spellDuel: "Spell Duel",
+      random: "Random",
     },
     columns: {
       champion: "Champion",
@@ -240,6 +241,7 @@ const translations = {
       classic: "Классика",
       moreLess: "Предметы",
       spellDuel: "Умения",
+      random: "Рандом",
     },
     columns: {
       champion: "Чемпион",
@@ -440,7 +442,9 @@ const dom = {
   suggestions: document.querySelector("#suggestions"),
   message: document.querySelector("#message"),
   mainModes: document.querySelector("#main-modes"),
-  modeButtons: document.querySelectorAll("[data-mode-key]"),
+  modeButtons: document.querySelectorAll("button[data-mode-key]"),
+  modeLinks: document.querySelectorAll("[data-mode-link]"),
+  pageLinks: document.querySelectorAll("[data-page-key]"),
   languageSwitch: document.querySelector("#language-switch"),
   languageButtons: document.querySelectorAll("[data-language]"),
   heroTitle: document.querySelector("#page-title"),
@@ -567,6 +571,23 @@ function applyLanguage(renderExisting = true) {
     button.setAttribute("aria-pressed", String(modeKey === currentMode));
   });
 
+  dom.modeLinks.forEach((link) => {
+    const modeKey = link.dataset.modeLink;
+    const isActive = modeKey === currentMode;
+    link.textContent = copy.modes[modeKey] || link.textContent;
+    link.classList.toggle("mode-active", isActive);
+    if (isActive) {
+      link.setAttribute("aria-current", "page");
+    } else {
+      link.removeAttribute("aria-current");
+    }
+  });
+
+  dom.pageLinks.forEach((link) => {
+    const pageKey = link.dataset.pageKey;
+    link.textContent = copy.modes[pageKey] || link.textContent;
+  });
+
   dom.languageButtons.forEach((button) => {
     const isActive = button.dataset.language === currentLanguage;
     button.classList.toggle("language-option-active", isActive);
@@ -599,6 +620,12 @@ function getSavedLanguage() {
 
 function getSavedMode() {
   try {
+    const requestedMode = new URLSearchParams(window.location.search).get("mode");
+    if (PLAYABLE_MODES.includes(requestedMode)) {
+      localStorage.setItem(MODE_KEY, requestedMode);
+      return requestedMode;
+    }
+
     const saved = localStorage.getItem(MODE_KEY);
     return PLAYABLE_MODES.includes(saved) ? saved : DEFAULT_MODE;
   } catch {

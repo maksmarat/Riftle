@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07080c">
+    <title>Riftle Random</title>
+    <link rel="stylesheet" href="./src/styles.css">
+  </head>
+  <body data-page="random">
+    <div class="backdrop" aria-hidden="true"></div>
+    <div class="app">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="Riftle">
+          <span class="brand-mark">R</span>
+          <span>Riftle</span>
+        </a>
+
+        <div class="top-actions">
+          <nav class="modes" aria-label="Pages">
+            <a class="mode" href="./" data-i18n="navGame">Game</a>
+            <a class="mode mode-active" href="./random.html" aria-current="page" data-i18n="navRandom">Random</a>
+          </nav>
+
+          <div class="language-switch" id="language-switch" aria-label="Language">
+            <button class="language-option language-option-active" data-language="en" type="button" aria-pressed="true">EN</button>
+            <button class="language-option" data-language="ru" type="button" aria-pressed="false">RU</button>
+          </div>
+        </div>
+      </header>
+
+      <main class="game random-page">
+        <section class="hero-panel random-hero" aria-labelledby="random-title">
+          <div class="hero-copy">
+            <h1 id="random-title" data-i18n="heroTitle">Random Tools</h1>
+          </div>
+        </section>
+
+        <section class="random-layout" aria-label="Random tools">
+          <section class="random-panel" aria-labelledby="roles-title">
+            <div class="panel-title-row">
+              <h2 id="roles-title" data-i18n="rolesTitle">Random roles</h2>
+              <button class="random-action" id="roll-roles" type="button" data-i18n="rollRoles">Roll roles</button>
+            </div>
+
+            <div class="role-table-wrap">
+              <table class="role-table">
+                <thead>
+                  <tr>
+                    <th scope="col" data-i18n="playerColumn">Player</th>
+                    <th scope="col" data-i18n="roleColumn">Role</th>
+                  </tr>
+                </thead>
+                <tbody id="role-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="random-panel" aria-labelledby="build-title">
+            <div class="panel-title-row">
+              <h2 id="build-title" data-i18n="buildTitle">Random build</h2>
+              <button class="random-action" id="roll-build" type="button" data-i18n="rollBuild">Generate</button>
+            </div>
+
+            <div class="role-picker" id="build-role-picker" aria-label="Build role"></div>
+
+            <div class="random-output-group">
+              <h3 data-i18n="itemsTitle">Items</h3>
+              <div class="loot-grid" id="build-items"></div>
+            </div>
+
+            <div class="random-output-group">
+              <h3 data-i18n="summonersTitle">Summoner spells</h3>
+              <div class="summoner-grid" id="build-summoners"></div>
+            </div>
+          </section>
+
+          <section class="random-panel random-panel-wide" aria-labelledby="buy-title">
+            <div class="panel-title-row">
+              <h2 id="buy-title" data-i18n="buyTitle">What buy next?</h2>
+              <button class="random-action" id="spin-buy" type="button" data-i18n="spinBuy">Spin</button>
+            </div>
+
+            <div class="roulette-window" id="buy-wheel">
+              <div class="roulette-track" id="buy-wheel-track"></div>
+              <div class="roulette-marker" aria-hidden="true"></div>
+            </div>
+
+            <div class="buy-result" id="buy-result" aria-live="polite"></div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script src="./src/random.js" defer></script>
+  </body>
+</html>

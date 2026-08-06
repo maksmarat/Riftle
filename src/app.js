@@ -1,6 +1,7 @@
 const DATA_URL = "./data/champions.json";
 const ITEM_DATA_URL = "./data/items.json";
 const ABILITY_DATA_URL = "./data/abilities.json";
+const CHAMPION_STAT_DATA_URL = "./data/champion-stats.json";
 const DATA_DRAGON_VERSION = "16.15.1";
 const SAVE_KEY = "riftle-classic-state-v1";
 const STATS_KEY = "riftle-classic-stats-v1";
@@ -12,14 +13,46 @@ const MORELESS_BEST_COOKIE = "riftle_moreless_best";
 const SPELL_DUEL_SAVE_KEY = "riftle-spell-duel-state-v1";
 const SPELL_DUEL_STATS_KEY = "riftle-spell-duel-stats-v1";
 const SPELL_DUEL_BEST_COOKIE = "riftle_spell_duel_best";
+const STAT_DUEL_SAVE_KEY = "riftle-stat-duel-state-v1";
+const STAT_DUEL_STATS_KEY = "riftle-stat-duel-stats-v1";
+const STAT_DUEL_BEST_COOKIE = "riftle_stat_duel_best";
 const DEFAULT_LANGUAGE = "en";
 const SUPPORTED_LANGUAGES = ["en", "ru"];
 const DEFAULT_MODE = "classic";
-const PLAYABLE_MODES = ["classic", "moreLess", "spellDuel"];
-const DUEL_MODES = ["moreLess", "spellDuel"];
+const PLAYABLE_MODES = ["classic", "moreLess", "spellDuel", "statDuel"];
+const DUEL_MODES = ["moreLess", "spellDuel", "statDuel"];
 const MAX_SUGGESTIONS = 8;
 
 const itemStatOrder = [
+  "healthLevel1",
+  "healthLevel18",
+  "healthGrowth",
+  "manaLevel1",
+  "manaLevel18",
+  "manaGrowth",
+  "armorLevel1",
+  "armorLevel18",
+  "armorGrowth",
+  "magicResistLevel1",
+  "magicResistLevel18",
+  "magicResistGrowth",
+  "attackDamageLevel1",
+  "attackDamageLevel18",
+  "attackDamageGrowth",
+  "attackSpeedLevel1",
+  "attackSpeedLevel18",
+  "attackSpeedGrowth",
+  "attackRange",
+  "moveSpeed",
+  "healthRegenLevel1",
+  "healthRegenLevel18",
+  "healthRegenGrowth",
+  "manaRegenLevel1",
+  "manaRegenLevel18",
+  "manaRegenGrowth",
+  "acquisitionRange",
+  "selectionRadius",
+  "pathfindingRadius",
   "attackDamage",
   "abilityPower",
   "health",
@@ -74,9 +107,11 @@ const percentStats = new Set([
   "abilityMoveSpeed",
   "abilityAttackSpeed",
   "abilityDamageReduction",
+  "attackSpeedGrowth",
 ]);
 
 const secondsStats = new Set(["abilityCooldown"]);
+const preciseStats = new Set(["attackSpeedLevel1", "attackSpeedLevel18"]);
 
 const duelStorage = {
   moreLess: {
@@ -90,6 +125,12 @@ const duelStorage = {
     statsKey: SPELL_DUEL_STATS_KEY,
     bestCookie: SPELL_DUEL_BEST_COOKIE,
     countLabelKey: "abilities",
+  },
+  statDuel: {
+    saveKey: STAT_DUEL_SAVE_KEY,
+    statsKey: STAT_DUEL_STATS_KEY,
+    bestCookie: STAT_DUEL_BEST_COOKIE,
+    countLabelKey: "champions",
   },
 };
 
@@ -112,6 +153,7 @@ const translations = {
       classic: "Riftle Classic",
       moreLess: "Riftle Item Duel",
       spellDuel: "Riftle Spell Duel",
+      statDuel: "Riftle Stat Duel",
     },
     languageAria: "Language",
     modesAria: "Modes",
@@ -126,11 +168,13 @@ const translations = {
       classic: "Guess the champion",
       moreLess: "Item Duel",
       spellDuel: "Spell Duel",
+      statDuel: "Stat Duel",
     },
     modes: {
       classic: "Classic",
       moreLess: "Item Duel",
       spellDuel: "Spell Duel",
+      statDuel: "Stat Duel",
       random: "Random",
     },
     columns: {
@@ -145,6 +189,34 @@ const translations = {
     },
     values: {},
     statLabels: {
+      healthLevel1: "Health at level 1",
+      healthLevel18: "Health at level 18",
+      healthGrowth: "Health Growth",
+      manaLevel1: "Mana at level 1",
+      manaLevel18: "Mana at level 18",
+      manaGrowth: "Mana Growth",
+      armorLevel1: "Armor at level 1",
+      armorLevel18: "Armor at level 18",
+      armorGrowth: "Armor Growth",
+      magicResistLevel1: "Magic Resist at level 1",
+      magicResistLevel18: "Magic Resist at level 18",
+      magicResistGrowth: "Magic Resist Growth",
+      attackDamageLevel1: "Attack Damage at level 1",
+      attackDamageLevel18: "Attack Damage at level 18",
+      attackDamageGrowth: "Attack Damage Growth",
+      attackSpeedLevel1: "Attack Speed at level 1",
+      attackSpeedLevel18: "Attack Speed at level 18",
+      attackSpeedGrowth: "Attack Speed Growth",
+      attackRange: "Attack Range",
+      acquisitionRange: "Acquisition Range",
+      selectionRadius: "Selection Radius",
+      pathfindingRadius: "Collision Radius",
+      healthRegenLevel1: "Health Regen at level 1",
+      healthRegenLevel18: "Health Regen at level 18",
+      healthRegenGrowth: "Health Regen Growth",
+      manaRegenLevel1: "Mana Regen at level 1",
+      manaRegenLevel18: "Mana Regen at level 18",
+      manaRegenGrowth: "Mana Regen Growth",
       attackDamage: "Attack Damage",
       abilityPower: "Ability Power",
       health: "Health",
@@ -187,6 +259,8 @@ const translations = {
       best: "best",
       items: "items",
       abilities: "abilities",
+      champions: "champions",
+      championStats: "champion stats",
       compareStat: "Compare stat",
       currentItem: "current item",
       nextItem: "next item",
@@ -222,6 +296,7 @@ const translations = {
       classic: "Riftle Classic",
       moreLess: "Riftle Item Duel",
       spellDuel: "Riftle Spell Duel",
+      statDuel: "Riftle Stat Duel",
     },
     languageAria: "Язык",
     modesAria: "Режимы",
@@ -236,11 +311,13 @@ const translations = {
       classic: "Угадай чемпиона",
       moreLess: "Дуэль предметов",
       spellDuel: "Дуэль умений",
+      statDuel: "Дуэль статов",
     },
     modes: {
       classic: "Классика",
       moreLess: "Предметы",
       spellDuel: "Умения",
+      statDuel: "Статы",
       random: "Рандом",
     },
     columns: {
@@ -326,6 +403,34 @@ const translations = {
       Zaun: "Заун",
     },
     statLabels: {
+      healthLevel1: "Здоровье на 1-м",
+      healthLevel18: "Здоровье на 18-м",
+      healthGrowth: "Прирост здоровья",
+      manaLevel1: "Мана на 1-м",
+      manaLevel18: "Мана на 18-м",
+      manaGrowth: "Прирост маны",
+      armorLevel1: "Броня на 1-м",
+      armorLevel18: "Броня на 18-м",
+      armorGrowth: "Прирост брони",
+      magicResistLevel1: "Сопротивление магии на 1-м",
+      magicResistLevel18: "Сопротивление магии на 18-м",
+      magicResistGrowth: "Прирост сопротивления магии",
+      attackDamageLevel1: "Сила атаки на 1-м",
+      attackDamageLevel18: "Сила атаки на 18-м",
+      attackDamageGrowth: "Прирост силы атаки",
+      attackSpeedLevel1: "Скорость атаки на 1-м",
+      attackSpeedLevel18: "Скорость атаки на 18-м",
+      attackSpeedGrowth: "Прирост скорости атаки",
+      attackRange: "Дальность атаки",
+      acquisitionRange: "Радиус захвата цели",
+      selectionRadius: "Радиус выбора",
+      pathfindingRadius: "Радиус коллизии",
+      healthRegenLevel1: "Регенерация здоровья на 1-м",
+      healthRegenLevel18: "Регенерация здоровья на 18-м",
+      healthRegenGrowth: "Прирост регенерации здоровья",
+      manaRegenLevel1: "Регенерация маны на 1-м",
+      manaRegenLevel18: "Регенерация маны на 18-м",
+      manaRegenGrowth: "Прирост регенерации маны",
       attackDamage: "Сила атаки",
       abilityPower: "Сила умений",
       health: "Здоровье",
@@ -368,6 +473,8 @@ const translations = {
       best: "лучший",
       items: "предметов",
       abilities: "умений",
+      champions: "чемпионов",
+      championStats: "статы чемпиона",
       compareStat: "Сравни стат",
       currentItem: "текущий предмет",
       nextItem: "следующий предмет",
@@ -425,9 +532,13 @@ let itemStatsByKey = new Map();
 let abilities = [];
 let abilityById = new Map();
 let abilityStatsByKey = new Map();
+let championStats = [];
+let championStatById = new Map();
+let championStatStatsByKey = new Map();
 let state = { ...stateDefaults };
 let moreLessState = { ...moreLessDefaults };
 let spellDuelState = { ...moreLessDefaults };
+let statDuelState = { ...moreLessDefaults };
 let target = null;
 let highlightedSuggestion = -1;
 let currentLanguage = getSavedLanguage();
@@ -481,10 +592,11 @@ async function init() {
   renderBoardHeader();
 
   try {
-    const [championData, itemData, abilityData] = await Promise.all([
+    const [championData, itemData, abilityData, championStatData] = await Promise.all([
       fetchJson(DATA_URL, "Champion data"),
       fetchJson(ITEM_DATA_URL, "Item data"),
       fetchJson(ABILITY_DATA_URL, "Ability data"),
+      fetchJson(CHAMPION_STAT_DATA_URL, "Champion stat data"),
     ]);
 
     champions = championData.map(normalizeChampion).sort((a, b) => a.name.localeCompare(b.name));
@@ -500,10 +612,16 @@ async function init() {
       .filter((ability) => ability.statEntries.length > 0);
     abilityById = new Map(abilities.map((ability) => [ability.id, ability]));
     abilityStatsByKey = buildItemStatsByKey(abilities);
+    championStats = (championStatData.champions || [])
+      .map(normalizeChampionStat)
+      .filter((champion) => champion.statEntries.length > 0);
+    championStatById = new Map(championStats.map((champion) => [champion.id, champion]));
+    championStatStatsByKey = buildItemStatsByKey(championStats);
 
     restoreState();
     restoreMoreLessState("moreLess");
     restoreMoreLessState("spellDuel");
+    restoreMoreLessState("statDuel");
     ensureTarget();
     bindEvents();
     render();
@@ -600,7 +718,10 @@ function applyLanguage(renderExisting = true) {
 
   renderBoardHeader();
 
-  if (renderExisting && (champions.length > 0 || items.length > 0 || abilities.length > 0)) {
+  if (
+    renderExisting &&
+    (champions.length > 0 || items.length > 0 || abilities.length > 0 || championStats.length > 0)
+  ) {
     render();
   }
 }
@@ -642,7 +763,15 @@ function getDuelStorage(mode = currentMode) {
 }
 
 function getDuelState(mode = currentMode) {
-  return mode === "spellDuel" ? spellDuelState : moreLessState;
+  if (mode === "spellDuel") {
+    return spellDuelState;
+  }
+
+  if (mode === "statDuel") {
+    return statDuelState;
+  }
+
+  return moreLessState;
 }
 
 function setDuelState(nextState, mode = currentMode) {
@@ -651,19 +780,48 @@ function setDuelState(nextState, mode = currentMode) {
     return;
   }
 
+  if (mode === "statDuel") {
+    statDuelState = nextState;
+    return;
+  }
+
   moreLessState = nextState;
 }
 
 function getDuelEntries(mode = currentMode) {
-  return mode === "spellDuel" ? abilities : items;
+  if (mode === "spellDuel") {
+    return abilities;
+  }
+
+  if (mode === "statDuel") {
+    return championStats;
+  }
+
+  return items;
 }
 
 function getDuelById(mode = currentMode) {
-  return mode === "spellDuel" ? abilityById : itemById;
+  if (mode === "spellDuel") {
+    return abilityById;
+  }
+
+  if (mode === "statDuel") {
+    return championStatById;
+  }
+
+  return itemById;
 }
 
 function getDuelStatsByKey(mode = currentMode) {
-  return mode === "spellDuel" ? abilityStatsByKey : itemStatsByKey;
+  if (mode === "spellDuel") {
+    return abilityStatsByKey;
+  }
+
+  if (mode === "statDuel") {
+    return championStatStatsByKey;
+  }
+
+  return itemStatsByKey;
 }
 
 function getDuelCountLabel(mode = currentMode) {
@@ -743,6 +901,23 @@ function normalizeAbility(ability) {
     ...ability,
     kind: "ability",
     id: String(ability.id),
+    stats,
+    statEntries,
+  };
+}
+
+function normalizeChampionStat(champion) {
+  const stats = Object.fromEntries(
+    Object.entries(champion.stats || {})
+      .map(([key, value]) => [key, Number(value)])
+      .filter(([, value]) => Number.isFinite(value)),
+  );
+  const statEntries = sortItemStats(Object.entries(stats));
+
+  return {
+    ...champion,
+    kind: "championStat",
+    id: String(champion.id),
     stats,
     statEntries,
   };
@@ -1620,9 +1795,10 @@ function getStatLabel(statKey) {
 
 function formatStatValue(statKey, value) {
   const number = Number(value);
+  const digits = preciseStats.has(statKey) ? 3 : 1;
   const formatted = Number.isInteger(number)
     ? String(number)
-    : number.toFixed(1).replace(/\.0$/, "");
+    : number.toFixed(digits).replace(/\.?0+$/, "");
 
   if (secondsStats.has(statKey)) {
     return `${formatted}s`;
@@ -1638,6 +1814,10 @@ function getEntryName(entry) {
 function getEntryMeta(entry, copy = getCopy()) {
   if (entry.kind === "ability") {
     return `${getLocalizedText(entry.championName)} • ${entry.slot}`;
+  }
+
+  if (entry.kind === "championStat") {
+    return getLocalizedText(entry.title) || copy.moreLess.championStats;
   }
 
   return `${entry.gold} ${copy.moreLess.gold}`;

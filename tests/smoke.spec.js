@@ -48,6 +48,7 @@ test("classic flow uses suggestions and victory menu", async ({ page }) => {
   await expect(page.locator("[data-mode-key='splash']")).toHaveCount(0);
   await expect(page.locator("[data-mode-link='moreLess']")).toHaveAttribute("href", "./?mode=moreLess");
   await expect(page.locator("[data-mode-link='spellDuel']")).toHaveAttribute("href", "./?mode=spellDuel");
+  await expect(page.locator("[data-mode-link='statDuel']")).toHaveAttribute("href", "./?mode=statDuel");
 
   await page.locator("[data-language='ru']").click();
   await expect(page.locator("html")).toHaveAttribute("lang", "ru");
@@ -230,6 +231,81 @@ test("spell duel mode renders ability comparison", async ({ page }) => {
   expect(nextState.challengerItemId).not.toBe(previousState.currentItemId);
 });
 
+test("stat duel mode renders champion stat comparison", async ({ page }) => {
+  await page.goto(`${BASE_URL}/`);
+  await page.evaluate(() => localStorage.clear());
+  await page.reload();
+
+  await page.locator("[data-mode-link='statDuel']").click();
+
+  await expect(page.locator("#page-title")).toHaveText("Stat Duel");
+  await expect(page.locator("#guess-panel")).toBeHidden();
+  await expect(page.locator("#board-shell")).toBeHidden();
+  await expect(page.locator("#moreless-shell")).toBeVisible();
+  await expect(page.locator("#moreless-item-count")).toHaveText("173");
+  await expect(page.locator("#moreless-item-count-label")).toHaveText("champions");
+  await expect(page.locator("#moreless-left-card img")).toBeVisible();
+  await expect(page.locator("#moreless-right-card img")).toBeVisible();
+  await expect(page.locator("#moreless-left-card .item-stat")).toHaveCount(1);
+  await expect(page.locator("#moreless-right-card .item-stat")).toHaveCount(1);
+  await expect(page.locator("#moreless-right-card .item-stat-focus strong")).toHaveText("???");
+  await expect(page.locator("#moreless-left-card")).toHaveAttribute("data-kind", "championStat");
+  await expect(page.locator("#moreless-right-card")).toHaveAttribute("data-kind", "championStat");
+
+  const statAudit = await page.evaluate(async () => {
+    const response = await fetch("./data/champion-stats.json");
+    const data = await response.json();
+    const keys = new Set();
+    data.champions.forEach((champion) => {
+      Object.keys(champion.stats).forEach((key) => keys.add(key));
+    });
+
+    return {
+      count: data.champions.length,
+      hasHealth18: keys.has("healthLevel18"),
+      hasAttackDamageGrowth: keys.has("attackDamageGrowth"),
+      hasAttackRange: keys.has("attackRange"),
+      attackDamageGrowthValues: new Set(
+        data.champions.map((champion) => champion.stats.attackDamageGrowth),
+      ).size,
+    };
+  });
+
+  expect(statAudit).toEqual({
+    count: 173,
+    hasHealth18: true,
+    hasAttackDamageGrowth: true,
+    hasAttackRange: true,
+    attackDamageGrowthValues: 34,
+  });
+
+  const previousState = await page.evaluate(() => {
+    return JSON.parse(localStorage.getItem("riftle-stat-duel-state-v1"));
+  });
+  const correctSide = await page.evaluate(async () => {
+    const state = JSON.parse(localStorage.getItem("riftle-stat-duel-state-v1"));
+    const response = await fetch("./data/champion-stats.json");
+    const data = await response.json();
+    const championById = new Map(data.champions.map((champion) => [String(champion.id), champion]));
+    const current = championById.get(state.currentItemId);
+    const challenger = championById.get(state.challengerItemId);
+
+    return challenger.stats[state.statKey] > current.stats[state.statKey] ? "right" : "left";
+  });
+
+  await page.locator(`#moreless-${correctSide}-card`).click();
+  await expect(page.locator("#moreless-right-card .item-stat-focus strong")).not.toHaveText("???");
+
+  await page.waitForTimeout(1100);
+
+  const nextState = await page.evaluate(() => {
+    return JSON.parse(localStorage.getItem("riftle-stat-duel-state-v1"));
+  });
+
+  expect(nextState.currentItemId).toBe(previousState.challengerItemId);
+  expect(nextState.challengerItemId).not.toBe(previousState.currentItemId);
+});
+
 test("random tools page rolls roles, build, and next item", async ({ page }) => {
   await page.goto(`${BASE_URL}/random.html`);
   await page.evaluate(() => localStorage.clear());
@@ -237,10 +313,11 @@ test("random tools page rolls roles, build, and next item", async ({ page }) => 
 
   await expect(page.locator("#random-title")).toHaveText("Random Tools");
   await expect(await auditClassicItems(page)).toEqual({ forbiddenItems: [], longIds: [] });
-  await expect(page.locator(".modes [data-mode-link]")).toHaveCount(4);
+  await expect(page.locator(".modes [data-mode-link]")).toHaveCount(5);
   await expect(page.locator("[data-mode-link='classic']")).toHaveText("Classic");
   await expect(page.locator("[data-mode-link='moreLess']")).toHaveText("Item Duel");
   await expect(page.locator("[data-mode-link='spellDuel']")).toHaveText("Spell Duel");
+  await expect(page.locator("[data-mode-link='statDuel']")).toHaveText("Stat Duel");
   await expect(page.locator("[data-mode-link='random']")).toHaveClass(/mode-active/);
   await expect(page.locator("[data-spin-speed='1']")).toHaveClass(/speed-chip-active/);
   await expect(page.locator("#build-items .loot-card")).toHaveCount(6);
@@ -250,6 +327,7 @@ test("random tools page rolls roles, build, and next item", async ({ page }) => 
   await expect(page.locator("html")).toHaveAttribute("lang", "ru");
   await expect(page.locator("#random-title")).toHaveText("Рандом для игры");
   await expect(page.locator("[data-mode-link='classic']")).toHaveText("Классика");
+  await expect(page.locator("[data-mode-link='statDuel']")).toHaveText("Статы");
   await expect(page.locator("[data-mode-link='random']")).toHaveText("Рандом");
 
   const names = ["Maks", "Dima", "Lena", "Ari", "Niko"];
@@ -286,4 +364,9 @@ test("direct duel pages open their modes on static hosting", async ({ page }) =>
   await page.goto(`${BASE_URL}/spell-duel.html`);
   await expect(page.locator("#page-title")).toHaveText("Spell Duel");
   await expect(page.locator("#moreless-item-count")).toHaveText("692");
+
+  await page.goto(`${BASE_URL}/stat-duel.html`);
+  await expect(page.locator("#page-title")).toHaveText("Stat Duel");
+  await expect(page.locator("#moreless-item-count")).toHaveText("173");
+  await expect(page.locator("#moreless-item-count-label")).toHaveText("champions");
 });

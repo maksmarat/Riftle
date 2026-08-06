@@ -1081,7 +1081,7 @@ function renderCell(column, guess) {
 function renderChampionCell(guess) {
   const cell = document.createElement("div");
   const isMatch = guess.name === target.name;
-  cell.className = `cell champion-cell ${isMatch ? "cell-match" : "cell-miss"}`;
+  cell.className = `cell champion-cell ${isMatch ? "cell-match" : "champion-cell-neutral"}`;
   cell.dataset.label = getCopy().columns.champion;
   cell.style.setProperty("--cell-index", "0");
   cell.innerHTML = `

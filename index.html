@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07080c">
+    <title>Riftle Classic</title>
+    <link rel="stylesheet" href="./src/styles.css">
+  </head>
+  <body>
+    <div class="backdrop" aria-hidden="true"></div>
+    <div class="app">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="Riftle">
+          <span class="brand-mark">R</span>
+          <span>Riftle</span>
+        </a>
+
+        <div class="top-actions">
+          <nav class="modes" id="main-modes" aria-label="Modes">
+            <button class="mode mode-active" data-mode-key="classic" type="button">Classic</button>
+            <button class="mode" data-mode-key="ability" type="button" disabled>Ability</button>
+            <button class="mode" data-mode-key="quote" type="button" disabled>Quote</button>
+            <button class="mode" data-mode-key="splash" type="button" disabled>Splash</button>
+          </nav>
+
+          <div class="language-switch" id="language-switch" aria-label="Language">
+            <button class="language-option language-option-active" data-language="en" type="button" aria-pressed="true">EN</button>
+            <button class="language-option" data-language="ru" type="button" aria-pressed="false">RU</button>
+          </div>
+        </div>
+      </header>
+
+      <main class="game">
+        <section class="hero-panel" aria-labelledby="page-title">
+          <div class="hero-copy">
+            <p class="eyebrow" id="hero-eyebrow">Infinite classic</p>
+            <h1 id="page-title">Guess the champion</h1>
+          </div>
+        </section>
+
+        <section class="guess-panel" id="guess-panel" aria-label="Guess form">
+          <form class="guess-form" id="guess-form" autocomplete="off">
+            <div class="search-wrap">
+              <label class="sr-only" id="champion-input-label" for="champion-input">Champion name</label>
+              <input
+                id="champion-input"
+                type="search"
+                placeholder="Enter champion name"
+                aria-controls="suggestions"
+                aria-expanded="false"
+              >
+              <div class="suggestions" id="suggestions" role="listbox"></div>
+            </div>
+          </form>
+
+          <p class="message" id="message" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="board-shell" id="board-shell" aria-label="Guesses">
+          <div class="board-scroll">
+            <div class="board-header" id="board-header"></div>
+            <div class="guess-list" id="guess-list"></div>
+          </div>
+          <div class="empty-state" id="empty-state">
+            <span id="empty-state-text">First guess is waiting.</span>
+          </div>
+        </section>
+
+        <section class="victory-modal hidden" id="victory-modal" role="dialog" aria-modal="true" aria-labelledby="victory-title">
+          <div class="victory-window">
+            <div class="victory-champion">
+              <img id="victory-image" alt="">
+              <div>
+                <p id="victory-kicker"></p>
+                <h2 id="victory-title"></h2>
+              </div>
+            </div>
+
+            <div class="victory-modes" id="victory-modes" aria-label="Next mode">
+              <button class="mode-choice mode-choice-active" data-mode-key="classic" type="button">Classic</button>
+              <button class="mode-choice" data-mode-key="ability" type="button" disabled>Ability</button>
+              <button class="mode-choice" data-mode-key="quote" type="button" disabled>Quote</button>
+              <button class="mode-choice" data-mode-key="splash" type="button" disabled>Splash</button>
+            </div>
+
+            <button class="play-again" id="play-again" type="button">Play again</button>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./src/app.js" defer></script>
+  </body>
+</html>

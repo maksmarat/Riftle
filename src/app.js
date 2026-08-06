@@ -1086,7 +1086,6 @@ function renderChampionCell(guess) {
   cell.style.setProperty("--cell-index", "0");
   cell.innerHTML = `
     <img src="${guess.icon}" alt="${guess.name}">
-    <span>${guess.name}</span>
   `;
   return cell;
 }

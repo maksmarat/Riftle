@@ -38,6 +38,7 @@ test("classic flow uses suggestions and victory menu", async ({ page }) => {
   await page.keyboard.press("Enter");
   await expect(page.locator(".guess-row")).toHaveCount(1);
   await expect(page.locator(".champion-cell").first()).not.toHaveClass(/cell-miss/);
+  await expect(page.locator(".champion-cell span")).toHaveCount(0);
   await page.waitForTimeout(700);
   const championIconBox = await page.locator(".champion-cell img").first().boundingBox();
   expect(Math.abs(championIconBox.width - championIconBox.height)).toBeLessThan(1);

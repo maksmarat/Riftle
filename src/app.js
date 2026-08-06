@@ -29,7 +29,6 @@ const translations = {
     inputPlaceholder: "Enter champion name",
     boardAria: "Guesses",
     victoryModesAria: "Next mode",
-    heroEyebrow: "Infinite classic",
     heroTitle: "Guess the champion",
     modes: {
       classic: "Classic",
@@ -48,7 +47,6 @@ const translations = {
       releaseYear: "Year",
     },
     values: {},
-    emptyState: "First guess is waiting.",
     playAgain: "Play again",
     messages: {
       loadError: "Could not load the champion list.",
@@ -57,9 +55,6 @@ const translations = {
       unknownChampion: "Champion is not in the list.",
       duplicateChampion: "This champion was already guessed.",
       hit: "Hit.",
-      needsNewer: "The answer is a newer champion.",
-      needsOlder: "The answer is an older champion.",
-      sameYear: "The release year matches.",
       victoryKicker: ({ round, guesses }) => {
         const guessLabel = guesses === 1 ? "guess" : "guesses";
         return `Round ${round} solved in ${guesses} ${guessLabel}`;
@@ -76,7 +71,6 @@ const translations = {
     inputPlaceholder: "Введите имя чемпиона",
     boardAria: "Догадки",
     victoryModesAria: "Следующий режим",
-    heroEyebrow: "Бесконечная классика",
     heroTitle: "Угадай чемпиона",
     modes: {
       classic: "Классика",
@@ -166,7 +160,6 @@ const translations = {
       Void: "Бездна",
       Zaun: "Заун",
     },
-    emptyState: "Первый ход ждет.",
     playAgain: "Еще раз",
     messages: {
       loadError: "Не удалось загрузить список чемпионов.",
@@ -175,9 +168,6 @@ const translations = {
       unknownChampion: "Такого чемпиона нет в списке.",
       duplicateChampion: "Этот чемпион уже был.",
       hit: "Попадание.",
-      needsNewer: "Нужен чемпион новее.",
-      needsOlder: "Нужен чемпион старше.",
-      sameYear: "Есть совпадение по году.",
       victoryKicker: ({ round, guesses }) => {
         return `Раунд ${round} закрыт за ${guesses} ${guessWordRu(guesses)}`;
       },
@@ -211,13 +201,10 @@ const dom = {
   modeButtons: document.querySelectorAll("[data-mode-key]"),
   languageSwitch: document.querySelector("#language-switch"),
   languageButtons: document.querySelectorAll("[data-language]"),
-  heroEyebrow: document.querySelector("#hero-eyebrow"),
   heroTitle: document.querySelector("#page-title"),
   boardHeader: document.querySelector("#board-header"),
   boardShell: document.querySelector("#board-shell"),
   guessList: document.querySelector("#guess-list"),
-  emptyState: document.querySelector("#empty-state"),
-  emptyStateText: document.querySelector("#empty-state-text"),
   guessPanel: document.querySelector("#guess-panel"),
   victoryModal: document.querySelector("#victory-modal"),
   victoryImage: document.querySelector("#victory-image"),
@@ -290,9 +277,7 @@ function applyLanguage(renderExisting = true) {
   dom.input.placeholder = copy.inputPlaceholder;
   dom.boardShell.setAttribute("aria-label", copy.boardAria);
   dom.victoryModes.setAttribute("aria-label", copy.victoryModesAria);
-  dom.heroEyebrow.textContent = copy.heroEyebrow;
   dom.heroTitle.textContent = copy.heroTitle;
-  dom.emptyStateText.textContent = copy.emptyState;
   dom.playAgain.textContent = copy.playAgain;
 
   dom.modeButtons.forEach((button) => {
@@ -433,8 +418,8 @@ function submitGuess(guess) {
     state.solved = true;
     saveStats();
     showMessage("hit", "success");
-  } else {
-    showMessage(getHintMessage(guess), "neutral");
+  } else if (currentMessage?.tone !== "error") {
+    clearMessage();
   }
 
   saveState();
@@ -545,8 +530,9 @@ function render() {
     .reverse();
 
   dom.input.disabled = state.solved;
-  dom.emptyState.classList.toggle("hidden", guessedChampions.length > 0);
+  dom.boardHeader.classList.toggle("hidden", guessedChampions.length === 0);
   dom.guessList.innerHTML = "";
+  dom.boardShell.classList.toggle("hidden", guessedChampions.length === 0);
 
   guessedChampions.forEach((guess, index) => {
     const row = document.createElement("div");
@@ -652,25 +638,16 @@ function renderVictory() {
   dom.victoryModal.classList.remove("hidden");
 }
 
-function getHintMessage(guess) {
-  const guessYear = Number(guess.releaseYear);
-  const answerYear = Number(target.releaseYear);
-
-  if (guessYear < answerYear) {
-    return "needsNewer";
-  }
-
-  if (guessYear > answerYear) {
-    return "needsOlder";
-  }
-
-  return "sameYear";
-}
-
 function showMessage(key, tone = "neutral", args = {}) {
   currentMessage = { key, tone, args };
   dom.message.textContent = translateMessage(key, args);
   dom.message.dataset.tone = tone;
+}
+
+function clearMessage() {
+  currentMessage = null;
+  dom.message.textContent = "";
+  delete dom.message.dataset.tone;
 }
 
 function translateMessage(key, args = {}) {

@@ -335,9 +335,17 @@ input[type="search"]:focus {
 .board-header,
 .guess-row {
   display: grid;
-  grid-template-columns: 128px repeat(7, 118px);
+  grid-template-columns:
+    minmax(126px, 1.08fr)
+    minmax(108px, 0.9fr)
+    minmax(116px, 1fr)
+    minmax(124px, 1.12fr)
+    minmax(108px, 0.9fr)
+    minmax(118px, 1.05fr)
+    minmax(118px, 1.05fr)
+    minmax(108px, 0.9fr);
   gap: 8px;
-  min-width: 1010px;
+  width: max(100%, 950px);
 }
 
 .board-header {
@@ -363,7 +371,7 @@ input[type="search"]:focus {
 
 .cell {
   display: grid;
-  min-height: 84px;
+  min-height: 82px;
   place-items: center;
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: var(--radius);
@@ -372,6 +380,7 @@ input[type="search"]:focus {
   font-weight: 900;
   line-height: 1.16;
   text-align: center;
+  overflow-wrap: anywhere;
   text-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.2),

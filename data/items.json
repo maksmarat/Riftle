@@ -1,6 +1,6 @@
 {
   "version": "16.15.1",
-  "generatedFrom": "Riot Data Dragon item.json",
+  "generatedFrom": "Riot Data Dragon 16.15.1 and CommunityDragon 16.15, filtered to Classic Rift and Summoner Rift shop items",
   "items": [
     {
       "id": "8020",
@@ -18,25 +18,6 @@
       "stats": {
         "health": 350,
         "magicResist": 45,
-        "abilityHaste": 15
-      }
-    },
-    {
-      "id": "328020",
-      "name": "Abyssal Mask",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/328020.png",
-      "gold": 2850,
-      "tags": [
-        "Health",
-        "SpellBlock",
-        "CooldownReduction",
-        "MagicResist",
-        "AbilityHaste"
-      ],
-      "plaintext": "",
-      "stats": {
-        "health": 350,
-        "magicResist": 50,
         "abilityHaste": 15
       }
     },
@@ -103,23 +84,6 @@
       }
     },
     {
-      "id": "323003",
-      "name": "Archangel's Staff",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/323003.png",
-      "gold": 2900,
-      "tags": [
-        "SpellDamage",
-        "Mana",
-        "AbilityHaste"
-      ],
-      "plaintext": "",
-      "stats": {
-        "abilityPower": 70,
-        "mana": 600,
-        "abilityHaste": 25
-      }
-    },
-    {
       "id": "3504",
       "name": "Ardent Censer",
       "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3504.png",
@@ -139,25 +103,6 @@
       }
     },
     {
-      "id": "323504",
-      "name": "Ardent Censer",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/323504.png",
-      "gold": 2600,
-      "tags": [
-        "AttackSpeed",
-        "SpellDamage",
-        "ManaRegen",
-        "NonbootsMovement"
-      ],
-      "plaintext": "",
-      "stats": {
-        "abilityPower": 55,
-        "healShieldPower": 10,
-        "baseManaRegen": 150,
-        "percentMoveSpeed": 6
-      }
-    },
-    {
       "id": "3174",
       "name": "Armored Advance",
       "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3174.png",
@@ -170,22 +115,6 @@
       "stats": {
         "armor": 35,
         "moveSpeed": 45
-      }
-    },
-    {
-      "id": "663039",
-      "name": "Atma's Reckoning",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/663039.png",
-      "gold": 2500,
-      "tags": [
-        "Health",
-        "CriticalStrike",
-        "Lane"
-      ],
-      "plaintext": "",
-      "stats": {
-        "health": 500,
-        "critChance": 20
       }
     },
     {
@@ -613,21 +542,6 @@
       }
     },
     {
-      "id": "663059",
-      "name": "Cloak of Starry Night",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/663059.png",
-      "gold": 2500,
-      "tags": [
-        "Health",
-        "SpellBlock"
-      ],
-      "plaintext": "",
-      "stats": {
-        "health": 250,
-        "magicResist": 60
-      }
-    },
-    {
       "id": "1029",
       "name": "Cloth Armor",
       "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/1029.png",
@@ -672,42 +586,6 @@
       "stats": {
         "abilityHaste": 20,
         "moveSpeed": 45
-      }
-    },
-    {
-      "id": "664644",
-      "name": "Crown of the Shattered Queen",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/664644.png",
-      "gold": 2500,
-      "tags": [
-        "Health",
-        "SpellDamage",
-        "Mana",
-        "AbilityHaste"
-      ],
-      "plaintext": "",
-      "stats": {
-        "abilityPower": 65,
-        "health": 250,
-        "mana": 600,
-        "abilityHaste": 15
-      }
-    },
-    {
-      "id": "667109",
-      "name": "Cruelty",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/667109.png",
-      "gold": 2500,
-      "tags": [
-        "Armor",
-        "SpellDamage",
-        "MagicResist"
-      ],
-      "plaintext": "",
-      "stats": {
-        "abilityPower": 60,
-        "armor": 25,
-        "magicResist": 25
       }
     },
     {
@@ -800,22 +678,6 @@
         "abilityPower": 45,
         "healShieldPower": 16,
         "baseManaRegen": 100
-      }
-    },
-    {
-      "id": "326621",
-      "name": "Dawncore",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/326621.png",
-      "gold": 2900,
-      "tags": [
-        "SpellDamage",
-        "ManaRegen"
-      ],
-      "plaintext": "",
-      "stats": {
-        "abilityPower": 50,
-        "healShieldPower": 20,
-        "baseManaRegen": 150
       }
     },
     {
@@ -1001,26 +863,6 @@
       }
     },
     {
-      "id": "326620",
-      "name": "Echoes of Helia",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/326620.png",
-      "gold": 2600,
-      "tags": [
-        "Health",
-        "SpellDamage",
-        "ManaRegen",
-        "CooldownReduction",
-        "AbilityHaste"
-      ],
-      "plaintext": "",
-      "stats": {
-        "abilityPower": 35,
-        "health": 250,
-        "abilityHaste": 20,
-        "baseManaRegen": 150
-      }
-    },
-    {
       "id": "6692",
       "name": "Eclipse",
       "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6692.png",
@@ -1186,22 +1028,6 @@
       }
     },
     {
-      "id": "667112",
-      "name": "Flesheater",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/667112.png",
-      "gold": 2500,
-      "tags": [
-        "Damage",
-        "SpellDamage",
-        "MagicPenetration",
-        "ArmorPenetration"
-      ],
-      "plaintext": "",
-      "stats": {
-        "health": 500
-      }
-    },
-    {
       "id": "3114",
       "name": "Forbidden Idol",
       "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3114.png",
@@ -1249,65 +1075,6 @@
         "armor": 75,
         "mana": 400,
         "abilityHaste": 20
-      }
-    },
-    {
-      "id": "323110",
-      "name": "Frozen Heart",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/323110.png",
-      "gold": 2700,
-      "tags": [
-        "Armor",
-        "Mana",
-        "Aura",
-        "CooldownReduction",
-        "AbilityHaste"
-      ],
-      "plaintext": "",
-      "stats": {
-        "armor": 75,
-        "mana": 500,
-        "abilityHaste": 25
-      }
-    },
-    {
-      "id": "667101",
-      "name": "Gambler's Blade",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/667101.png",
-      "gold": 2500,
-      "tags": [
-        "Damage",
-        "NonbootsMovement",
-        "MagicPenetration",
-        "ArmorPenetration",
-        "AbilityHaste"
-      ],
-      "plaintext": "",
-      "stats": {
-        "abilityHaste": 10,
-        "lethality": 15,
-        "magicPenetration": 15,
-        "percentMoveSpeed": 15
-      }
-    },
-    {
-      "id": "663193",
-      "name": "Gargoyle Stoneplate",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/663193.png",
-      "gold": 2500,
-      "tags": [
-        "SpellBlock",
-        "Armor",
-        "Active",
-        "CooldownReduction",
-        "AbilityHaste"
-      ],
-      "plaintext": "",
-      "stats": {
-        "armor": 55,
-        "magicResist": 55,
-        "abilityHaste": 10,
-        "percentMoveSpeed": 8
       }
     },
     {
@@ -1383,74 +1150,6 @@
       "stats": {
         "attackDamage": 55,
         "armor": 45
-      }
-    },
-    {
-      "id": "3177",
-      "name": "Guardian's Blade",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3177.png",
-      "gold": 950,
-      "tags": [
-        "Health",
-        "Damage",
-        "Lane",
-        "AbilityHaste"
-      ],
-      "plaintext": "Good starting item for attackers",
-      "stats": {
-        "attackDamage": 30,
-        "health": 150,
-        "abilityHaste": 15
-      }
-    },
-    {
-      "id": "3184",
-      "name": "Guardian's Hammer",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3184.png",
-      "gold": 950,
-      "tags": [
-        "Health",
-        "Damage",
-        "LifeSteal",
-        "Lane"
-      ],
-      "plaintext": "Good starting item for attackers",
-      "stats": {
-        "attackDamage": 25,
-        "health": 150,
-        "lifeSteal": 5
-      }
-    },
-    {
-      "id": "2051",
-      "name": "Guardian's Horn",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/2051.png",
-      "gold": 950,
-      "tags": [
-        "Health",
-        "HealthRegen",
-        "Lane"
-      ],
-      "plaintext": "Good starting item for tanks",
-      "stats": {
-        "health": 150
-      }
-    },
-    {
-      "id": "3112",
-      "name": "Guardian's Orb",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3112.png",
-      "gold": 950,
-      "tags": [
-        "Health",
-        "SpellDamage",
-        "ManaRegen",
-        "Lane"
-      ],
-      "plaintext": "Good starting item for mages",
-      "stats": {
-        "abilityPower": 50,
-        "health": 150
       }
     },
     {
@@ -1593,25 +1292,6 @@
         "abilityPower": 80,
         "attackDamage": 40,
         "omnivamp": 10
-      }
-    },
-    {
-      "id": "663146",
-      "name": "Hextech Gunblade",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/663146.png",
-      "gold": 2500,
-      "tags": [
-        "Damage",
-        "LifeSteal",
-        "SpellDamage",
-        "Active",
-        "SpellVamp"
-      ],
-      "plaintext": "",
-      "stats": {
-        "abilityPower": 90,
-        "attackDamage": 45,
-        "omnivamp": 15
       }
     },
     {
@@ -1776,24 +1456,6 @@
       }
     },
     {
-      "id": "324005",
-      "name": "Imperial Mandate",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/324005.png",
-      "gold": 2400,
-      "tags": [
-        "SpellDamage",
-        "ManaRegen",
-        "CooldownReduction",
-        "AbilityHaste"
-      ],
-      "plaintext": "",
-      "stats": {
-        "abilityPower": 65,
-        "abilityHaste": 15,
-        "baseManaRegen": 150
-      }
-    },
-    {
       "id": "3031",
       "name": "Infinity Edge",
       "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3031.png",
@@ -1897,28 +1559,6 @@
       }
     },
     {
-      "id": "323109",
-      "name": "Knight's Vow",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/323109.png",
-      "gold": 2900,
-      "tags": [
-        "Health",
-        "HealthRegen",
-        "Armor",
-        "Aura",
-        "Active",
-        "CooldownReduction",
-        "AbilityHaste"
-      ],
-      "plaintext": "",
-      "stats": {
-        "health": 300,
-        "armor": 50,
-        "abilityHaste": 10,
-        "baseHealthRegen": 150
-      }
-    },
-    {
       "id": "6672",
       "name": "Kraken Slayer",
       "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6672.png",
@@ -2001,28 +1641,6 @@
       "plaintext": "Activate to shield nearby allies from damage",
       "stats": {
         "health": 200,
-        "armor": 30,
-        "magicResist": 30,
-        "abilityHaste": 10
-      }
-    },
-    {
-      "id": "323190",
-      "name": "Locket of the Iron Solari",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/323190.png",
-      "gold": 2600,
-      "tags": [
-        "Health",
-        "SpellBlock",
-        "Armor",
-        "Aura",
-        "Active",
-        "MagicResist",
-        "AbilityHaste"
-      ],
-      "plaintext": "",
-      "stats": {
-        "health": 250,
         "armor": 30,
         "magicResist": 30,
         "abilityHaste": 10
@@ -2133,25 +1751,6 @@
       }
     },
     {
-      "id": "323004",
-      "name": "Manamune",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/323004.png",
-      "gold": 2900,
-      "tags": [
-        "Damage",
-        "Mana",
-        "CooldownReduction",
-        "OnHit",
-        "AbilityHaste"
-      ],
-      "plaintext": "",
-      "stats": {
-        "attackDamage": 35,
-        "mana": 500,
-        "abilityHaste": 15
-      }
-    },
-    {
       "id": "3156",
       "name": "Maw of Malmortius",
       "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3156.png",
@@ -2245,27 +1844,6 @@
       }
     },
     {
-      "id": "323222",
-      "name": "Mikael's Blessing",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/323222.png",
-      "gold": 2800,
-      "tags": [
-        "Health",
-        "ManaRegen",
-        "Active",
-        "CooldownReduction",
-        "Tenacity",
-        "AbilityHaste"
-      ],
-      "plaintext": "",
-      "stats": {
-        "health": 400,
-        "baseManaRegen": 100,
-        "healShieldPower": 15,
-        "abilityHaste": 15
-      }
-    },
-    {
       "id": "6617",
       "name": "Moonstone Renewer",
       "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6617.png",
@@ -2283,26 +1861,6 @@
         "health": 200,
         "abilityHaste": 20,
         "baseManaRegen": 125
-      }
-    },
-    {
-      "id": "326617",
-      "name": "Moonstone Renewer",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/326617.png",
-      "gold": 2900,
-      "tags": [
-        "Health",
-        "SpellDamage",
-        "ManaRegen",
-        "CooldownReduction",
-        "AbilityHaste"
-      ],
-      "plaintext": "",
-      "stats": {
-        "abilityPower": 35,
-        "health": 400,
-        "abilityHaste": 20,
-        "baseManaRegen": 150
       }
     },
     {
@@ -2683,26 +2241,6 @@
       }
     },
     {
-      "id": "323107",
-      "name": "Redemption",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/323107.png",
-      "gold": 2800,
-      "tags": [
-        "SpellDamage",
-        "ManaRegen",
-        "CooldownReduction",
-        "AbilityHaste"
-      ],
-      "plaintext": "",
-      "stats": {
-        "abilityPower": 30,
-        "abilityHaste": 15,
-        "baseManaRegen": 100,
-        "healShieldPower": 10,
-        "health": 400
-      }
-    },
-    {
       "id": "1006",
       "name": "Rejuvenation Bead",
       "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/1006.png",
@@ -2737,25 +2275,6 @@
       "id": "6657",
       "name": "Rod of Ages",
       "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6657.png",
-      "gold": 2600,
-      "tags": [
-        "Health",
-        "HealthRegen",
-        "SpellDamage",
-        "Mana",
-        "ManaRegen"
-      ],
-      "plaintext": "",
-      "stats": {
-        "abilityPower": 45,
-        "health": 350,
-        "mana": 500
-      }
-    },
-    {
-      "id": "326657",
-      "name": "Rod of Ages",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/326657.png",
       "gold": 2600,
       "tags": [
         "Health",
@@ -2924,18 +2443,6 @@
       }
     },
     {
-      "id": "2421",
-      "name": "Shattered Armguard",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/2421.png",
-      "gold": 1600,
-      "tags": [],
-      "plaintext": "Upgrades to stopwatch",
-      "stats": {
-        "abilityPower": 40,
-        "armor": 25
-      }
-    },
-    {
       "id": "3057",
       "name": "Sheen",
       "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3057.png",
@@ -2947,21 +2454,6 @@
       "plaintext": "Grants a bonus to next attack after spell cast",
       "stats": {
         "abilityHaste": 10
-      }
-    },
-    {
-      "id": "663058",
-      "name": "Shield of Molten Stone",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/663058.png",
-      "gold": 2500,
-      "tags": [
-        "Health",
-        "Armor"
-      ],
-      "plaintext": "",
-      "stats": {
-        "health": 250,
-        "armor": 80
       }
     },
     {
@@ -2983,27 +2475,6 @@
         "abilityHaste": 15,
         "percentMoveSpeed": 4,
         "baseManaRegen": 125
-      }
-    },
-    {
-      "id": "322065",
-      "name": "Shurelya's Battlesong",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/322065.png",
-      "gold": 2600,
-      "tags": [
-        "SpellDamage",
-        "ManaRegen",
-        "Active",
-        "CooldownReduction",
-        "NonbootsMovement",
-        "AbilityHaste"
-      ],
-      "plaintext": "",
-      "stats": {
-        "abilityPower": 65,
-        "abilityHaste": 15,
-        "percentMoveSpeed": 6,
-        "baseManaRegen": 150
       }
     },
     {
@@ -3126,25 +2597,6 @@
         "abilityPower": 35,
         "healShieldPower": 10,
         "baseManaRegen": 125,
-        "abilityHaste": 10
-      }
-    },
-    {
-      "id": "326616",
-      "name": "Staff of Flowing Water",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/326616.png",
-      "gold": 2600,
-      "tags": [
-        "SpellDamage",
-        "ManaRegen",
-        "CooldownReduction",
-        "AbilityHaste"
-      ],
-      "plaintext": "",
-      "stats": {
-        "abilityPower": 45,
-        "healShieldPower": 10,
-        "baseManaRegen": 150,
         "abilityHaste": 10
       }
     },
@@ -3303,41 +2755,6 @@
       }
     },
     {
-      "id": "664011",
-      "name": "Sword of Blossoming Dawn",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/664011.png",
-      "gold": 2500,
-      "tags": [
-        "Health",
-        "SpellDamage",
-        "CooldownReduction",
-        "OnHit",
-        "AbilityHaste"
-      ],
-      "plaintext": "",
-      "stats": {
-        "abilityPower": 35,
-        "health": 150,
-        "healShieldPower": 10,
-        "abilityHaste": 10
-      }
-    },
-    {
-      "id": "663060",
-      "name": "Sword of the Divine",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/663060.png",
-      "gold": 2500,
-      "tags": [
-        "Damage",
-        "CriticalStrike",
-        "SpellDamage"
-      ],
-      "plaintext": "",
-      "stats": {
-        "critChance": 50
-      }
-    },
-    {
       "id": "3070",
       "name": "Tear of the Goddess",
       "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3070.png",
@@ -3347,20 +2764,6 @@
         "ManaRegen"
       ],
       "plaintext": "Increases maximum Mana as Mana is spent",
-      "stats": {
-        "mana": 240
-      }
-    },
-    {
-      "id": "323070",
-      "name": "Tear of the Goddess",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/323070.png",
-      "gold": 400,
-      "tags": [
-        "Mana",
-        "ManaRegen"
-      ],
-      "plaintext": "",
       "stats": {
         "mana": 240
       }
@@ -3418,23 +2821,6 @@
       }
     },
     {
-      "id": "667666",
-      "name": "The Collector",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/667666.png",
-      "gold": 3000,
-      "tags": [
-        "Damage",
-        "CriticalStrike",
-        "ArmorPenetration"
-      ],
-      "plaintext": "",
-      "stats": {
-        "attackDamage": 50,
-        "lethality": 10,
-        "critChance": 25
-      }
-    },
-    {
       "id": "3075",
       "name": "Thornmail",
       "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3075.png",
@@ -3447,21 +2833,6 @@
       "stats": {
         "health": 150,
         "armor": 75
-      }
-    },
-    {
-      "id": "323075",
-      "name": "Thornmail",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/323075.png",
-      "gold": 2650,
-      "tags": [
-        "Health",
-        "Armor"
-      ],
-      "plaintext": "",
-      "stats": {
-        "health": 200,
-        "armor": 85
       }
     },
     {
@@ -3680,24 +3051,6 @@
       }
     },
     {
-      "id": "322526",
-      "name": "Whispering Circlet",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/322526.png",
-      "gold": 2250,
-      "tags": [
-        "Health",
-        "Mana",
-        "ManaRegen"
-      ],
-      "plaintext": "",
-      "stats": {
-        "health": 200,
-        "healShieldPower": 8,
-        "baseManaRegen": 75,
-        "mana": 300
-      }
-    },
-    {
       "id": "3066",
       "name": "Winged Moonplate",
       "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3066.png",
@@ -3716,23 +3069,6 @@
       "id": "3119",
       "name": "Winter's Approach",
       "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3119.png",
-      "gold": 2400,
-      "tags": [
-        "Health",
-        "Mana",
-        "AbilityHaste"
-      ],
-      "plaintext": "",
-      "stats": {
-        "health": 550,
-        "mana": 500,
-        "abilityHaste": 15
-      }
-    },
-    {
-      "id": "323119",
-      "name": "Winter's Approach",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/323119.png",
       "gold": 2400,
       "tags": [
         "Health",
@@ -3869,45 +3205,6 @@
         "armor": 25,
         "magicResist": 25,
         "abilityHaste": 10
-      }
-    },
-    {
-      "id": "323050",
-      "name": "Zeke's Convergence",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/323050.png",
-      "gold": 2300,
-      "tags": [
-        "Health",
-        "SpellBlock",
-        "Armor",
-        "AbilityHaste"
-      ],
-      "plaintext": "",
-      "stats": {
-        "health": 350,
-        "armor": 30,
-        "magicResist": 30,
-        "abilityHaste": 10
-      }
-    },
-    {
-      "id": "663172",
-      "name": "Zephyr",
-      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/663172.png",
-      "gold": 2500,
-      "tags": [
-        "AttackSpeed",
-        "CooldownReduction",
-        "OnHit",
-        "NonbootsMovement",
-        "Tenacity"
-      ],
-      "plaintext": "",
-      "stats": {
-        "attackSpeed": 40,
-        "percentMoveSpeed": 8,
-        "abilityHaste": 25,
-        "tenacity": 20
       }
     },
     {

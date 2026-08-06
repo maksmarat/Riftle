@@ -1,6 +1,35 @@
 const { expect, test } = require("@playwright/test");
 
 const BASE_URL = process.env.BASE_URL || "http://localhost:4173";
+const CLASSIC_ITEM_COUNT = "194";
+const FORBIDDEN_CLASSIC_ITEMS = [
+  "Atma's Reckoning",
+  "Cloak of Starry Night",
+  "Crown of the Shattered Queen",
+  "Cruelty",
+  "Flesheater",
+  "Gambler's Blade",
+  "Guardian's Blade",
+  "Guardian's Hammer",
+  "Guardian's Horn",
+  "Guardian's Orb",
+  "Shield of Molten Stone",
+  "Sword of Blossoming Dawn",
+  "Sword of the Divine",
+];
+
+async function auditClassicItems(page) {
+  return page.evaluate(async (forbiddenItems) => {
+    const response = await fetch("./data/items.json");
+    const data = await response.json();
+    const names = new Set(data.items.map((item) => item.name));
+
+    return {
+      forbiddenItems: forbiddenItems.filter((name) => names.has(name)),
+      longIds: data.items.filter((item) => String(item.id).length > 4).map((item) => item.name),
+    };
+  }, FORBIDDEN_CLASSIC_ITEMS);
+}
 
 test("classic flow uses suggestions and victory menu", async ({ page }) => {
   await page.goto(`${BASE_URL}/`);
@@ -76,7 +105,7 @@ test("item duel mode renders item comparison", async ({ page }) => {
   await expect(page.locator("#guess-panel")).toBeHidden();
   await expect(page.locator("#board-shell")).toBeHidden();
   await expect(page.locator("#moreless-shell")).toBeVisible();
-  await expect(page.locator("#moreless-item-count")).toHaveText("233");
+  await expect(page.locator("#moreless-item-count")).toHaveText(CLASSIC_ITEM_COUNT);
   await expect(page.locator("#moreless-left-card img")).toBeVisible();
   await expect(page.locator("#moreless-right-card img")).toBeVisible();
   await expect(page.locator("#moreless-left-card .item-stat")).toHaveCount(1);
@@ -84,6 +113,7 @@ test("item duel mode renders item comparison", async ({ page }) => {
   await expect(page.locator("#moreless-right-card .item-stat-focus strong")).toHaveText("???");
   await expect(page.locator("#moreless-left-card")).toHaveAttribute("role", "button");
   await expect(page.locator("#moreless-right-card")).toHaveAttribute("role", "button");
+  await expect(await auditClassicItems(page)).toEqual({ forbiddenItems: [], longIds: [] });
 
   const previousState = await page.evaluate(() => {
     return JSON.parse(localStorage.getItem("riftle-moreless-state-v1"));
@@ -206,6 +236,7 @@ test("random tools page rolls roles, build, and next item", async ({ page }) => 
   await page.reload();
 
   await expect(page.locator("#random-title")).toHaveText("Random Tools");
+  await expect(await auditClassicItems(page)).toEqual({ forbiddenItems: [], longIds: [] });
   await expect(page.locator(".modes [data-mode-link]")).toHaveCount(4);
   await expect(page.locator("[data-mode-link='classic']")).toHaveText("Classic");
   await expect(page.locator("[data-mode-link='moreLess']")).toHaveText("Item Duel");
@@ -250,7 +281,7 @@ test("random tools page rolls roles, build, and next item", async ({ page }) => 
 test("direct duel pages open their modes on static hosting", async ({ page }) => {
   await page.goto(`${BASE_URL}/item-duel.html`);
   await expect(page.locator("#page-title")).toHaveText("Item Duel");
-  await expect(page.locator("#moreless-item-count")).toHaveText("233");
+  await expect(page.locator("#moreless-item-count")).toHaveText(CLASSIC_ITEM_COUNT);
 
   await page.goto(`${BASE_URL}/spell-duel.html`);
   await expect(page.locator("#page-title")).toHaveText("Spell Duel");

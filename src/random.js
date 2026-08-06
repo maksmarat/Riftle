@@ -6,9 +6,19 @@
   const LANGUAGE_KEY = "riftle-language-v1";
   const PLAYERS_KEY = "riftle-random-players-v1";
   const BUILD_ROLE_KEY = "riftle-random-build-role-v1";
+  const SPIN_SPEED_KEY = "riftle-random-spin-speed-v1";
   const DEFAULT_LANGUAGE = "en";
   const SUPPORTED_LANGUAGES = ["en", "ru"];
   const ROLE_COUNT = 5;
+  const SPIN_SPEEDS = [0.5, 1, 2, 4];
+  const DEFAULT_SPIN_SPEED = 1;
+
+  const spinSettings = {
+    0.5: { duration: 9200, selectedIndex: 72 },
+    1: { duration: 5600, selectedIndex: 54 },
+    2: { duration: 3000, selectedIndex: 36 },
+    4: { duration: 1500, selectedIndex: 22 },
+  };
 
   const roles = [
     { key: "top", en: "Top", ru: "Топ" },
@@ -22,8 +32,12 @@
     en: {
       htmlLang: "en",
       documentTitle: "Riftle Random",
-      navGame: "Game",
-      navRandom: "Random",
+      modes: {
+        classic: "Classic",
+        moreLess: "Item Duel",
+        spellDuel: "Spell Duel",
+        random: "Random",
+      },
       heroTitle: "Random Tools",
       rolesTitle: "Random roles",
       playerColumn: "Player",
@@ -37,6 +51,7 @@
       summonersTitle: "Summoner spells",
       buyTitle: "What buy next?",
       spinBuy: "Spin",
+      spinSpeedAria: "Spin speed",
       loading: "Loading items...",
       loadError: "Could not load items.",
       noRole: "—",
@@ -64,8 +79,12 @@
     ru: {
       htmlLang: "ru",
       documentTitle: "Riftle Рандом",
-      navGame: "Игра",
-      navRandom: "Рандом",
+      modes: {
+        classic: "Классика",
+        moreLess: "Предметы",
+        spellDuel: "Умения",
+        random: "Рандом",
+      },
       heroTitle: "Рандом для игры",
       rolesTitle: "Случайные роли",
       playerColumn: "Игрок",
@@ -79,6 +98,7 @@
       summonersTitle: "Саммонерки",
       buyTitle: "Что купить следующим?",
       spinBuy: "Крутить",
+      spinSpeedAria: "Скорость прокрутки",
       loading: "Загружаю предметы...",
       loadError: "Не удалось загрузить предметы.",
       noRole: "—",
@@ -348,6 +368,7 @@
     buildItems: document.querySelector("#build-items"),
     buildSummoners: document.querySelector("#build-summoners"),
     spinBuyButton: document.querySelector("#spin-buy"),
+    buySpeedPicker: document.querySelector("#buy-speed-picker"),
     buyWheel: document.querySelector("#buy-wheel"),
     buyTrack: document.querySelector("#buy-wheel-track"),
     buyResult: document.querySelector("#buy-result"),
@@ -355,6 +376,7 @@
 
   let language = readLanguage();
   let selectedBuildRole = readStorage(BUILD_ROLE_KEY, "bottom");
+  let spinSpeed = readSpinSpeed();
   let allItems = [];
   let completedItems = [];
   let buyPool = [];
@@ -380,6 +402,11 @@
     } catch {
       return fallback;
     }
+  }
+
+  function readSpinSpeed() {
+    const saved = Number(readStorage(SPIN_SPEED_KEY, String(DEFAULT_SPIN_SPEED)));
+    return SPIN_SPEEDS.includes(saved) ? saved : DEFAULT_SPIN_SPEED;
   }
 
   function writeStorage(key, value) {
@@ -453,9 +480,16 @@
       }
     });
 
+    document.querySelectorAll("[data-mode-link]").forEach((link) => {
+      const modeKey = link.dataset.modeLink;
+      link.textContent = copy.modes[modeKey] || link.textContent;
+    });
+
     if (elements.languageSwitch) {
       elements.languageSwitch.setAttribute("aria-label", language === "ru" ? "Язык" : "Language");
     }
+
+    elements.buySpeedPicker.setAttribute("aria-label", copy.spinSpeedAria);
 
     document.querySelectorAll(".language-option").forEach((button) => {
       const isActive = button.dataset.language === language;
@@ -466,6 +500,7 @@
     updatePlayerPlaceholders();
     updateRoleAssignments();
     renderRolePicker();
+    renderSpinSpeedPicker();
     renderBuildOutput();
     renderBuyResult();
   }
@@ -543,12 +578,14 @@
   }
 
   function rollRoles() {
-    window.clearInterval(roleRollTimer);
+    window.clearTimeout(roleRollTimer);
 
     const participants = getRoleParticipants();
     const rolesForPlayers = shuffle(roles).slice(0, participants.length);
     const roleCells = elements.roleTableBody.querySelectorAll(".role-badge");
+    const totalTicks = 34;
 
+    elements.rollRolesButton.disabled = true;
     roleCells.forEach((cell) => {
       delete cell.dataset.roleKey;
       cell.textContent = t().noRole;
@@ -556,7 +593,7 @@
     });
 
     let tick = 0;
-    roleRollTimer = window.setInterval(() => {
+    const step = () => {
       participants.forEach((participant, index) => {
         const cell = roleCells[participant.index];
         const rollingRole = roles[(tick + index) % roles.length];
@@ -565,8 +602,7 @@
       });
 
       tick += 1;
-      if (tick >= 18) {
-        window.clearInterval(roleRollTimer);
+      if (tick >= totalTicks) {
         participants.forEach((participant, index) => {
           const cell = roleCells[participant.index];
           const finalRole = rolesForPlayers[index];
@@ -575,8 +611,20 @@
           cell.classList.remove("role-badge-rolling");
           cell.classList.add("role-badge-filled");
         });
+        elements.rollRolesButton.disabled = false;
+        return;
       }
-    }, 46);
+
+      const progress = tick / totalTicks;
+      const delay = 34 + easeOutCubic(progress) * 142;
+      roleRollTimer = window.setTimeout(step, delay);
+    };
+
+    step();
+  }
+
+  function easeOutCubic(progress) {
+    return 1 - Math.pow(1 - progress, 3);
   }
 
   function renderRolePicker() {
@@ -840,6 +888,26 @@
     elements.buyTrack.replaceChildren(...previewItems.map((item) => createLootCard(item, "roulette-card")));
   }
 
+  function renderSpinSpeedPicker() {
+    elements.buySpeedPicker.querySelectorAll("[data-spin-speed]").forEach((button) => {
+      const buttonSpeed = Number(button.dataset.spinSpeed);
+      const isActive = buttonSpeed === spinSpeed;
+      button.classList.toggle("speed-chip-active", isActive);
+      button.setAttribute("aria-pressed", String(isActive));
+      button.textContent = String(buttonSpeed);
+    });
+  }
+
+  function setSpinSpeed(nextSpeed) {
+    if (!SPIN_SPEEDS.includes(nextSpeed)) {
+      return;
+    }
+
+    spinSpeed = nextSpeed;
+    writeStorage(SPIN_SPEED_KEY, String(spinSpeed));
+    renderSpinSpeedPicker();
+  }
+
   function spinBuy() {
     if (isSpinning || buyPool.length === 0) {
       return;
@@ -852,7 +920,8 @@
     renderBuyResult();
 
     const selectedItem = sample(buyPool);
-    const selectedIndex = 22;
+    const settings = spinSettings[spinSpeed] || spinSettings[DEFAULT_SPIN_SPEED];
+    const selectedIndex = settings.selectedIndex;
     const stripItems = [
       ...Array.from({ length: selectedIndex }, () => sample(buyPool)),
       selectedItem,
@@ -869,7 +938,7 @@
       const offset = selectedCard.offsetLeft + selectedCard.offsetWidth / 2 - elements.buyWheel.clientWidth / 2;
       elements.buyTrack.style.transition = reducedMotion
         ? "none"
-        : "transform 1320ms cubic-bezier(0.12, 0.84, 0.2, 1)";
+        : `transform ${settings.duration}ms cubic-bezier(0.08, 0.78, 0.05, 1)`;
       elements.buyTrack.style.transform = `translateX(${-offset}px)`;
 
       buySpinTimer = window.setTimeout(
@@ -879,7 +948,7 @@
           elements.spinBuyButton.disabled = false;
           renderBuyResult();
         },
-        reducedMotion ? 40 : 1380,
+        reducedMotion ? 40 : settings.duration + 120,
       );
     };
 
@@ -957,6 +1026,14 @@
     });
 
     elements.rollBuildButton.addEventListener("click", generateBuild);
+    elements.buySpeedPicker.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-spin-speed]");
+      if (!button || isSpinning) {
+        return;
+      }
+
+      setSpinSpeed(Number(button.dataset.spinSpeed));
+    });
     elements.spinBuyButton.addEventListener("click", spinBuy);
   }
 

@@ -206,12 +206,20 @@ test("random tools page rolls roles, build, and next item", async ({ page }) => 
   await page.reload();
 
   await expect(page.locator("#random-title")).toHaveText("Random Tools");
+  await expect(page.locator(".modes [data-mode-link]")).toHaveCount(4);
+  await expect(page.locator("[data-mode-link='classic']")).toHaveText("Classic");
+  await expect(page.locator("[data-mode-link='moreLess']")).toHaveText("Item Duel");
+  await expect(page.locator("[data-mode-link='spellDuel']")).toHaveText("Spell Duel");
+  await expect(page.locator("[data-mode-link='random']")).toHaveClass(/mode-active/);
+  await expect(page.locator("[data-spin-speed='1']")).toHaveClass(/speed-chip-active/);
   await expect(page.locator("#build-items .loot-card")).toHaveCount(6);
   await expect(page.locator("#build-summoners .summoner-card")).toHaveCount(2);
 
   await page.locator("[data-language='ru']").click();
   await expect(page.locator("html")).toHaveAttribute("lang", "ru");
   await expect(page.locator("#random-title")).toHaveText("Рандом для игры");
+  await expect(page.locator("[data-mode-link='classic']")).toHaveText("Классика");
+  await expect(page.locator("[data-mode-link='random']")).toHaveText("Рандом");
 
   const names = ["Maks", "Dima", "Lena", "Ari", "Niko"];
   for (const [index, name] of names.entries()) {
@@ -219,7 +227,7 @@ test("random tools page rolls roles, build, and next item", async ({ page }) => 
   }
 
   await page.locator("#roll-roles").click();
-  await expect(page.locator(".role-badge-filled")).toHaveCount(5);
+  await expect(page.locator(".role-badge-filled")).toHaveCount(5, { timeout: 8000 });
 
   const assignedRoles = await page.locator(".role-badge-filled").allTextContents();
   expect(new Set(assignedRoles).size).toBe(5);
@@ -232,6 +240,8 @@ test("random tools page rolls roles, build, and next item", async ({ page }) => 
   const summoners = await page.locator("#build-summoners .summoner-card").allTextContents();
   expect(summoners.join(" ")).toContain("Smite");
 
+  await page.locator("[data-spin-speed='4']").click();
+  await expect(page.locator("[data-spin-speed='4']")).toHaveClass(/speed-chip-active/);
   await page.locator("#spin-buy").click();
   await expect(page.locator("#buy-result strong")).not.toHaveText("", { timeout: 3000 });
   await expect(page.locator(".roulette-marker")).toBeVisible();

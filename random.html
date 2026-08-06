@@ -17,9 +17,11 @@
         </a>
 
         <div class="top-actions">
-          <nav class="modes" aria-label="Pages">
-            <a class="mode" href="./" data-i18n="navGame">Game</a>
-            <a class="mode mode-active" href="./random.html" aria-current="page" data-i18n="navRandom">Random</a>
+          <nav class="modes" aria-label="Modes">
+            <a class="mode" href="./?mode=classic" data-mode-link="classic">Classic</a>
+            <a class="mode" href="./?mode=moreLess" data-mode-link="moreLess">Item Duel</a>
+            <a class="mode" href="./?mode=spellDuel" data-mode-link="spellDuel">Spell Duel</a>
+            <a class="mode mode-active" href="./random.html" aria-current="page" data-mode-link="random">Random</a>
           </nav>
 
           <div class="language-switch" id="language-switch" aria-label="Language">
@@ -78,7 +80,15 @@
           <section class="random-panel random-panel-wide" aria-labelledby="buy-title">
             <div class="panel-title-row">
               <h2 id="buy-title" data-i18n="buyTitle">What buy next?</h2>
-              <button class="random-action" id="spin-buy" type="button" data-i18n="spinBuy">Spin</button>
+              <div class="panel-action-row">
+                <div class="speed-picker" id="buy-speed-picker" aria-label="Spin speed">
+                  <button class="speed-chip" data-spin-speed="0.5" type="button">0.5</button>
+                  <button class="speed-chip speed-chip-active" data-spin-speed="1" type="button">1</button>
+                  <button class="speed-chip" data-spin-speed="2" type="button">2</button>
+                  <button class="speed-chip" data-spin-speed="4" type="button">4</button>
+                </div>
+                <button class="random-action" id="spin-buy" type="button" data-i18n="spinBuy">Spin</button>
+              </div>
             </div>
 
             <div class="roulette-window" id="buy-wheel">

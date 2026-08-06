@@ -802,6 +802,13 @@ input[type="search"]:focus {
   line-height: 1.05;
 }
 
+.panel-action-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
 .random-action {
   flex: 0 0 auto;
   min-height: 42px;
@@ -826,6 +833,42 @@ input[type="search"]:focus {
 
 .random-action:disabled {
   opacity: 0.54;
+}
+
+.speed-picker {
+  display: inline-flex;
+  gap: 3px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px;
+  background: rgba(7, 9, 14, 0.72);
+}
+
+.speed-chip {
+  min-width: 38px;
+  min-height: 34px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 950;
+  transition:
+    background 0.16s ease,
+    color 0.16s ease,
+    transform 0.16s ease;
+}
+
+.speed-chip:hover,
+.speed-chip:focus-visible {
+  color: var(--text);
+  transform: translateY(-1px);
+}
+
+.speed-chip-active {
+  background: rgba(215, 181, 109, 0.26);
+  color: var(--text);
+  box-shadow: inset 0 0 0 1px rgba(240, 207, 133, 0.48);
 }
 
 .role-table-wrap {
@@ -1359,6 +1402,20 @@ input[type="search"]:focus {
 
   .random-action {
     width: 100%;
+  }
+
+  .panel-action-row {
+    width: 100%;
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .speed-picker {
+    width: 100%;
+  }
+
+  .speed-chip {
+    flex: 1;
   }
 
   .role-picker {

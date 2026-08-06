@@ -1,21 +1,26 @@
 const { expect, test } = require("@playwright/test");
 
 test("classic flow uses suggestions and victory menu", async ({ page }) => {
-  await page.goto("http://127.0.0.1:4173/");
+  await page.goto("http://localhost:4173/");
   await page.evaluate(() => localStorage.clear());
   await page.reload();
 
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
   await expect(page.locator("#page-title")).toHaveText("Guess the champion");
-  await expect(page.locator(".board-heading").first()).toHaveText("Champion");
+  await expect(page.locator("#hero-eyebrow")).toHaveCount(0);
+  await expect(page.locator("#board-shell")).toBeHidden();
+  await expect(page.locator("#moreless-shell")).toBeHidden();
   await expect(page.locator(".primary-button")).toHaveCount(0);
   await expect(page.locator("#next-round")).toHaveCount(0);
+  await expect(page.locator("[data-mode-key='ability']")).toHaveCount(0);
+  await expect(page.locator("[data-mode-key='quote']")).toHaveCount(0);
+  await expect(page.locator("[data-mode-key='splash']")).toHaveCount(0);
 
   await page.locator("[data-language='ru']").click();
   await expect(page.locator("html")).toHaveAttribute("lang", "ru");
   await expect(page.locator("#page-title")).toHaveText("Угадай чемпиона");
   await expect(page.locator("#champion-input")).toHaveAttribute("placeholder", "Введите имя чемпиона");
-  await expect(page.locator(".board-heading").first()).toHaveText("Чемпион");
+  await expect(page.locator("#board-shell")).toBeHidden();
 
   await page.locator("[data-language='en']").click();
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
@@ -27,6 +32,9 @@ test("classic flow uses suggestions and victory menu", async ({ page }) => {
 
   await page.keyboard.press("Enter");
   await expect(page.locator(".guess-row")).toHaveCount(1);
+  await expect(page.locator("#board-shell")).toBeVisible();
+  await expect(page.locator(".board-heading").first()).toHaveText("Champion");
+  await expect(page.locator("#message")).not.toContainText(/older|newer|release year/i);
 
   const alreadySolved = await page.locator("#victory-modal:not(.hidden)").count();
   if (!alreadySolved) {
@@ -44,4 +52,139 @@ test("classic flow uses suggestions and victory menu", async ({ page }) => {
   await page.locator("#play-again").click();
   await expect(page.locator("#victory-modal")).toHaveClass(/hidden/);
   await expect(page.locator("#champion-input")).toBeEnabled();
+});
+
+test("item duel mode renders item comparison", async ({ page }) => {
+  await page.goto("http://localhost:4173/");
+  await page.evaluate(() => localStorage.clear());
+  await page.reload();
+
+  await page.locator("[data-mode-key='moreLess']").first().click();
+
+  await expect(page.locator("#page-title")).toHaveText("Item Duel");
+  await expect(page.locator("#guess-panel")).toBeHidden();
+  await expect(page.locator("#board-shell")).toBeHidden();
+  await expect(page.locator("#moreless-shell")).toBeVisible();
+  await expect(page.locator("#moreless-item-count")).toHaveText("233");
+  await expect(page.locator("#moreless-left-card img")).toBeVisible();
+  await expect(page.locator("#moreless-right-card img")).toBeVisible();
+  await expect(page.locator("#moreless-left-card .item-stat")).toHaveCount(1);
+  await expect(page.locator("#moreless-right-card .item-stat")).toHaveCount(1);
+  await expect(page.locator("#moreless-right-card .item-stat-focus strong")).toHaveText("???");
+  await expect(page.locator("#moreless-left-card")).toHaveAttribute("role", "button");
+  await expect(page.locator("#moreless-right-card")).toHaveAttribute("role", "button");
+
+  const previousState = await page.evaluate(() => {
+    return JSON.parse(localStorage.getItem("riftle-moreless-state-v1"));
+  });
+  const correctSide = await page.evaluate(async () => {
+    const state = JSON.parse(localStorage.getItem("riftle-moreless-state-v1"));
+    const response = await fetch("./data/items.json");
+    const data = await response.json();
+    const itemById = new Map(data.items.map((item) => [String(item.id), item]));
+    const current = itemById.get(state.currentItemId);
+    const challenger = itemById.get(state.challengerItemId);
+
+    return challenger.stats[state.statKey] > current.stats[state.statKey] ? "right" : "left";
+  });
+
+  await page.locator(`#moreless-${correctSide}-card`).click();
+
+  await expect(page.locator("#moreless-right-card .item-stat-focus strong")).not.toHaveText("???");
+
+  await page.waitForTimeout(1100);
+
+  const nextState = await page.evaluate(() => {
+    return JSON.parse(localStorage.getItem("riftle-moreless-state-v1"));
+  });
+
+  expect(nextState.currentItemId).toBe(previousState.challengerItemId);
+  expect(nextState.challengerItemId).not.toBe(previousState.currentItemId);
+  expect(nextState.seenItemIds).toContain(previousState.currentItemId);
+  expect(nextState.seenItemIds).toContain(previousState.challengerItemId);
+  expect(nextState.seenItemIds).toContain(nextState.challengerItemId);
+
+  const repeatCheck = await page.evaluate(
+    async ({ previousState, nextState }) => {
+      const response = await fetch("./data/items.json");
+      const data = await response.json();
+      const itemById = new Map(data.items.map((item) => [String(item.id), item]));
+      const current = itemById.get(nextState.currentItemId);
+      const previousSeenIds = new Set(previousState.seenItemIds || []);
+      const leftValue = current.stats[nextState.statKey];
+      const allCandidates = data.items.filter((item) => {
+        const id = String(item.id);
+
+        return (
+          id !== nextState.currentItemId &&
+          Number.isFinite(Number(item.stats[nextState.statKey])) &&
+          item.stats[nextState.statKey] !== leftValue
+        );
+      });
+      const withoutPreviousCurrent = allCandidates.filter((item) => {
+        return String(item.id) !== previousState.currentItemId;
+      });
+      const candidates = withoutPreviousCurrent.length > 0 ? withoutPreviousCurrent : allCandidates;
+      const freshCandidates = candidates.filter((item) => !previousSeenIds.has(String(item.id)));
+
+      return {
+        freshCount: freshCandidates.length,
+        selectedWasFresh: !previousSeenIds.has(nextState.challengerItemId),
+      };
+    },
+    { previousState, nextState },
+  );
+
+  if (repeatCheck.freshCount > 0) {
+    expect(repeatCheck.selectedWasFresh).toBe(true);
+  }
+});
+
+test("spell duel mode renders ability comparison", async ({ page }) => {
+  await page.goto("http://localhost:4173/");
+  await page.evaluate(() => localStorage.clear());
+  await page.reload();
+
+  await page.locator("[data-mode-key='spellDuel']").first().click();
+
+  await expect(page.locator("#page-title")).toHaveText("Spell Duel");
+  await expect(page.locator("#guess-panel")).toBeHidden();
+  await expect(page.locator("#board-shell")).toBeHidden();
+  await expect(page.locator("#moreless-shell")).toBeVisible();
+  await expect(page.locator("#moreless-item-count")).toHaveText("692");
+  await expect(page.locator("#moreless-item-count-label")).toHaveText("abilities");
+  await expect(page.locator("#moreless-left-card img")).toBeVisible();
+  await expect(page.locator("#moreless-right-card img")).toBeVisible();
+  await expect(page.locator("#moreless-left-card .item-stat")).toHaveCount(1);
+  await expect(page.locator("#moreless-right-card .item-stat")).toHaveCount(1);
+  await expect(page.locator("#moreless-right-card .item-stat-focus strong")).toHaveText("???");
+  await expect(page.locator("#moreless-left-card")).toHaveAttribute("data-kind", "ability");
+  await expect(page.locator("#moreless-right-card")).toHaveAttribute("data-kind", "ability");
+
+  const previousState = await page.evaluate(() => {
+    return JSON.parse(localStorage.getItem("riftle-spell-duel-state-v1"));
+  });
+  const correctSide = await page.evaluate(async () => {
+    const state = JSON.parse(localStorage.getItem("riftle-spell-duel-state-v1"));
+    const response = await fetch("./data/abilities.json");
+    const data = await response.json();
+    const abilityById = new Map(data.abilities.map((ability) => [String(ability.id), ability]));
+    const current = abilityById.get(state.currentItemId);
+    const challenger = abilityById.get(state.challengerItemId);
+
+    return challenger.stats[state.statKey] > current.stats[state.statKey] ? "right" : "left";
+  });
+
+  await page.locator(`#moreless-${correctSide}-card`).click();
+
+  await expect(page.locator("#moreless-right-card .item-stat-focus strong")).not.toHaveText("???");
+
+  await page.waitForTimeout(1100);
+
+  const nextState = await page.evaluate(() => {
+    return JSON.parse(localStorage.getItem("riftle-spell-duel-state-v1"));
+  });
+
+  expect(nextState.currentItemId).toBe(previousState.challengerItemId);
+  expect(nextState.challengerItemId).not.toBe(previousState.currentItemId);
 });

@@ -1,0 +1,3930 @@
+{
+  "version": "16.15.1",
+  "generatedFrom": "Riot Data Dragon item.json",
+  "items": [
+    {
+      "id": "8020",
+      "name": "Abyssal Mask",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/8020.png",
+      "gold": 2650,
+      "tags": [
+        "Health",
+        "SpellBlock",
+        "CooldownReduction",
+        "MagicResist",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 350,
+        "magicResist": 45,
+        "abilityHaste": 15
+      }
+    },
+    {
+      "id": "328020",
+      "name": "Abyssal Mask",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/328020.png",
+      "gold": 2850,
+      "tags": [
+        "Health",
+        "SpellBlock",
+        "CooldownReduction",
+        "MagicResist",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 350,
+        "magicResist": 50,
+        "abilityHaste": 15
+      }
+    },
+    {
+      "id": "2522",
+      "name": "Actualizer",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/2522.png",
+      "gold": 2800,
+      "tags": [
+        "SpellDamage",
+        "Mana",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "abilityPower": 90,
+        "mana": 300,
+        "abilityHaste": 10
+      }
+    },
+    {
+      "id": "3113",
+      "name": "Aether Wisp",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3113.png",
+      "gold": 900,
+      "tags": [
+        "NonbootsMovement",
+        "SpellDamage"
+      ],
+      "plaintext": "Increases Ability Power and Move Speed",
+      "stats": {
+        "abilityPower": 30,
+        "percentMoveSpeed": 4
+      }
+    },
+    {
+      "id": "1052",
+      "name": "Amplifying Tome",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/1052.png",
+      "gold": 400,
+      "tags": [
+        "SpellDamage"
+      ],
+      "plaintext": "Slightly increases Ability Power",
+      "stats": {
+        "abilityPower": 20
+      }
+    },
+    {
+      "id": "3003",
+      "name": "Archangel's Staff",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3003.png",
+      "gold": 2900,
+      "tags": [
+        "SpellDamage",
+        "Mana",
+        "AbilityHaste"
+      ],
+      "plaintext": "Increases Ability Power based on maximum Mana",
+      "stats": {
+        "abilityPower": 70,
+        "mana": 600,
+        "abilityHaste": 25
+      }
+    },
+    {
+      "id": "323003",
+      "name": "Archangel's Staff",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/323003.png",
+      "gold": 2900,
+      "tags": [
+        "SpellDamage",
+        "Mana",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "abilityPower": 70,
+        "mana": 600,
+        "abilityHaste": 25
+      }
+    },
+    {
+      "id": "3504",
+      "name": "Ardent Censer",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3504.png",
+      "gold": 2200,
+      "tags": [
+        "AttackSpeed",
+        "SpellDamage",
+        "ManaRegen",
+        "NonbootsMovement"
+      ],
+      "plaintext": "Shield and heal effects on other units grant both of you Attack Speed and their attacks deal additional on-hit magic damage.",
+      "stats": {
+        "abilityPower": 45,
+        "healShieldPower": 10,
+        "baseManaRegen": 125,
+        "percentMoveSpeed": 4
+      }
+    },
+    {
+      "id": "323504",
+      "name": "Ardent Censer",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/323504.png",
+      "gold": 2600,
+      "tags": [
+        "AttackSpeed",
+        "SpellDamage",
+        "ManaRegen",
+        "NonbootsMovement"
+      ],
+      "plaintext": "",
+      "stats": {
+        "abilityPower": 55,
+        "healShieldPower": 10,
+        "baseManaRegen": 150,
+        "percentMoveSpeed": 6
+      }
+    },
+    {
+      "id": "3174",
+      "name": "Armored Advance",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3174.png",
+      "gold": 1200,
+      "tags": [
+        "Armor",
+        "Boots"
+      ],
+      "plaintext": "Deal damage to empower your heals and shields",
+      "stats": {
+        "armor": 35,
+        "moveSpeed": 45
+      }
+    },
+    {
+      "id": "663039",
+      "name": "Atma's Reckoning",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/663039.png",
+      "gold": 2500,
+      "tags": [
+        "Health",
+        "CriticalStrike",
+        "Lane"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 500,
+        "critChance": 20
+      }
+    },
+    {
+      "id": "6696",
+      "name": "Axiom Arc",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6696.png",
+      "gold": 2750,
+      "tags": [
+        "Damage",
+        "ArmorPenetration",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 55,
+        "lethality": 18,
+        "abilityHaste": 20
+      }
+    },
+    {
+      "id": "1038",
+      "name": "B. F. Sword",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/1038.png",
+      "gold": 1300,
+      "tags": [
+        "Damage"
+      ],
+      "plaintext": "Greatly increases Attack Damage",
+      "stats": {
+        "attackDamage": 40
+      }
+    },
+    {
+      "id": "6660",
+      "name": "Bami's Cinder",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6660.png",
+      "gold": 900,
+      "tags": [
+        "Health",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 150,
+        "abilityHaste": 5
+      }
+    },
+    {
+      "id": "4642",
+      "name": "Bandleglass Mirror",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/4642.png",
+      "gold": 900,
+      "tags": [
+        "SpellDamage",
+        "ManaRegen",
+        "CooldownReduction",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "abilityPower": 20,
+        "baseManaRegen": 100,
+        "abilityHaste": 10
+      }
+    },
+    {
+      "id": "2524",
+      "name": "Bandlepipes",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/2524.png",
+      "gold": 2300,
+      "tags": [
+        "Health",
+        "SpellBlock",
+        "Armor",
+        "AttackSpeed",
+        "NonbootsMovement",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 200,
+        "abilityHaste": 15,
+        "armor": 20,
+        "magicResist": 20
+      }
+    },
+    {
+      "id": "3102",
+      "name": "Banshee's Veil",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3102.png",
+      "gold": 3000,
+      "tags": [
+        "SpellBlock",
+        "SpellDamage"
+      ],
+      "plaintext": "Periodically blocks enemy abilities",
+      "stats": {
+        "abilityPower": 105,
+        "magicResist": 40
+      }
+    },
+    {
+      "id": "2520",
+      "name": "Bastionbreaker",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/2520.png",
+      "gold": 3000,
+      "tags": [
+        "Damage",
+        "ArmorPenetration",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 55,
+        "lethality": 22,
+        "abilityHaste": 15
+      }
+    },
+    {
+      "id": "3006",
+      "name": "Berserker's Greaves",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3006.png",
+      "gold": 1100,
+      "tags": [
+        "AttackSpeed",
+        "Boots"
+      ],
+      "plaintext": "Enhances Move Speed and Attack Speed",
+      "stats": {
+        "attackSpeed": 25,
+        "moveSpeed": 45
+      }
+    },
+    {
+      "id": "3071",
+      "name": "Black Cleaver",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3071.png",
+      "gold": 3000,
+      "tags": [
+        "Health",
+        "Damage",
+        "CooldownReduction",
+        "OnHit",
+        "NonbootsMovement",
+        "ArmorPenetration",
+        "AbilityHaste"
+      ],
+      "plaintext": "Dealing physical damage to enemy champions reduces their Armor",
+      "stats": {
+        "attackDamage": 40,
+        "health": 400,
+        "abilityHaste": 20
+      }
+    },
+    {
+      "id": "2503",
+      "name": "Blackfire Torch",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/2503.png",
+      "gold": 2800,
+      "tags": [
+        "SpellDamage",
+        "Mana",
+        "CooldownReduction",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "abilityPower": 80,
+        "mana": 600,
+        "abilityHaste": 20
+      }
+    },
+    {
+      "id": "3153",
+      "name": "Blade of The Ruined King",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3153.png",
+      "gold": 3200,
+      "tags": [
+        "Damage",
+        "AttackSpeed",
+        "LifeSteal",
+        "Slow",
+        "OnHit"
+      ],
+      "plaintext": "Deals damage based on target's Health, can steal Move Speed",
+      "stats": {
+        "attackDamage": 40,
+        "attackSpeed": 25,
+        "lifeSteal": 10
+      }
+    },
+    {
+      "id": "1026",
+      "name": "Blasting Wand",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/1026.png",
+      "gold": 850,
+      "tags": [
+        "SpellDamage"
+      ],
+      "plaintext": "Moderately increases Ability Power",
+      "stats": {
+        "abilityPower": 45
+      }
+    },
+    {
+      "id": "4630",
+      "name": "Blighting Jewel",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/4630.png",
+      "gold": 1100,
+      "tags": [
+        "MagicPenetration",
+        "SpellDamage"
+      ],
+      "plaintext": "",
+      "stats": {
+        "abilityPower": 25,
+        "percentMagicPenetration": 13
+      }
+    },
+    {
+      "id": "8010",
+      "name": "Bloodletter's Curse",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/8010.png",
+      "gold": 2900,
+      "tags": [
+        "Health",
+        "SpellDamage",
+        "CooldownReduction",
+        "MagicPenetration"
+      ],
+      "plaintext": "",
+      "stats": {
+        "abilityPower": 65,
+        "health": 400,
+        "abilityHaste": 15
+      }
+    },
+    {
+      "id": "3877",
+      "name": "Bloodsong",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3877.png",
+      "gold": 400,
+      "tags": [
+        "Health",
+        "HealthRegen",
+        "ManaRegen",
+        "Vision",
+        "GoldPer",
+        "Lane"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 200,
+        "baseHealthRegen": 75,
+        "baseManaRegen": 75
+      }
+    },
+    {
+      "id": "3072",
+      "name": "Bloodthirster",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3072.png",
+      "gold": 3400,
+      "tags": [
+        "Damage",
+        "LifeSteal"
+      ],
+      "plaintext": "Grants Attack Damage, Life Steal and Life Steal now overheals",
+      "stats": {
+        "attackDamage": 80,
+        "lifeSteal": 15
+      }
+    },
+    {
+      "id": "1001",
+      "name": "Boots",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/1001.png",
+      "gold": 300,
+      "tags": [
+        "Boots"
+      ],
+      "plaintext": "Slightly increases Move Speed",
+      "stats": {
+        "moveSpeed": 25
+      }
+    },
+    {
+      "id": "3009",
+      "name": "Boots of Swiftness",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3009.png",
+      "gold": 1000,
+      "tags": [
+        "Boots"
+      ],
+      "plaintext": "Enhances Move Speed and reduces the effect of slows",
+      "stats": {
+        "moveSpeed": 55
+      }
+    },
+    {
+      "id": "3076",
+      "name": "Bramble Vest",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3076.png",
+      "gold": 800,
+      "tags": [
+        "Armor"
+      ],
+      "plaintext": "",
+      "stats": {
+        "armor": 30
+      }
+    },
+    {
+      "id": "3803",
+      "name": "Catalyst of Aeons",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3803.png",
+      "gold": 1300,
+      "tags": [
+        "Health",
+        "HealthRegen",
+        "Mana",
+        "ManaRegen"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 300,
+        "mana": 375
+      }
+    },
+    {
+      "id": "3133",
+      "name": "Caulfield's Warhammer",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3133.png",
+      "gold": 1050,
+      "tags": [
+        "Damage",
+        "CooldownReduction",
+        "AbilityHaste"
+      ],
+      "plaintext": "Attack Damage and Cooldown Reduction",
+      "stats": {
+        "attackDamage": 20,
+        "abilityHaste": 10
+      }
+    },
+    {
+      "id": "3869",
+      "name": "Celestial Opposition",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3869.png",
+      "gold": 400,
+      "tags": [
+        "Health",
+        "HealthRegen",
+        "ManaRegen",
+        "Vision",
+        "GoldPer",
+        "Lane"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 200,
+        "baseHealthRegen": 75,
+        "baseManaRegen": 75
+      }
+    },
+    {
+      "id": "1031",
+      "name": "Chain Vest",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/1031.png",
+      "gold": 800,
+      "tags": [
+        "Armor"
+      ],
+      "plaintext": "Greatly increases Armor",
+      "stats": {
+        "armor": 40
+      }
+    },
+    {
+      "id": "3173",
+      "name": "Chainlaced Crushers",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3173.png",
+      "gold": 1250,
+      "tags": [
+        "SpellBlock",
+        "Boots",
+        "Tenacity",
+        "MagicResist"
+      ],
+      "plaintext": "Increases Move Speed and Cooldown Reduction",
+      "stats": {
+        "magicResist": 30,
+        "moveSpeed": 45,
+        "tenacity": 30
+      }
+    },
+    {
+      "id": "6609",
+      "name": "Chempunk Chainsword",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6609.png",
+      "gold": 3000,
+      "tags": [
+        "Health",
+        "Damage",
+        "CooldownReduction",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 45,
+        "health": 450,
+        "abilityHaste": 15
+      }
+    },
+    {
+      "id": "1018",
+      "name": "Cloak of Agility",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/1018.png",
+      "gold": 600,
+      "tags": [
+        "CriticalStrike"
+      ],
+      "plaintext": "Increases critical strike chance",
+      "stats": {
+        "critChance": 15
+      }
+    },
+    {
+      "id": "663059",
+      "name": "Cloak of Starry Night",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/663059.png",
+      "gold": 2500,
+      "tags": [
+        "Health",
+        "SpellBlock"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 250,
+        "magicResist": 60
+      }
+    },
+    {
+      "id": "1029",
+      "name": "Cloth Armor",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/1029.png",
+      "gold": 300,
+      "tags": [
+        "Armor"
+      ],
+      "plaintext": "Slightly increases Armor",
+      "stats": {
+        "armor": 15
+      }
+    },
+    {
+      "id": "4629",
+      "name": "Cosmic Drive",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/4629.png",
+      "gold": 3000,
+      "tags": [
+        "Health",
+        "SpellDamage",
+        "NonbootsMovement",
+        "AbilityHaste"
+      ],
+      "plaintext": "Massive amounts of Cooldown Reduction",
+      "stats": {
+        "abilityPower": 70,
+        "health": 350,
+        "abilityHaste": 25,
+        "percentMoveSpeed": 4
+      }
+    },
+    {
+      "id": "3171",
+      "name": "Crimson Lucidity",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3171.png",
+      "gold": 900,
+      "tags": [
+        "CooldownReduction",
+        "Boots"
+      ],
+      "plaintext": "",
+      "stats": {
+        "abilityHaste": 20,
+        "moveSpeed": 45
+      }
+    },
+    {
+      "id": "664644",
+      "name": "Crown of the Shattered Queen",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/664644.png",
+      "gold": 2500,
+      "tags": [
+        "Health",
+        "SpellDamage",
+        "Mana",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "abilityPower": 65,
+        "health": 250,
+        "mana": 600,
+        "abilityHaste": 15
+      }
+    },
+    {
+      "id": "667109",
+      "name": "Cruelty",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/667109.png",
+      "gold": 2500,
+      "tags": [
+        "Armor",
+        "SpellDamage",
+        "MagicResist"
+      ],
+      "plaintext": "",
+      "stats": {
+        "abilityPower": 60,
+        "armor": 25,
+        "magicResist": 25
+      }
+    },
+    {
+      "id": "3137",
+      "name": "Cryptbloom",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3137.png",
+      "gold": 3000,
+      "tags": [
+        "SpellDamage",
+        "MagicPenetration",
+        "AbilityHaste"
+      ],
+      "plaintext": "Activate to remove all debuffs and grant massive Move Speed",
+      "stats": {
+        "abilityPower": 75,
+        "percentMagicPenetration": 30,
+        "abilityHaste": 20
+      }
+    },
+    {
+      "id": "3801",
+      "name": "Crystalline Bracer",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3801.png",
+      "gold": 800,
+      "tags": [
+        "Health",
+        "HealthRegen"
+      ],
+      "plaintext": "Grants Health and Health Regen",
+      "stats": {
+        "health": 200,
+        "baseHealthRegen": 100
+      }
+    },
+    {
+      "id": "1083",
+      "name": "Cull",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/1083.png",
+      "gold": 450,
+      "tags": [
+        "Damage",
+        "OnHit",
+        "Lane"
+      ],
+      "plaintext": "Provides damage and Life Steal on hit - Killing minions grant bonus Gold",
+      "stats": {
+        "attackDamage": 7
+      }
+    },
+    {
+      "id": "1042",
+      "name": "Dagger",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/1042.png",
+      "gold": 250,
+      "tags": [
+        "AttackSpeed"
+      ],
+      "plaintext": "Slightly increases Attack Speed",
+      "stats": {
+        "attackSpeed": 10
+      }
+    },
+    {
+      "id": "1082",
+      "name": "Dark Seal",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/1082.png",
+      "gold": 350,
+      "tags": [
+        "Health",
+        "SpellDamage",
+        "Lane"
+      ],
+      "plaintext": "Provides Ability Power and Mana.  Increases in power as you kill enemies.",
+      "stats": {
+        "abilityPower": 15,
+        "health": 50
+      }
+    },
+    {
+      "id": "6621",
+      "name": "Dawncore",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6621.png",
+      "gold": 2500,
+      "tags": [
+        "SpellDamage",
+        "ManaRegen"
+      ],
+      "plaintext": "",
+      "stats": {
+        "abilityPower": 45,
+        "healShieldPower": 16,
+        "baseManaRegen": 100
+      }
+    },
+    {
+      "id": "326621",
+      "name": "Dawncore",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/326621.png",
+      "gold": 2900,
+      "tags": [
+        "SpellDamage",
+        "ManaRegen"
+      ],
+      "plaintext": "",
+      "stats": {
+        "abilityPower": 50,
+        "healShieldPower": 20,
+        "baseManaRegen": 150
+      }
+    },
+    {
+      "id": "3742",
+      "name": "Dead Man's Plate",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3742.png",
+      "gold": 2900,
+      "tags": [
+        "Health",
+        "Armor",
+        "Slow",
+        "NonbootsMovement"
+      ],
+      "plaintext": "Build momentum as you move around then smash into enemies.",
+      "stats": {
+        "health": 350,
+        "armor": 55,
+        "percentMoveSpeed": 4
+      }
+    },
+    {
+      "id": "6333",
+      "name": "Death's Dance",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6333.png",
+      "gold": 3300,
+      "tags": [
+        "Armor",
+        "Damage",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 60,
+        "armor": 50,
+        "abilityHaste": 15
+      }
+    },
+    {
+      "id": "1055",
+      "name": "Doran's Blade",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/1055.png",
+      "gold": 450,
+      "tags": [
+        "Health",
+        "Damage",
+        "LifeSteal",
+        "SpellVamp",
+        "Lane"
+      ],
+      "plaintext": "Good starting item for attackers",
+      "stats": {
+        "attackDamage": 10,
+        "health": 80,
+        "omnivamp": 2.5
+      }
+    },
+    {
+      "id": "1086",
+      "name": "Doran's Bow",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/1086.png",
+      "gold": 400,
+      "tags": [
+        "Damage",
+        "AttackSpeed",
+        "SpellVamp",
+        "Lane"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 8,
+        "attackSpeed": 15,
+        "omnivamp": 1.5
+      }
+    },
+    {
+      "id": "1120",
+      "name": "Doran's Helm",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/1120.png",
+      "gold": 450,
+      "tags": [
+        "Health",
+        "SpellBlock",
+        "Armor",
+        "Lane"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 150,
+        "armor": 8,
+        "magicResist": 8
+      }
+    },
+    {
+      "id": "1056",
+      "name": "Doran's Ring",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/1056.png",
+      "gold": 400,
+      "tags": [
+        "Health",
+        "Lane",
+        "ManaRegen",
+        "SpellDamage"
+      ],
+      "plaintext": "Good starting item for casters",
+      "stats": {
+        "abilityPower": 18,
+        "health": 90
+      }
+    },
+    {
+      "id": "1054",
+      "name": "Doran's Shield",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/1054.png",
+      "gold": 450,
+      "tags": [
+        "Health",
+        "HealthRegen",
+        "Lane"
+      ],
+      "plaintext": "Good defensive starting item",
+      "stats": {
+        "health": 110
+      }
+    },
+    {
+      "id": "3870",
+      "name": "Dream Maker",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3870.png",
+      "gold": 400,
+      "tags": [
+        "Health",
+        "HealthRegen",
+        "ManaRegen",
+        "Vision",
+        "GoldPer",
+        "Lane"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 200,
+        "baseHealthRegen": 75,
+        "baseManaRegen": 75
+      }
+    },
+    {
+      "id": "2510",
+      "name": "Dusk and Dawn",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/2510.png",
+      "gold": 3100,
+      "tags": [
+        "Health",
+        "AttackSpeed",
+        "SpellDamage",
+        "OnHit",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 300,
+        "abilityPower": 60,
+        "abilityHaste": 20,
+        "attackSpeed": 20
+      }
+    },
+    {
+      "id": "6620",
+      "name": "Echoes of Helia",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6620.png",
+      "gold": 2200,
+      "tags": [
+        "Health",
+        "SpellDamage",
+        "ManaRegen",
+        "CooldownReduction",
+        "AbilityHaste"
+      ],
+      "plaintext": "Damage low-health enemies to trigger a cursed explosion, dealing damage and slowing nearby foes",
+      "stats": {
+        "abilityPower": 35,
+        "health": 200,
+        "abilityHaste": 20,
+        "baseManaRegen": 125
+      }
+    },
+    {
+      "id": "326620",
+      "name": "Echoes of Helia",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/326620.png",
+      "gold": 2600,
+      "tags": [
+        "Health",
+        "SpellDamage",
+        "ManaRegen",
+        "CooldownReduction",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "abilityPower": 35,
+        "health": 250,
+        "abilityHaste": 20,
+        "baseManaRegen": 150
+      }
+    },
+    {
+      "id": "6692",
+      "name": "Eclipse",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6692.png",
+      "gold": 2900,
+      "tags": [
+        "Damage",
+        "CooldownReduction",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 60,
+        "abilityHaste": 15
+      }
+    },
+    {
+      "id": "3814",
+      "name": "Edge of Night",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3814.png",
+      "gold": 3000,
+      "tags": [
+        "Health",
+        "Damage",
+        "ArmorPenetration"
+      ],
+      "plaintext": "Periodically blocks enemy abilities",
+      "stats": {
+        "attackDamage": 50,
+        "lethality": 15,
+        "health": 250
+      }
+    },
+    {
+      "id": "2517",
+      "name": "Endless Hunger",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/2517.png",
+      "gold": 3100,
+      "tags": [
+        "Damage",
+        "LifeSteal",
+        "SpellVamp",
+        "Tenacity",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 65,
+        "omnivamp": 5,
+        "tenacity": 20
+      }
+    },
+    {
+      "id": "3508",
+      "name": "Essence Reaver",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3508.png",
+      "gold": 3050,
+      "tags": [
+        "Damage",
+        "CriticalStrike",
+        "ManaRegen",
+        "CooldownReduction",
+        "OnHit",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 50,
+        "abilityHaste": 20,
+        "critChance": 25
+      }
+    },
+    {
+      "id": "3123",
+      "name": "Executioner's Calling",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3123.png",
+      "gold": 800,
+      "tags": [
+        "Damage"
+      ],
+      "plaintext": "Overcomes enemies with high health gain",
+      "stats": {
+        "attackDamage": 15
+      }
+    },
+    {
+      "id": "3073",
+      "name": "Experimental Hexplate",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3073.png",
+      "gold": 3000,
+      "tags": [
+        "Health",
+        "Damage",
+        "AttackSpeed",
+        "CooldownReduction",
+        "NonbootsMovement",
+        "AbilityHaste"
+      ],
+      "plaintext": "Increases maximum Mana as Mana is spent",
+      "stats": {
+        "attackDamage": 40,
+        "attackSpeed": 20,
+        "health": 450
+      }
+    },
+    {
+      "id": "1004",
+      "name": "Faerie Charm",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/1004.png",
+      "gold": 200,
+      "tags": [
+        "ManaRegen"
+      ],
+      "plaintext": "Slightly increases Mana Regen",
+      "stats": {
+        "baseManaRegen": 50
+      }
+    },
+    {
+      "id": "2508",
+      "name": "Fated Ashes",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/2508.png",
+      "gold": 900,
+      "tags": [
+        "SpellDamage"
+      ],
+      "plaintext": "",
+      "stats": {
+        "abilityPower": 30
+      }
+    },
+    {
+      "id": "2512",
+      "name": "Fiendhunter Bolts",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/2512.png",
+      "gold": 2650,
+      "tags": [
+        "CriticalStrike",
+        "AttackSpeed",
+        "NonbootsMovement",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackSpeed": 45,
+        "critChance": 25,
+        "percentMoveSpeed": 4
+      }
+    },
+    {
+      "id": "3108",
+      "name": "Fiendish Codex",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3108.png",
+      "gold": 850,
+      "tags": [
+        "SpellDamage",
+        "CooldownReduction",
+        "AbilityHaste"
+      ],
+      "plaintext": "Increases Ability Power and Cooldown Reduction",
+      "stats": {
+        "abilityPower": 25,
+        "abilityHaste": 10
+      }
+    },
+    {
+      "id": "667112",
+      "name": "Flesheater",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/667112.png",
+      "gold": 2500,
+      "tags": [
+        "Damage",
+        "SpellDamage",
+        "MagicPenetration",
+        "ArmorPenetration"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 500
+      }
+    },
+    {
+      "id": "3114",
+      "name": "Forbidden Idol",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3114.png",
+      "gold": 600,
+      "tags": [
+        "ManaRegen"
+      ],
+      "plaintext": "Increases Heal and Shield Power, Mana Regeneration, and Cooldown Reduction",
+      "stats": {
+        "baseManaRegen": 50,
+        "healShieldPower": 8
+      }
+    },
+    {
+      "id": "4401",
+      "name": "Force of Nature",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/4401.png",
+      "gold": 2800,
+      "tags": [
+        "Health",
+        "SpellBlock",
+        "NonbootsMovement"
+      ],
+      "plaintext": "Move Speed, Magic Resist, and max Health Regeneration",
+      "stats": {
+        "health": 400,
+        "magicResist": 55,
+        "percentMoveSpeed": 4
+      }
+    },
+    {
+      "id": "3110",
+      "name": "Frozen Heart",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3110.png",
+      "gold": 2500,
+      "tags": [
+        "Armor",
+        "Mana",
+        "Aura",
+        "CooldownReduction",
+        "AbilityHaste"
+      ],
+      "plaintext": "Massively increases Armor and slows enemy basic attacks",
+      "stats": {
+        "armor": 75,
+        "mana": 400,
+        "abilityHaste": 20
+      }
+    },
+    {
+      "id": "323110",
+      "name": "Frozen Heart",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/323110.png",
+      "gold": 2700,
+      "tags": [
+        "Armor",
+        "Mana",
+        "Aura",
+        "CooldownReduction",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "armor": 75,
+        "mana": 500,
+        "abilityHaste": 25
+      }
+    },
+    {
+      "id": "667101",
+      "name": "Gambler's Blade",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/667101.png",
+      "gold": 2500,
+      "tags": [
+        "Damage",
+        "NonbootsMovement",
+        "MagicPenetration",
+        "ArmorPenetration",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "abilityHaste": 10,
+        "lethality": 15,
+        "magicPenetration": 15,
+        "percentMoveSpeed": 15
+      }
+    },
+    {
+      "id": "663193",
+      "name": "Gargoyle Stoneplate",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/663193.png",
+      "gold": 2500,
+      "tags": [
+        "SpellBlock",
+        "Armor",
+        "Active",
+        "CooldownReduction",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "armor": 55,
+        "magicResist": 55,
+        "abilityHaste": 10,
+        "percentMoveSpeed": 8
+      }
+    },
+    {
+      "id": "1011",
+      "name": "Giant's Belt",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/1011.png",
+      "gold": 900,
+      "tags": [
+        "Health"
+      ],
+      "plaintext": "Greatly increases Health",
+      "stats": {
+        "health": 350
+      }
+    },
+    {
+      "id": "3024",
+      "name": "Glacial Buckler",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3024.png",
+      "gold": 900,
+      "tags": [
+        "Armor",
+        "Mana",
+        "CooldownReduction",
+        "AbilityHaste"
+      ],
+      "plaintext": "Increases Armor and Cooldown Reduction",
+      "stats": {
+        "armor": 25,
+        "mana": 300,
+        "abilityHaste": 10
+      }
+    },
+    {
+      "id": "2022",
+      "name": "Glowing Mote",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/2022.png",
+      "gold": 250,
+      "tags": [
+        "CooldownReduction"
+      ],
+      "plaintext": "",
+      "stats": {
+        "abilityHaste": 5
+      }
+    },
+    {
+      "id": "3008",
+      "name": "Gluttonous Greaves",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3008.png",
+      "gold": 1000,
+      "tags": [
+        "LifeSteal",
+        "SpellVamp",
+        "Boots"
+      ],
+      "plaintext": "Increases Attack Damage based on maximum Mana",
+      "stats": {
+        "moveSpeed": 45,
+        "omnivamp": 4
+      }
+    },
+    {
+      "id": "3026",
+      "name": "Guardian Angel",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3026.png",
+      "gold": 3200,
+      "tags": [
+        "Armor",
+        "Damage"
+      ],
+      "plaintext": "Periodically revives champion upon death",
+      "stats": {
+        "attackDamage": 55,
+        "armor": 45
+      }
+    },
+    {
+      "id": "3177",
+      "name": "Guardian's Blade",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3177.png",
+      "gold": 950,
+      "tags": [
+        "Health",
+        "Damage",
+        "Lane",
+        "AbilityHaste"
+      ],
+      "plaintext": "Good starting item for attackers",
+      "stats": {
+        "attackDamage": 30,
+        "health": 150,
+        "abilityHaste": 15
+      }
+    },
+    {
+      "id": "3184",
+      "name": "Guardian's Hammer",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3184.png",
+      "gold": 950,
+      "tags": [
+        "Health",
+        "Damage",
+        "LifeSteal",
+        "Lane"
+      ],
+      "plaintext": "Good starting item for attackers",
+      "stats": {
+        "attackDamage": 25,
+        "health": 150,
+        "lifeSteal": 5
+      }
+    },
+    {
+      "id": "2051",
+      "name": "Guardian's Horn",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/2051.png",
+      "gold": 950,
+      "tags": [
+        "Health",
+        "HealthRegen",
+        "Lane"
+      ],
+      "plaintext": "Good starting item for tanks",
+      "stats": {
+        "health": 150
+      }
+    },
+    {
+      "id": "3112",
+      "name": "Guardian's Orb",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3112.png",
+      "gold": 950,
+      "tags": [
+        "Health",
+        "SpellDamage",
+        "ManaRegen",
+        "Lane"
+      ],
+      "plaintext": "Good starting item for mages",
+      "stats": {
+        "abilityPower": 50,
+        "health": 150
+      }
+    },
+    {
+      "id": "3124",
+      "name": "Guinsoo's Rageblade",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3124.png",
+      "gold": 3000,
+      "tags": [
+        "Damage",
+        "AttackSpeed",
+        "SpellDamage",
+        "OnHit"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 30,
+        "abilityPower": 30,
+        "attackSpeed": 25
+      }
+    },
+    {
+      "id": "3172",
+      "name": "Gunmetal Greaves",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3172.png",
+      "gold": 1100,
+      "tags": [
+        "AttackSpeed",
+        "LifeSteal",
+        "NonbootsMovement"
+      ],
+      "plaintext": "Mobility and Tenacity",
+      "stats": {
+        "attackSpeed": 40,
+        "moveSpeed": 45,
+        "lifeSteal": 5
+      }
+    },
+    {
+      "id": "3147",
+      "name": "Haunting Guise",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3147.png",
+      "gold": 1300,
+      "tags": [
+        "Health",
+        "SpellDamage"
+      ],
+      "plaintext": "Deals additional physical damage when ambushing enemies",
+      "stats": {
+        "abilityPower": 30,
+        "health": 200
+      }
+    },
+    {
+      "id": "3051",
+      "name": "Hearthbound Axe",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3051.png",
+      "gold": 1200,
+      "tags": [
+        "Damage",
+        "AttackSpeed"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 20,
+        "attackSpeed": 20
+      }
+    },
+    {
+      "id": "3084",
+      "name": "Heartsteel",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3084.png",
+      "gold": 3000,
+      "tags": [
+        "Health",
+        "HealthRegen"
+      ],
+      "plaintext": "Restores Health on kill or assist",
+      "stats": {
+        "health": 900,
+        "baseHealthRegen": 100
+      }
+    },
+    {
+      "id": "3155",
+      "name": "Hexdrinker",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3155.png",
+      "gold": 1300,
+      "tags": [
+        "Damage",
+        "SpellBlock"
+      ],
+      "plaintext": "Increases Attack Damage and Magic Resist",
+      "stats": {
+        "attackDamage": 25,
+        "magicResist": 25
+      }
+    },
+    {
+      "id": "2523",
+      "name": "Hexoptics C44",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/2523.png",
+      "gold": 2800,
+      "tags": [
+        "Damage",
+        "CriticalStrike"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 55,
+        "critChance": 25
+      }
+    },
+    {
+      "id": "3145",
+      "name": "Hextech Alternator",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3145.png",
+      "gold": 1100,
+      "tags": [
+        "SpellDamage"
+      ],
+      "plaintext": "Increases Ability Power. Deal bonus magic damage on attack periodically.",
+      "stats": {
+        "abilityPower": 45
+      }
+    },
+    {
+      "id": "3146",
+      "name": "Hextech Gunblade",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3146.png",
+      "gold": 3000,
+      "tags": [
+        "Damage",
+        "LifeSteal",
+        "SpellDamage",
+        "Active",
+        "SpellVamp"
+      ],
+      "plaintext": "Increases Attack Damage and Ability Power, activate to slow a target",
+      "stats": {
+        "abilityPower": 80,
+        "attackDamage": 40,
+        "omnivamp": 10
+      }
+    },
+    {
+      "id": "663146",
+      "name": "Hextech Gunblade",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/663146.png",
+      "gold": 2500,
+      "tags": [
+        "Damage",
+        "LifeSteal",
+        "SpellDamage",
+        "Active",
+        "SpellVamp"
+      ],
+      "plaintext": "",
+      "stats": {
+        "abilityPower": 90,
+        "attackDamage": 45,
+        "omnivamp": 15
+      }
+    },
+    {
+      "id": "3152",
+      "name": "Hextech Rocketbelt",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3152.png",
+      "gold": 2650,
+      "tags": [
+        "Health",
+        "SpellDamage",
+        "Active",
+        "CooldownReduction",
+        "NonbootsMovement",
+        "AbilityHaste"
+      ],
+      "plaintext": "Activate to dash forward and unleash a fiery explosion",
+      "stats": {
+        "abilityPower": 60,
+        "health": 350,
+        "abilityHaste": 20
+      }
+    },
+    {
+      "id": "6664",
+      "name": "Hollow Radiance",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6664.png",
+      "gold": 2800,
+      "tags": [
+        "Health",
+        "SpellBlock",
+        "HealthRegen",
+        "Aura",
+        "MagicResist",
+        "AbilityHaste"
+      ],
+      "plaintext": "Immobilize enemies to gain a shield. Activate to run faster at opponents.",
+      "stats": {
+        "health": 400,
+        "magicResist": 40,
+        "abilityHaste": 10,
+        "baseHealthRegen": 100
+      }
+    },
+    {
+      "id": "4628",
+      "name": "Horizon Focus",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/4628.png",
+      "gold": 2700,
+      "tags": [
+        "SpellDamage",
+        "AbilityHaste"
+      ],
+      "plaintext": "Immobilizing a champion causes lightning to strike them",
+      "stats": {
+        "abilityPower": 75,
+        "abilityHaste": 25
+      }
+    },
+    {
+      "id": "6697",
+      "name": "Hubris",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6697.png",
+      "gold": 2800,
+      "tags": [
+        "Damage",
+        "Active",
+        "CooldownReduction",
+        "ArmorPenetration",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 55,
+        "lethality": 18,
+        "abilityHaste": 10
+      }
+    },
+    {
+      "id": "3181",
+      "name": "Hullbreaker",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3181.png",
+      "gold": 3000,
+      "tags": [
+        "Health",
+        "Damage",
+        "NonbootsMovement"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 40,
+        "health": 500,
+        "percentMoveSpeed": 4
+      }
+    },
+    {
+      "id": "6662",
+      "name": "Iceborn Gauntlet",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6662.png",
+      "gold": 2900,
+      "tags": [
+        "Health",
+        "Armor",
+        "CooldownReduction",
+        "Slow",
+        "OnHit",
+        "AbilityHaste"
+      ],
+      "plaintext": "High Magic Resist.Passively slow nearby enemies. When spells are cast near you, release a wave of energy that damages and slows.",
+      "stats": {
+        "health": 300,
+        "armor": 50,
+        "abilityHaste": 15
+      }
+    },
+    {
+      "id": "3168",
+      "name": "Immortal Path",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3168.png",
+      "gold": 1000,
+      "tags": [
+        "LifeSteal",
+        "SpellVamp",
+        "Boots"
+      ],
+      "plaintext": "",
+      "stats": {
+        "moveSpeed": 45,
+        "omnivamp": 4
+      }
+    },
+    {
+      "id": "6673",
+      "name": "Immortal Shieldbow",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6673.png",
+      "gold": 3000,
+      "tags": [
+        "Damage",
+        "CriticalStrike"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 55,
+        "critChance": 25
+      }
+    },
+    {
+      "id": "4005",
+      "name": "Imperial Mandate",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/4005.png",
+      "gold": 2400,
+      "tags": [
+        "SpellDamage",
+        "ManaRegen",
+        "CooldownReduction",
+        "AbilityHaste"
+      ],
+      "plaintext": "Defer damage until later.",
+      "stats": {
+        "abilityPower": 60,
+        "abilityHaste": 15,
+        "baseManaRegen": 150
+      }
+    },
+    {
+      "id": "324005",
+      "name": "Imperial Mandate",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/324005.png",
+      "gold": 2400,
+      "tags": [
+        "SpellDamage",
+        "ManaRegen",
+        "CooldownReduction",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "abilityPower": 65,
+        "abilityHaste": 15,
+        "baseManaRegen": 150
+      }
+    },
+    {
+      "id": "3031",
+      "name": "Infinity Edge",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3031.png",
+      "gold": 3500,
+      "tags": [
+        "CriticalStrike",
+        "Damage"
+      ],
+      "plaintext": "Massively enhances critical strikes",
+      "stats": {
+        "attackDamage": 75,
+        "critChance": 25
+      }
+    },
+    {
+      "id": "3158",
+      "name": "Ionian Boots of Lucidity",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3158.png",
+      "gold": 900,
+      "tags": [
+        "Boots",
+        "CooldownReduction"
+      ],
+      "plaintext": "Increases Move Speed and Cooldown Reduction",
+      "stats": {
+        "abilityHaste": 10,
+        "moveSpeed": 45
+      }
+    },
+    {
+      "id": "6665",
+      "name": "Jak'Sho, The Protean",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6665.png",
+      "gold": 3200,
+      "tags": [
+        "Health",
+        "SpellBlock",
+        "Armor",
+        "MagicResist"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 350,
+        "armor": 45,
+        "magicResist": 45
+      }
+    },
+    {
+      "id": "2504",
+      "name": "Kaenic Rookern",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/2504.png",
+      "gold": 2900,
+      "tags": [
+        "Health",
+        "SpellBlock",
+        "HealthRegen"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 400,
+        "magicResist": 80,
+        "baseHealthRegen": 100
+      }
+    },
+    {
+      "id": "3067",
+      "name": "Kindlegem",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3067.png",
+      "gold": 800,
+      "tags": [
+        "Health",
+        "CooldownReduction",
+        "AbilityHaste"
+      ],
+      "plaintext": "Increases Health and Cooldown Reduction",
+      "stats": {
+        "health": 200,
+        "abilityHaste": 10
+      }
+    },
+    {
+      "id": "3109",
+      "name": "Knight's Vow",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3109.png",
+      "gold": 2300,
+      "tags": [
+        "Health",
+        "HealthRegen",
+        "Armor",
+        "Aura",
+        "Active",
+        "CooldownReduction",
+        "AbilityHaste"
+      ],
+      "plaintext": "Partner with an ally to protect each other",
+      "stats": {
+        "health": 200,
+        "armor": 40,
+        "abilityHaste": 10,
+        "baseHealthRegen": 100
+      }
+    },
+    {
+      "id": "323109",
+      "name": "Knight's Vow",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/323109.png",
+      "gold": 2900,
+      "tags": [
+        "Health",
+        "HealthRegen",
+        "Armor",
+        "Aura",
+        "Active",
+        "CooldownReduction",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 300,
+        "armor": 50,
+        "abilityHaste": 10,
+        "baseHealthRegen": 150
+      }
+    },
+    {
+      "id": "6672",
+      "name": "Kraken Slayer",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6672.png",
+      "gold": 3000,
+      "tags": [
+        "Damage",
+        "AttackSpeed",
+        "OnHit",
+        "NonbootsMovement"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 45,
+        "attackSpeed": 40,
+        "percentMoveSpeed": 4
+      }
+    },
+    {
+      "id": "3035",
+      "name": "Last Whisper",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3035.png",
+      "gold": 1450,
+      "tags": [
+        "ArmorPenetration",
+        "Damage"
+      ],
+      "plaintext": "Overcomes enemies with high Armor",
+      "stats": {
+        "attackDamage": 20,
+        "percentArmorPenetration": 18
+      }
+    },
+    {
+      "id": "6653",
+      "name": "Liandry's Torment",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6653.png",
+      "gold": 3000,
+      "tags": [
+        "Health",
+        "SpellDamage"
+      ],
+      "plaintext": "Charge up in combat to deal high damage over time, especially against durable enemies",
+      "stats": {
+        "abilityPower": 60,
+        "health": 300
+      }
+    },
+    {
+      "id": "3100",
+      "name": "Lich Bane",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3100.png",
+      "gold": 2900,
+      "tags": [
+        "SpellDamage",
+        "OnHit",
+        "NonbootsMovement",
+        "AbilityHaste"
+      ],
+      "plaintext": "Grants a bonus to next attack after spell cast",
+      "stats": {
+        "abilityPower": 100,
+        "percentMoveSpeed": 6,
+        "abilityHaste": 10
+      }
+    },
+    {
+      "id": "3190",
+      "name": "Locket of the Iron Solari",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3190.png",
+      "gold": 2200,
+      "tags": [
+        "Health",
+        "SpellBlock",
+        "Armor",
+        "Aura",
+        "Active",
+        "MagicResist",
+        "AbilityHaste"
+      ],
+      "plaintext": "Activate to shield nearby allies from damage",
+      "stats": {
+        "health": 200,
+        "armor": 30,
+        "magicResist": 30,
+        "abilityHaste": 10
+      }
+    },
+    {
+      "id": "323190",
+      "name": "Locket of the Iron Solari",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/323190.png",
+      "gold": 2600,
+      "tags": [
+        "Health",
+        "SpellBlock",
+        "Armor",
+        "Aura",
+        "Active",
+        "MagicResist",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 250,
+        "armor": 30,
+        "magicResist": 30,
+        "abilityHaste": 10
+      }
+    },
+    {
+      "id": "1036",
+      "name": "Long Sword",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/1036.png",
+      "gold": 350,
+      "tags": [
+        "Damage",
+        "Lane"
+      ],
+      "plaintext": "Slightly increases Attack Damage",
+      "stats": {
+        "attackDamage": 10
+      }
+    },
+    {
+      "id": "3036",
+      "name": "Lord Dominik's Regards",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3036.png",
+      "gold": 3300,
+      "tags": [
+        "Damage",
+        "CriticalStrike",
+        "ArmorPenetration"
+      ],
+      "plaintext": "Overcomes enemies with high health and armor",
+      "stats": {
+        "attackDamage": 35,
+        "percentArmorPenetration": 35,
+        "critChance": 25
+      }
+    },
+    {
+      "id": "3802",
+      "name": "Lost Chapter",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3802.png",
+      "gold": 1200,
+      "tags": [
+        "SpellDamage",
+        "Mana",
+        "ManaRegen",
+        "CooldownReduction",
+        "AbilityHaste"
+      ],
+      "plaintext": "Restores Mana upon levelling up.",
+      "stats": {
+        "abilityPower": 40,
+        "mana": 300,
+        "abilityHaste": 10
+      }
+    },
+    {
+      "id": "6655",
+      "name": "Luden's Echo",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6655.png",
+      "gold": 2750,
+      "tags": [
+        "SpellDamage",
+        "Mana",
+        "CooldownReduction",
+        "AbilityHaste"
+      ],
+      "plaintext": "High burst damage, good against fragile foes",
+      "stats": {
+        "abilityPower": 100,
+        "mana": 600,
+        "abilityHaste": 10
+      }
+    },
+    {
+      "id": "3118",
+      "name": "Malignance",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3118.png",
+      "gold": 2700,
+      "tags": [
+        "SpellDamage",
+        "Mana",
+        "AbilityHaste"
+      ],
+      "plaintext": "Partner with an ally to protect each other",
+      "stats": {
+        "abilityPower": 90,
+        "mana": 600,
+        "abilityHaste": 15
+      }
+    },
+    {
+      "id": "3004",
+      "name": "Manamune",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3004.png",
+      "gold": 2900,
+      "tags": [
+        "Damage",
+        "Mana",
+        "CooldownReduction",
+        "OnHit",
+        "AbilityHaste"
+      ],
+      "plaintext": "Increases Attack Damage based on maximum Mana",
+      "stats": {
+        "attackDamage": 35,
+        "mana": 500,
+        "abilityHaste": 15
+      }
+    },
+    {
+      "id": "323004",
+      "name": "Manamune",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/323004.png",
+      "gold": 2900,
+      "tags": [
+        "Damage",
+        "Mana",
+        "CooldownReduction",
+        "OnHit",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 35,
+        "mana": 500,
+        "abilityHaste": 15
+      }
+    },
+    {
+      "id": "3156",
+      "name": "Maw of Malmortius",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3156.png",
+      "gold": 3100,
+      "tags": [
+        "SpellBlock",
+        "Damage",
+        "LifeSteal",
+        "SpellVamp",
+        "AbilityHaste"
+      ],
+      "plaintext": "Grants bonus Attack Damage when Health is low",
+      "stats": {
+        "attackDamage": 60,
+        "abilityHaste": 15,
+        "magicResist": 40
+      }
+    },
+    {
+      "id": "3041",
+      "name": "Mejai's Soulstealer",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3041.png",
+      "gold": 1500,
+      "tags": [
+        "Health",
+        "SpellDamage",
+        "NonbootsMovement"
+      ],
+      "plaintext": "Grants Ability Power for kills and assists",
+      "stats": {
+        "abilityPower": 20,
+        "health": 100
+      }
+    },
+    {
+      "id": "3139",
+      "name": "Mercurial Scimitar",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3139.png",
+      "gold": 3200,
+      "tags": [
+        "SpellBlock",
+        "Damage",
+        "LifeSteal",
+        "Active",
+        "NonbootsMovement",
+        "Tenacity"
+      ],
+      "plaintext": "Activate to remove all crowd control debuffs and grant massive Move Speed",
+      "stats": {
+        "attackDamage": 50,
+        "magicResist": 35,
+        "lifeSteal": 10
+      }
+    },
+    {
+      "id": "3111",
+      "name": "Mercury's Treads",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3111.png",
+      "gold": 1250,
+      "tags": [
+        "Boots",
+        "SpellBlock",
+        "Tenacity"
+      ],
+      "plaintext": "Increases Move Speed and reduces duration of disabling effects",
+      "stats": {
+        "magicResist": 20,
+        "moveSpeed": 45,
+        "tenacity": 30
+      }
+    },
+    {
+      "id": "3222",
+      "name": "Mikael's Blessing",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3222.png",
+      "gold": 2300,
+      "tags": [
+        "Health",
+        "ManaRegen",
+        "Active",
+        "CooldownReduction",
+        "Tenacity",
+        "AbilityHaste"
+      ],
+      "plaintext": "Activate to remove all disabling effects from an allied champion",
+      "stats": {
+        "health": 250,
+        "baseManaRegen": 100,
+        "healShieldPower": 12,
+        "abilityHaste": 15
+      }
+    },
+    {
+      "id": "323222",
+      "name": "Mikael's Blessing",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/323222.png",
+      "gold": 2800,
+      "tags": [
+        "Health",
+        "ManaRegen",
+        "Active",
+        "CooldownReduction",
+        "Tenacity",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 400,
+        "baseManaRegen": 100,
+        "healShieldPower": 15,
+        "abilityHaste": 15
+      }
+    },
+    {
+      "id": "6617",
+      "name": "Moonstone Renewer",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6617.png",
+      "gold": 2200,
+      "tags": [
+        "Health",
+        "SpellDamage",
+        "ManaRegen",
+        "CooldownReduction",
+        "AbilityHaste"
+      ],
+      "plaintext": "Your heals and shields cool down faster and have greater effect on low health allies",
+      "stats": {
+        "abilityPower": 25,
+        "health": 200,
+        "abilityHaste": 20,
+        "baseManaRegen": 125
+      }
+    },
+    {
+      "id": "326617",
+      "name": "Moonstone Renewer",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/326617.png",
+      "gold": 2900,
+      "tags": [
+        "Health",
+        "SpellDamage",
+        "ManaRegen",
+        "CooldownReduction",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "abilityPower": 35,
+        "health": 400,
+        "abilityHaste": 20,
+        "baseManaRegen": 150
+      }
+    },
+    {
+      "id": "3165",
+      "name": "Morellonomicon",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3165.png",
+      "gold": 2850,
+      "tags": [
+        "Health",
+        "SpellDamage",
+        "CooldownReduction",
+        "AbilityHaste"
+      ],
+      "plaintext": "Increases magic damage",
+      "stats": {
+        "abilityPower": 75,
+        "health": 350,
+        "abilityHaste": 15
+      }
+    },
+    {
+      "id": "3033",
+      "name": "Mortal Reminder",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3033.png",
+      "gold": 3000,
+      "tags": [
+        "Damage",
+        "CriticalStrike",
+        "ArmorPenetration"
+      ],
+      "plaintext": "Overcomes enemies with high Health recovery and Armor",
+      "stats": {
+        "attackDamage": 35,
+        "percentArmorPenetration": 30,
+        "critChance": 25
+      }
+    },
+    {
+      "id": "3115",
+      "name": "Nashor's Tooth",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3115.png",
+      "gold": 2900,
+      "tags": [
+        "AttackSpeed",
+        "SpellDamage",
+        "OnHit",
+        "AbilityHaste"
+      ],
+      "plaintext": "Increases Attack Speed, Ability Power, and Cooldown Reduction",
+      "stats": {
+        "abilityPower": 80,
+        "attackSpeed": 50,
+        "abilityHaste": 15
+      }
+    },
+    {
+      "id": "6675",
+      "name": "Navori Flickerblade",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6675.png",
+      "gold": 2650,
+      "tags": [
+        "CriticalStrike",
+        "AttackSpeed",
+        "NonbootsMovement"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackSpeed": 40,
+        "critChance": 25,
+        "percentMoveSpeed": 4
+      }
+    },
+    {
+      "id": "1058",
+      "name": "Needlessly Large Rod",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/1058.png",
+      "gold": 1200,
+      "tags": [
+        "SpellDamage"
+      ],
+      "plaintext": "Greatly increases Ability Power",
+      "stats": {
+        "abilityPower": 65
+      }
+    },
+    {
+      "id": "1057",
+      "name": "Negatron Cloak",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/1057.png",
+      "gold": 850,
+      "tags": [
+        "SpellBlock"
+      ],
+      "plaintext": "Moderately increases Magic Resist",
+      "stats": {
+        "magicResist": 45
+      }
+    },
+    {
+      "id": "6670",
+      "name": "Noonquiver",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6670.png",
+      "gold": 1300,
+      "tags": [
+        "Damage",
+        "CriticalStrike"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 15,
+        "critChance": 20
+      }
+    },
+    {
+      "id": "1033",
+      "name": "Null-Magic Mantle",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/1033.png",
+      "gold": 400,
+      "tags": [
+        "SpellBlock"
+      ],
+      "plaintext": "Slightly increases Magic Resist",
+      "stats": {
+        "magicResist": 20
+      }
+    },
+    {
+      "id": "3916",
+      "name": "Oblivion Orb",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3916.png",
+      "gold": 800,
+      "tags": [
+        "SpellDamage"
+      ],
+      "plaintext": "Increases magic damage",
+      "stats": {
+        "abilityPower": 25
+      }
+    },
+    {
+      "id": "2501",
+      "name": "Overlord's Bloodmail",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/2501.png",
+      "gold": 3300,
+      "tags": [
+        "Health",
+        "Damage"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 30,
+        "health": 550
+      }
+    },
+    {
+      "id": "3044",
+      "name": "Phage",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3044.png",
+      "gold": 1100,
+      "tags": [
+        "Health",
+        "Damage",
+        "NonbootsMovement"
+      ],
+      "plaintext": "Attacks and kills give a small burst of speed",
+      "stats": {
+        "attackDamage": 15,
+        "health": 200
+      }
+    },
+    {
+      "id": "3046",
+      "name": "Phantom Dancer",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3046.png",
+      "gold": 2650,
+      "tags": [
+        "CriticalStrike",
+        "AttackSpeed",
+        "NonbootsMovement"
+      ],
+      "plaintext": "Move faster while attacking enemies and gain a shield when on low health.",
+      "stats": {
+        "attackSpeed": 65,
+        "critChance": 25,
+        "percentMoveSpeed": 10
+      }
+    },
+    {
+      "id": "1037",
+      "name": "Pickaxe",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/1037.png",
+      "gold": 875,
+      "tags": [
+        "Damage"
+      ],
+      "plaintext": "Moderately increases Attack Damage",
+      "stats": {
+        "attackDamage": 25
+      }
+    },
+    {
+      "id": "3047",
+      "name": "Plated Steelcaps",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3047.png",
+      "gold": 1200,
+      "tags": [
+        "Armor",
+        "Boots"
+      ],
+      "plaintext": "Enhances Move Speed and reduces incoming basic attack damage",
+      "stats": {
+        "armor": 25,
+        "moveSpeed": 45
+      }
+    },
+    {
+      "id": "6698",
+      "name": "Profane Hydra",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6698.png",
+      "gold": 2850,
+      "tags": [
+        "Damage",
+        "Active",
+        "CooldownReduction",
+        "ArmorPenetration",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 55,
+        "lethality": 18,
+        "abilityHaste": 10
+      }
+    },
+    {
+      "id": "2525",
+      "name": "Protoplasm Harness",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/2525.png",
+      "gold": 2600,
+      "tags": [
+        "Health",
+        "NonbootsMovement",
+        "Tenacity",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 600,
+        "abilityHaste": 20
+      }
+    },
+    {
+      "id": "3140",
+      "name": "Quicksilver Sash",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3140.png",
+      "gold": 1300,
+      "tags": [
+        "Active",
+        "SpellBlock"
+      ],
+      "plaintext": "Activate to remove all crowd control debuffs",
+      "stats": {
+        "magicResist": 30
+      }
+    },
+    {
+      "id": "3089",
+      "name": "Rabadon's Deathcap",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3089.png",
+      "gold": 3500,
+      "tags": [
+        "SpellDamage"
+      ],
+      "plaintext": "Massively increases Ability Power",
+      "stats": {
+        "abilityPower": 130
+      }
+    },
+    {
+      "id": "3143",
+      "name": "Randuin's Omen",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3143.png",
+      "gold": 2700,
+      "tags": [
+        "Health",
+        "Armor",
+        "Active",
+        "Slow"
+      ],
+      "plaintext": "Greatly increases defenses, activate to slow nearby enemies",
+      "stats": {
+        "health": 350,
+        "armor": 75
+      }
+    },
+    {
+      "id": "3094",
+      "name": "Rapid Firecannon",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3094.png",
+      "gold": 2650,
+      "tags": [
+        "CriticalStrike",
+        "AttackSpeed",
+        "NonbootsMovement"
+      ],
+      "plaintext": "Movement builds charges that release a sieging fire attack on release",
+      "stats": {
+        "attackSpeed": 35,
+        "critChance": 25,
+        "percentMoveSpeed": 4
+      }
+    },
+    {
+      "id": "3074",
+      "name": "Ravenous Hydra",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3074.png",
+      "gold": 3300,
+      "tags": [
+        "Damage",
+        "LifeSteal",
+        "CooldownReduction",
+        "OnHit",
+        "AbilityHaste"
+      ],
+      "plaintext": "Melee attacks hit nearby enemies, dealing damage and restoring Health",
+      "stats": {
+        "attackDamage": 65,
+        "abilityHaste": 15,
+        "lifeSteal": 12
+      }
+    },
+    {
+      "id": "6690",
+      "name": "Rectrix",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6690.png",
+      "gold": 775,
+      "tags": [
+        "Damage",
+        "NonbootsMovement"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 15,
+        "percentMoveSpeed": 4
+      }
+    },
+    {
+      "id": "1043",
+      "name": "Recurve Bow",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/1043.png",
+      "gold": 700,
+      "tags": [
+        "AttackSpeed",
+        "OnHit"
+      ],
+      "plaintext": "Greatly increases Attack Speed",
+      "stats": {
+        "attackSpeed": 15
+      }
+    },
+    {
+      "id": "3107",
+      "name": "Redemption",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3107.png",
+      "gold": 2300,
+      "tags": [
+        "SpellDamage",
+        "ManaRegen",
+        "CooldownReduction",
+        "AbilityHaste"
+      ],
+      "plaintext": "Activate to heal allies and damage enemies in an area",
+      "stats": {
+        "abilityPower": 30,
+        "abilityHaste": 15,
+        "baseManaRegen": 100,
+        "healShieldPower": 10
+      }
+    },
+    {
+      "id": "323107",
+      "name": "Redemption",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/323107.png",
+      "gold": 2800,
+      "tags": [
+        "SpellDamage",
+        "ManaRegen",
+        "CooldownReduction",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "abilityPower": 30,
+        "abilityHaste": 15,
+        "baseManaRegen": 100,
+        "healShieldPower": 10,
+        "health": 400
+      }
+    },
+    {
+      "id": "1006",
+      "name": "Rejuvenation Bead",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/1006.png",
+      "gold": 300,
+      "tags": [
+        "HealthRegen"
+      ],
+      "plaintext": "Slightly increases Health Regen",
+      "stats": {
+        "baseHealthRegen": 100
+      }
+    },
+    {
+      "id": "4633",
+      "name": "Riftmaker",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/4633.png",
+      "gold": 3100,
+      "tags": [
+        "Health",
+        "SpellDamage",
+        "CooldownReduction",
+        "SpellVamp"
+      ],
+      "plaintext": "",
+      "stats": {
+        "abilityPower": 70,
+        "health": 350,
+        "abilityHaste": 15
+      }
+    },
+    {
+      "id": "6657",
+      "name": "Rod of Ages",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6657.png",
+      "gold": 2600,
+      "tags": [
+        "Health",
+        "HealthRegen",
+        "SpellDamage",
+        "Mana",
+        "ManaRegen"
+      ],
+      "plaintext": "",
+      "stats": {
+        "abilityPower": 45,
+        "health": 350,
+        "mana": 500
+      }
+    },
+    {
+      "id": "326657",
+      "name": "Rod of Ages",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/326657.png",
+      "gold": 2600,
+      "tags": [
+        "Health",
+        "HealthRegen",
+        "SpellDamage",
+        "Mana",
+        "ManaRegen"
+      ],
+      "plaintext": "",
+      "stats": {
+        "abilityPower": 45,
+        "health": 350,
+        "mana": 500
+      }
+    },
+    {
+      "id": "1028",
+      "name": "Ruby Crystal",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/1028.png",
+      "gold": 400,
+      "tags": [
+        "Health"
+      ],
+      "plaintext": "Increases Health",
+      "stats": {
+        "health": 150
+      }
+    },
+    {
+      "id": "3085",
+      "name": "Runaan's Hurricane",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3085.png",
+      "gold": 2650,
+      "tags": [
+        "CriticalStrike",
+        "AttackSpeed",
+        "OnHit",
+        "NonbootsMovement"
+      ],
+      "plaintext": "Ranged attacks fire two bolts at nearby enemies",
+      "stats": {
+        "attackSpeed": 40,
+        "critChance": 25,
+        "percentMoveSpeed": 4
+      }
+    },
+    {
+      "id": "3116",
+      "name": "Rylai's Crystal Scepter",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3116.png",
+      "gold": 2600,
+      "tags": [
+        "Health",
+        "SpellDamage",
+        "Slow"
+      ],
+      "plaintext": "Abilities slow enemies",
+      "stats": {
+        "abilityPower": 65,
+        "health": 400
+      }
+    },
+    {
+      "id": "1027",
+      "name": "Sapphire Crystal",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/1027.png",
+      "gold": 300,
+      "tags": [
+        "Mana"
+      ],
+      "plaintext": "Increases Mana",
+      "stats": {
+        "mana": 300
+      }
+    },
+    {
+      "id": "3144",
+      "name": "Scout's Slingshot",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3144.png",
+      "gold": 600,
+      "tags": [
+        "AttackSpeed"
+      ],
+      "plaintext": "Activate to deal magic damage and slow target champion",
+      "stats": {
+        "attackSpeed": 20
+      }
+    },
+    {
+      "id": "2420",
+      "name": "Seeker's Armguard",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/2420.png",
+      "gold": 1600,
+      "tags": [
+        "Armor",
+        "SpellDamage",
+        "Active"
+      ],
+      "plaintext": "Activate to become invincible but unable to take actions",
+      "stats": {
+        "abilityPower": 40,
+        "armor": 25
+      }
+    },
+    {
+      "id": "6695",
+      "name": "Serpent's Fang",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6695.png",
+      "gold": 2500,
+      "tags": [
+        "Damage",
+        "ArmorPenetration"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 55,
+        "lethality": 15
+      }
+    },
+    {
+      "id": "3134",
+      "name": "Serrated Dirk",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3134.png",
+      "gold": 1000,
+      "tags": [
+        "Damage",
+        "ArmorPenetration"
+      ],
+      "plaintext": "Increases Attack Damage and Lethality",
+      "stats": {
+        "attackDamage": 20,
+        "lethality": 10
+      }
+    },
+    {
+      "id": "6694",
+      "name": "Serylda's Grudge",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6694.png",
+      "gold": 3000,
+      "tags": [
+        "Damage",
+        "CooldownReduction",
+        "ArmorPenetration",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 45,
+        "percentArmorPenetration": 35,
+        "abilityHaste": 15
+      }
+    },
+    {
+      "id": "4645",
+      "name": "Shadowflame",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/4645.png",
+      "gold": 3200,
+      "tags": [
+        "SpellDamage",
+        "MagicPenetration"
+      ],
+      "plaintext": "",
+      "stats": {
+        "abilityPower": 110,
+        "magicPenetration": 15
+      }
+    },
+    {
+      "id": "2421",
+      "name": "Shattered Armguard",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/2421.png",
+      "gold": 1600,
+      "tags": [],
+      "plaintext": "Upgrades to stopwatch",
+      "stats": {
+        "abilityPower": 40,
+        "armor": 25
+      }
+    },
+    {
+      "id": "3057",
+      "name": "Sheen",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3057.png",
+      "gold": 900,
+      "tags": [
+        "OnHit",
+        "AbilityHaste"
+      ],
+      "plaintext": "Grants a bonus to next attack after spell cast",
+      "stats": {
+        "abilityHaste": 10
+      }
+    },
+    {
+      "id": "663058",
+      "name": "Shield of Molten Stone",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/663058.png",
+      "gold": 2500,
+      "tags": [
+        "Health",
+        "Armor"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 250,
+        "armor": 80
+      }
+    },
+    {
+      "id": "2065",
+      "name": "Shurelya's Battlesong",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/2065.png",
+      "gold": 2200,
+      "tags": [
+        "SpellDamage",
+        "ManaRegen",
+        "Active",
+        "CooldownReduction",
+        "NonbootsMovement",
+        "AbilityHaste"
+      ],
+      "plaintext": "Activate to speed up nearby allies.",
+      "stats": {
+        "abilityPower": 50,
+        "abilityHaste": 15,
+        "percentMoveSpeed": 4,
+        "baseManaRegen": 125
+      }
+    },
+    {
+      "id": "322065",
+      "name": "Shurelya's Battlesong",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/322065.png",
+      "gold": 2600,
+      "tags": [
+        "SpellDamage",
+        "ManaRegen",
+        "Active",
+        "CooldownReduction",
+        "NonbootsMovement",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "abilityPower": 65,
+        "abilityHaste": 15,
+        "percentMoveSpeed": 6,
+        "baseManaRegen": 150
+      }
+    },
+    {
+      "id": "3876",
+      "name": "Solstice Sleigh",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3876.png",
+      "gold": 400,
+      "tags": [
+        "Health",
+        "HealthRegen",
+        "ManaRegen",
+        "Vision",
+        "GoldPer",
+        "Lane"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 200,
+        "baseHealthRegen": 75,
+        "baseManaRegen": 75
+      }
+    },
+    {
+      "id": "3020",
+      "name": "Sorcerer's Shoes",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3020.png",
+      "gold": 1100,
+      "tags": [
+        "Boots",
+        "MagicPenetration"
+      ],
+      "plaintext": "Enhances Move Speed and magic damage",
+      "stats": {
+        "magicPenetration": 12,
+        "moveSpeed": 45
+      }
+    },
+    {
+      "id": "3161",
+      "name": "Spear of Shojin",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3161.png",
+      "gold": 3100,
+      "tags": [
+        "Health",
+        "Damage",
+        "AbilityHaste"
+      ],
+      "plaintext": "Reduce damage taken from champions by a flat amount. Attack while near multiple enemy champions to increase this amount for a short time.",
+      "stats": {
+        "attackDamage": 45,
+        "health": 450
+      }
+    },
+    {
+      "id": "3211",
+      "name": "Spectre's Cowl",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3211.png",
+      "gold": 1250,
+      "tags": [
+        "Health",
+        "HealthRegen",
+        "SpellBlock"
+      ],
+      "plaintext": "Improves defense and grants regeneration upon being damaged",
+      "stats": {
+        "health": 200,
+        "magicResist": 35,
+        "baseHealthRegen": 100
+      }
+    },
+    {
+      "id": "3175",
+      "name": "Spellslinger's Shoes",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3175.png",
+      "gold": 1100,
+      "tags": [
+        "Boots",
+        "MagicPenetration"
+      ],
+      "plaintext": "",
+      "stats": {
+        "magicPenetration": 18,
+        "percentMagicPenetration": 8,
+        "moveSpeed": 45
+      }
+    },
+    {
+      "id": "3065",
+      "name": "Spirit Visage",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3065.png",
+      "gold": 2700,
+      "tags": [
+        "Health",
+        "SpellBlock",
+        "HealthRegen",
+        "CooldownReduction",
+        "AbilityHaste"
+      ],
+      "plaintext": "Increases Health and healing effects",
+      "stats": {
+        "health": 400,
+        "magicResist": 50,
+        "abilityHaste": 10,
+        "baseHealthRegen": 100
+      }
+    },
+    {
+      "id": "6616",
+      "name": "Staff of Flowing Water",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6616.png",
+      "gold": 2250,
+      "tags": [
+        "SpellDamage",
+        "ManaRegen",
+        "CooldownReduction",
+        "AbilityHaste"
+      ],
+      "plaintext": "Your heals and shields reduce crowd control and grant Move Speed",
+      "stats": {
+        "abilityPower": 35,
+        "healShieldPower": 10,
+        "baseManaRegen": 125,
+        "abilityHaste": 10
+      }
+    },
+    {
+      "id": "326616",
+      "name": "Staff of Flowing Water",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/326616.png",
+      "gold": 2600,
+      "tags": [
+        "SpellDamage",
+        "ManaRegen",
+        "CooldownReduction",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "abilityPower": 45,
+        "healShieldPower": 10,
+        "baseManaRegen": 150,
+        "abilityHaste": 10
+      }
+    },
+    {
+      "id": "3087",
+      "name": "Statikk Shiv",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3087.png",
+      "gold": 3000,
+      "tags": [
+        "Damage",
+        "AttackSpeed",
+        "SpellDamage",
+        "OnHit",
+        "NonbootsMovement"
+      ],
+      "plaintext": "Movement builds charges that release chain lightning on basic attack",
+      "stats": {
+        "attackDamage": 45,
+        "abilityPower": 45,
+        "attackSpeed": 30,
+        "percentMoveSpeed": 4
+      }
+    },
+    {
+      "id": "2019",
+      "name": "Steel Sigil",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/2019.png",
+      "gold": 1100,
+      "tags": [
+        "Armor",
+        "Damage"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 15,
+        "armor": 30
+      }
+    },
+    {
+      "id": "3053",
+      "name": "Sterak's Gage",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3053.png",
+      "gold": 3200,
+      "tags": [
+        "Health",
+        "Damage",
+        "Tenacity"
+      ],
+      "plaintext": "Shields against large bursts of damage",
+      "stats": {
+        "health": 400,
+        "tenacity": 20
+      }
+    },
+    {
+      "id": "3097",
+      "name": "Stormrazor",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3097.png",
+      "gold": 3200,
+      "tags": [
+        "Damage",
+        "CriticalStrike",
+        "AttackSpeed",
+        "NonbootsMovement"
+      ],
+      "plaintext": "Periodically kill enemy minions to heal and grant gold to a nearby ally",
+      "stats": {
+        "attackDamage": 50,
+        "attackSpeed": 20,
+        "critChance": 25
+      }
+    },
+    {
+      "id": "4646",
+      "name": "Stormsurge",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/4646.png",
+      "gold": 2800,
+      "tags": [
+        "SpellDamage",
+        "GoldPer",
+        "NonbootsMovement",
+        "MagicPenetration"
+      ],
+      "plaintext": "",
+      "stats": {
+        "abilityPower": 90,
+        "magicPenetration": 15,
+        "percentMoveSpeed": 6
+      }
+    },
+    {
+      "id": "6631",
+      "name": "Stridebreaker",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6631.png",
+      "gold": 3300,
+      "tags": [
+        "Health",
+        "Damage",
+        "AttackSpeed",
+        "Slow"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 40,
+        "attackSpeed": 25,
+        "health": 450
+      }
+    },
+    {
+      "id": "6610",
+      "name": "Sundered Sky",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6610.png",
+      "gold": 3100,
+      "tags": [
+        "Health",
+        "Damage",
+        "CooldownReduction",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 45,
+        "health": 400,
+        "abilityHaste": 10
+      }
+    },
+    {
+      "id": "3068",
+      "name": "Sunfire Aegis",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3068.png",
+      "gold": 2700,
+      "tags": [
+        "Health",
+        "Armor",
+        "Aura",
+        "AbilityHaste"
+      ],
+      "plaintext": "High armor. Constantly deals damage to nearby enemies. Immobilize enemies to release a wave of damaging flame",
+      "stats": {
+        "health": 350,
+        "armor": 50,
+        "abilityHaste": 10
+      }
+    },
+    {
+      "id": "3170",
+      "name": "Swiftmarch",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3170.png",
+      "gold": 1000,
+      "tags": [
+        "Boots"
+      ],
+      "plaintext": "Improves defense and reduces duration of disabling effects",
+      "stats": {
+        "moveSpeed": 65
+      }
+    },
+    {
+      "id": "664011",
+      "name": "Sword of Blossoming Dawn",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/664011.png",
+      "gold": 2500,
+      "tags": [
+        "Health",
+        "SpellDamage",
+        "CooldownReduction",
+        "OnHit",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "abilityPower": 35,
+        "health": 150,
+        "healShieldPower": 10,
+        "abilityHaste": 10
+      }
+    },
+    {
+      "id": "663060",
+      "name": "Sword of the Divine",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/663060.png",
+      "gold": 2500,
+      "tags": [
+        "Damage",
+        "CriticalStrike",
+        "SpellDamage"
+      ],
+      "plaintext": "",
+      "stats": {
+        "critChance": 50
+      }
+    },
+    {
+      "id": "3070",
+      "name": "Tear of the Goddess",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3070.png",
+      "gold": 400,
+      "tags": [
+        "Mana",
+        "ManaRegen"
+      ],
+      "plaintext": "Increases maximum Mana as Mana is spent",
+      "stats": {
+        "mana": 240
+      }
+    },
+    {
+      "id": "323070",
+      "name": "Tear of the Goddess",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/323070.png",
+      "gold": 400,
+      "tags": [
+        "Mana",
+        "ManaRegen"
+      ],
+      "plaintext": "",
+      "stats": {
+        "mana": 240
+      }
+    },
+    {
+      "id": "3302",
+      "name": "Terminus",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3302.png",
+      "gold": 3000,
+      "tags": [
+        "Damage",
+        "AttackSpeed",
+        "OnHit",
+        "MagicPenetration",
+        "ArmorPenetration"
+      ],
+      "plaintext": "Kill minions periodically to heal and grant gold to a nearby ally",
+      "stats": {
+        "attackDamage": 30,
+        "attackSpeed": 35
+      }
+    },
+    {
+      "id": "2020",
+      "name": "The Brutalizer",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/2020.png",
+      "gold": 1337,
+      "tags": [
+        "Damage",
+        "CooldownReduction",
+        "ArmorPenetration"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 25,
+        "abilityHaste": 10,
+        "lethality": 5
+      }
+    },
+    {
+      "id": "6676",
+      "name": "The Collector",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6676.png",
+      "gold": 3000,
+      "tags": [
+        "Damage",
+        "CriticalStrike",
+        "ArmorPenetration"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 50,
+        "lethality": 10,
+        "critChance": 25
+      }
+    },
+    {
+      "id": "667666",
+      "name": "The Collector",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/667666.png",
+      "gold": 3000,
+      "tags": [
+        "Damage",
+        "CriticalStrike",
+        "ArmorPenetration"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 50,
+        "lethality": 10,
+        "critChance": 25
+      }
+    },
+    {
+      "id": "3075",
+      "name": "Thornmail",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3075.png",
+      "gold": 2450,
+      "tags": [
+        "Health",
+        "Armor"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 150,
+        "armor": 75
+      }
+    },
+    {
+      "id": "323075",
+      "name": "Thornmail",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/323075.png",
+      "gold": 2650,
+      "tags": [
+        "Health",
+        "Armor"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 200,
+        "armor": 85
+      }
+    },
+    {
+      "id": "3077",
+      "name": "Tiamat",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3077.png",
+      "gold": 1200,
+      "tags": [
+        "Damage",
+        "OnHit"
+      ],
+      "plaintext": "Melee attacks hit nearby enemies",
+      "stats": {
+        "attackDamage": 20
+      }
+    },
+    {
+      "id": "3748",
+      "name": "Titanic Hydra",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3748.png",
+      "gold": 3300,
+      "tags": [
+        "Health",
+        "HealthRegen",
+        "Damage",
+        "OnHit"
+      ],
+      "plaintext": "Deals area of effect damage based on owner's health",
+      "stats": {
+        "attackDamage": 40,
+        "health": 600
+      }
+    },
+    {
+      "id": "3078",
+      "name": "Trinity Force",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3078.png",
+      "gold": 3333,
+      "tags": [
+        "Health",
+        "Damage",
+        "AttackSpeed",
+        "CooldownReduction",
+        "OnHit",
+        "NonbootsMovement",
+        "AbilityHaste"
+      ],
+      "plaintext": "Tons of Damage",
+      "stats": {
+        "attackDamage": 36,
+        "attackSpeed": 30,
+        "health": 333,
+        "abilityHaste": 15
+      }
+    },
+    {
+      "id": "2021",
+      "name": "Tunneler",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/2021.png",
+      "gold": 1150,
+      "tags": [
+        "Health",
+        "Damage"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 15,
+        "health": 250
+      }
+    },
+    {
+      "id": "3179",
+      "name": "Umbral Glaive",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3179.png",
+      "gold": 2800,
+      "tags": [
+        "Damage",
+        "Vision",
+        "CooldownReduction",
+        "ArmorPenetration",
+        "AbilityHaste"
+      ],
+      "plaintext": "Provides trap and ward detection periodically",
+      "stats": {
+        "attackDamage": 60,
+        "lethality": 18,
+        "abilityHaste": 15
+      }
+    },
+    {
+      "id": "2502",
+      "name": "Unending Despair",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/2502.png",
+      "gold": 2800,
+      "tags": [
+        "Health",
+        "Armor",
+        "CooldownReduction",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 400,
+        "armor": 50,
+        "abilityHaste": 15
+      }
+    },
+    {
+      "id": "1053",
+      "name": "Vampiric Scepter",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/1053.png",
+      "gold": 900,
+      "tags": [
+        "Damage",
+        "LifeSteal"
+      ],
+      "plaintext": "Basic attacks restore Health",
+      "stats": {
+        "attackDamage": 15,
+        "lifeSteal": 7
+      }
+    },
+    {
+      "id": "4632",
+      "name": "Verdant Barrier",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/4632.png",
+      "gold": 1600,
+      "tags": [
+        "SpellBlock",
+        "SpellDamage"
+      ],
+      "plaintext": "",
+      "stats": {
+        "abilityPower": 40,
+        "magicResist": 25
+      }
+    },
+    {
+      "id": "3135",
+      "name": "Void Staff",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3135.png",
+      "gold": 3000,
+      "tags": [
+        "MagicPenetration",
+        "SpellDamage"
+      ],
+      "plaintext": "Increases magic damage",
+      "stats": {
+        "abilityPower": 95,
+        "percentMagicPenetration": 40
+      }
+    },
+    {
+      "id": "6699",
+      "name": "Voltaic Cyclosword",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/6699.png",
+      "gold": 3000,
+      "tags": [
+        "Damage",
+        "Active",
+        "CooldownReduction",
+        "ArmorPenetration",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 55,
+        "lethality": 10,
+        "abilityHaste": 10
+      }
+    },
+    {
+      "id": "3082",
+      "name": "Warden's Mail",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3082.png",
+      "gold": 1000,
+      "tags": [
+        "Armor"
+      ],
+      "plaintext": "",
+      "stats": {
+        "armor": 40
+      }
+    },
+    {
+      "id": "3083",
+      "name": "Warmog's Armor",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3083.png",
+      "gold": 3100,
+      "tags": [
+        "Health",
+        "HealthRegen"
+      ],
+      "plaintext": "Grants massive Health and Health Regen",
+      "stats": {
+        "health": 1000,
+        "baseHealthRegen": 100
+      }
+    },
+    {
+      "id": "2526",
+      "name": "Whispering Circlet",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/2526.png",
+      "gold": 2250,
+      "tags": [
+        "Health",
+        "Mana",
+        "ManaRegen"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 200,
+        "healShieldPower": 8,
+        "baseManaRegen": 75,
+        "mana": 300
+      }
+    },
+    {
+      "id": "322526",
+      "name": "Whispering Circlet",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/322526.png",
+      "gold": 2250,
+      "tags": [
+        "Health",
+        "Mana",
+        "ManaRegen"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 200,
+        "healShieldPower": 8,
+        "baseManaRegen": 75,
+        "mana": 300
+      }
+    },
+    {
+      "id": "3066",
+      "name": "Winged Moonplate",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3066.png",
+      "gold": 800,
+      "tags": [
+        "Health",
+        "NonbootsMovement"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 200,
+        "percentMoveSpeed": 4
+      }
+    },
+    {
+      "id": "3119",
+      "name": "Winter's Approach",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3119.png",
+      "gold": 2400,
+      "tags": [
+        "Health",
+        "Mana",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 550,
+        "mana": 500,
+        "abilityHaste": 15
+      }
+    },
+    {
+      "id": "323119",
+      "name": "Winter's Approach",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/323119.png",
+      "gold": 2400,
+      "tags": [
+        "Health",
+        "Mana",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 550,
+        "mana": 500,
+        "abilityHaste": 15
+      }
+    },
+    {
+      "id": "3091",
+      "name": "Wit's End",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3091.png",
+      "gold": 2800,
+      "tags": [
+        "SpellBlock",
+        "AttackSpeed",
+        "OnHit",
+        "Tenacity"
+      ],
+      "plaintext": "Resist magic damage and claw your way back to life.",
+      "stats": {
+        "attackSpeed": 50,
+        "magicResist": 45,
+        "tenacity": 20
+      }
+    },
+    {
+      "id": "3865",
+      "name": "World Atlas",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3865.png",
+      "gold": 400,
+      "tags": [
+        "Health",
+        "ManaRegen",
+        "Vision",
+        "GoldPer",
+        "Lane"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 30
+      }
+    },
+    {
+      "id": "3142",
+      "name": "Youmuu's Ghostblade",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3142.png",
+      "gold": 2800,
+      "tags": [
+        "Damage",
+        "Active",
+        "NonbootsMovement",
+        "ArmorPenetration"
+      ],
+      "plaintext": "Activate to greatly increase Move Speed",
+      "stats": {
+        "attackDamage": 55,
+        "lethality": 18,
+        "percentMoveSpeed": 4
+      }
+    },
+    {
+      "id": "3032",
+      "name": "Yun Tal Wildarrows",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3032.png",
+      "gold": 3000,
+      "tags": [
+        "Damage",
+        "CriticalStrike",
+        "AttackSpeed"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackDamage": 50,
+        "attackSpeed": 45
+      }
+    },
+    {
+      "id": "3871",
+      "name": "Zaz'Zak's Realmspike",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3871.png",
+      "gold": 400,
+      "tags": [
+        "Health",
+        "HealthRegen",
+        "ManaRegen",
+        "Vision",
+        "GoldPer",
+        "Lane"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 200,
+        "baseHealthRegen": 75,
+        "baseManaRegen": 75
+      }
+    },
+    {
+      "id": "3086",
+      "name": "Zeal",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3086.png",
+      "gold": 1200,
+      "tags": [
+        "CriticalStrike",
+        "AttackSpeed",
+        "NonbootsMovement"
+      ],
+      "plaintext": "Slight bonuses to Critical Strike Chance, Move Speed and Attack Speed",
+      "stats": {
+        "attackSpeed": 15,
+        "critChance": 15,
+        "percentMoveSpeed": 4
+      }
+    },
+    {
+      "id": "3050",
+      "name": "Zeke's Convergence",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3050.png",
+      "gold": 2200,
+      "tags": [
+        "Health",
+        "SpellBlock",
+        "Armor",
+        "AbilityHaste"
+      ],
+      "plaintext": "Grants you and your ally bonuses when you cast your ultimate.",
+      "stats": {
+        "health": 300,
+        "armor": 25,
+        "magicResist": 25,
+        "abilityHaste": 10
+      }
+    },
+    {
+      "id": "323050",
+      "name": "Zeke's Convergence",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/323050.png",
+      "gold": 2300,
+      "tags": [
+        "Health",
+        "SpellBlock",
+        "Armor",
+        "AbilityHaste"
+      ],
+      "plaintext": "",
+      "stats": {
+        "health": 350,
+        "armor": 30,
+        "magicResist": 30,
+        "abilityHaste": 10
+      }
+    },
+    {
+      "id": "663172",
+      "name": "Zephyr",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/663172.png",
+      "gold": 2500,
+      "tags": [
+        "AttackSpeed",
+        "CooldownReduction",
+        "OnHit",
+        "NonbootsMovement",
+        "Tenacity"
+      ],
+      "plaintext": "",
+      "stats": {
+        "attackSpeed": 40,
+        "percentMoveSpeed": 8,
+        "abilityHaste": 25,
+        "tenacity": 20
+      }
+    },
+    {
+      "id": "3157",
+      "name": "Zhonya's Hourglass",
+      "icon": "https://ddragon.leagueoflegends.com/cdn/16.15.1/img/item/3157.png",
+      "gold": 3250,
+      "tags": [
+        "Armor",
+        "SpellDamage",
+        "Active"
+      ],
+      "plaintext": "Activate to become invincible but unable to take actions",
+      "stats": {
+        "abilityPower": 105,
+        "armor": 50
+      }
+    }
+  ]
+}

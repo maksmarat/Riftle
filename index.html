@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#07080c">
-    <title>Riftle Classic</title>
+    <title>Riftle</title>
     <link rel="stylesheet" href="./src/styles.css">
   </head>
   <body>
@@ -19,9 +19,8 @@
         <div class="top-actions">
           <nav class="modes" id="main-modes" aria-label="Modes">
             <button class="mode mode-active" data-mode-key="classic" type="button">Classic</button>
-            <button class="mode" data-mode-key="ability" type="button" disabled>Ability</button>
-            <button class="mode" data-mode-key="quote" type="button" disabled>Quote</button>
-            <button class="mode" data-mode-key="splash" type="button" disabled>Splash</button>
+            <button class="mode" data-mode-key="moreLess" type="button">Item Duel</button>
+            <button class="mode" data-mode-key="spellDuel" type="button">Spell Duel</button>
           </nav>
 
           <div class="language-switch" id="language-switch" aria-label="Language">
@@ -34,7 +33,6 @@
       <main class="game">
         <section class="hero-panel" aria-labelledby="page-title">
           <div class="hero-copy">
-            <p class="eyebrow" id="hero-eyebrow">Infinite classic</p>
             <h1 id="page-title">Guess the champion</h1>
           </div>
         </section>
@@ -57,13 +55,40 @@
           <p class="message" id="message" role="status" aria-live="polite"></p>
         </section>
 
-        <section class="board-shell" id="board-shell" aria-label="Guesses">
+        <section class="board-shell hidden" id="board-shell" aria-label="Guesses">
           <div class="board-scroll">
             <div class="board-header" id="board-header"></div>
             <div class="guess-list" id="guess-list"></div>
           </div>
-          <div class="empty-state" id="empty-state">
-            <span id="empty-state-text">First guess is waiting.</span>
+        </section>
+
+        <section class="moreless-shell hidden" id="moreless-shell" aria-label="More or Less">
+          <div class="moreless-scorebar" aria-live="polite">
+            <div class="score-pill">
+              <span id="moreless-streak">0</span>
+              <small id="moreless-streak-label">streak</small>
+            </div>
+            <div class="score-pill">
+              <span id="moreless-best">0</span>
+              <small id="moreless-best-label">best</small>
+            </div>
+            <div class="score-pill score-pill-muted">
+              <span id="moreless-item-count">0</span>
+              <small id="moreless-item-count-label">items</small>
+            </div>
+          </div>
+
+          <div class="moreless-stage" id="moreless-stage">
+            <article class="moreless-card moreless-card-left" id="moreless-left-card" role="button" tabindex="0"></article>
+            <article class="moreless-card moreless-card-right" id="moreless-right-card" role="button" tabindex="0"></article>
+          </div>
+
+          <div class="moreless-result hidden" id="moreless-result" role="status" aria-live="polite">
+            <div>
+              <h2 id="moreless-result-title">Game over</h2>
+              <p id="moreless-result-copy">Your streak: 0</p>
+            </div>
+            <button class="play-again" id="moreless-retry" type="button">Try again</button>
           </div>
         </section>
 
@@ -79,9 +104,8 @@
 
             <div class="victory-modes" id="victory-modes" aria-label="Next mode">
               <button class="mode-choice mode-choice-active" data-mode-key="classic" type="button">Classic</button>
-              <button class="mode-choice" data-mode-key="ability" type="button" disabled>Ability</button>
-              <button class="mode-choice" data-mode-key="quote" type="button" disabled>Quote</button>
-              <button class="mode-choice" data-mode-key="splash" type="button" disabled>Splash</button>
+              <button class="mode-choice" data-mode-key="moreLess" type="button">Item Duel</button>
+              <button class="mode-choice" data-mode-key="spellDuel" type="button">Spell Duel</button>
             </div>
 
             <button class="play-again" id="play-again" type="button">Play again</button>

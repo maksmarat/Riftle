@@ -322,6 +322,8 @@ test("random tools page rolls roles, build, and next item", async ({ page }) => 
   await expect(page.locator("[data-spin-speed='1']")).toHaveClass(/speed-chip-active/);
   await expect(page.locator("#build-items .loot-card")).toHaveCount(6);
   await expect(page.locator("#build-summoners .summoner-card")).toHaveCount(2);
+  await expect(page.locator("#build-slots .slot-card")).toHaveCount(1);
+  await expect(page.locator("#build-slots .slot-card")).toContainText("Boot slot");
 
   await page.locator("[data-language='ru']").click();
   await expect(page.locator("html")).toHaveAttribute("lang", "ru");
@@ -345,9 +347,16 @@ test("random tools page rolls roles, build, and next item", async ({ page }) => 
   await page.locator("[data-build-role='jungle']").click();
   await expect(page.locator("[data-build-role='jungle']")).toHaveClass(/role-chip-active/);
   await expect(page.locator("#build-items .loot-card")).toHaveCount(6);
+  await expect(page.locator("#build-slots .slot-card")).toHaveCount(0);
 
   const summoners = await page.locator("#build-summoners .summoner-card").allTextContents();
   expect(summoners.join(" ")).toContain("Smite");
+
+  await page.locator("[data-build-role='support']").click();
+  await expect(page.locator("[data-build-role='support']")).toHaveClass(/role-chip-active/);
+  await expect(page.locator("#build-items .loot-card")).toHaveCount(5);
+  await expect(page.locator("#build-slots .slot-card")).toHaveCount(1);
+  await expect(page.locator("#build-slots .slot-card")).toContainText("Support slot");
 
   await page.locator("[data-spin-speed='4']").click();
   await expect(page.locator("[data-spin-speed='4']")).toHaveClass(/speed-chip-active/);

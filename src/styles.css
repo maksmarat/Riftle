@@ -1003,6 +1003,7 @@ input[type="search"]:focus {
 
 .loot-card,
 .summoner-card,
+.slot-card,
 .roulette-card {
   min-width: 0;
   border: 1px solid rgba(255, 255, 255, 0.13);
@@ -1024,6 +1025,7 @@ input[type="search"]:focus {
 
 .loot-icon,
 .summoner-icon,
+.slot-icon,
 .roulette-icon {
   position: relative;
   display: grid;
@@ -1042,6 +1044,7 @@ input[type="search"]:focus {
 
 .loot-icon img,
 .summoner-icon img,
+.slot-icon img,
 .roulette-icon img {
   position: absolute;
   inset: 0;
@@ -1072,6 +1075,7 @@ input[type="search"]:focus {
 
 .loot-card strong,
 .summoner-card strong,
+.slot-card strong,
 .roulette-card strong {
   min-width: 0;
   color: var(--text);
@@ -1097,6 +1101,12 @@ input[type="search"]:focus {
   gap: 10px;
 }
 
+.slot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 10px;
+}
+
 .summoner-card {
   display: flex;
   align-items: center;
@@ -1105,7 +1115,27 @@ input[type="search"]:focus {
   padding: 10px;
 }
 
-.summoner-icon {
+.slot-card {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  min-height: 64px;
+  border-color: rgba(240, 207, 133, 0.3);
+  padding: 10px;
+}
+
+.slot-card span {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--gold-strong);
+  font-size: 0.68rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.summoner-icon,
+.slot-icon {
   width: 44px;
   height: 44px;
 }

@@ -50,6 +50,9 @@
       buildRoleAria: "Build role",
       itemsTitle: "Items",
       summonersTitle: "Summoner spells",
+      slotsTitle: "Role slots",
+      bootSlot: "Boot slot",
+      supportSlot: "Support slot",
       buyTitle: "What buy next?",
       spinBuy: "Spin",
       spinSpeedAria: "Spin speed",
@@ -98,6 +101,9 @@
       buildRoleAria: "Роль для билда",
       itemsTitle: "Предметы",
       summonersTitle: "Саммонерки",
+      slotsTitle: "Слоты роли",
+      bootSlot: "Слот ботинка",
+      supportSlot: "Сап слот",
       buyTitle: "Что купить следующим?",
       spinBuy: "Крутить",
       spinSpeedAria: "Скорость прокрутки",
@@ -369,6 +375,8 @@
     rollBuildButton: document.querySelector("#roll-build"),
     buildItems: document.querySelector("#build-items"),
     buildSummoners: document.querySelector("#build-summoners"),
+    buildSlotsGroup: document.querySelector("#build-slots-group"),
+    buildSlots: document.querySelector("#build-slots"),
     spinBuyButton: document.querySelector("#spin-buy"),
     buySpeedPicker: document.querySelector("#buy-speed-picker"),
     buyWheel: document.querySelector("#buy-wheel"),
@@ -383,6 +391,7 @@
   let completedItems = [];
   let buyPool = [];
   let currentBuildItems = [];
+  let currentBuildSlots = [];
   let currentSummoners = [];
   let currentBuyItem = null;
   let isSpinning = false;
@@ -686,6 +695,16 @@
     return item.tags.includes("Boots");
   }
 
+  function isSupportSlotItem(item) {
+    return [
+      "Bloodsong",
+      "Celestial Opposition",
+      "Dream Maker",
+      "Solstice Sleigh",
+      "Zaz'Zak's Realmspike",
+    ].includes(item.name);
+  }
+
   function isCompletedItem(item) {
     const tags = new Set(item.tags);
     if (tags.has("Consumable") || tags.has("Trinket") || tags.has("Vision")) {
@@ -766,30 +785,78 @@
     return picks;
   }
 
-  function selectRoleBuild(roleKey) {
-    const profile = roleProfiles[roleKey] || roleProfiles.bottom;
+  function selectBoot(roleKey) {
     const boots = completedItems
       .filter(isBoots)
       .map((item) => ({ item, score: itemScoreForRole(item, roleKey) }))
       .sort((left, right) => right.score - left.score);
-    const boot = weightedSample(boots.slice(0, 7), 1)[0];
+
+    return weightedSample(boots.slice(0, 7), 1)[0] || null;
+  }
+
+  function selectSupportSlot() {
+    const supportItems = allItems
+      .filter(isSupportSlotItem)
+      .map((item) => ({ item, score: itemScoreForRole(item, "support") }))
+      .sort((left, right) => right.score - left.score);
+
+    return weightedSample(supportItems, 1)[0] || null;
+  }
+
+  function selectCoreItems(roleKey, count, excludedItems = []) {
+    const profile = roleProfiles[roleKey] || roleProfiles.bottom;
+    const excludedIds = new Set(excludedItems.filter(Boolean).map((item) => item.id));
     const scoredCore = completedItems
-      .filter((item) => !isBoots(item))
+      .filter((item) => !isBoots(item) && !excludedIds.has(item.id) && !isSupportSlotItem(item))
       .map((item) => ({ item, score: itemScoreForRole(item, roleKey) }))
       .filter((entry) => entry.score >= profile.minimum)
       .sort((left, right) => right.score - left.score);
     const sampleSize = Math.max(24, Math.ceil(scoredCore.length * 0.55));
-    const picks = weightedSample(scoredCore.slice(0, sampleSize), 5);
+    const picks = weightedSample(scoredCore.slice(0, sampleSize), count);
     const fallback = completedItems
-      .filter((item) => !isBoots(item) && !picks.includes(item))
+      .filter((item) => {
+        return (
+          !isBoots(item) &&
+          !picks.includes(item) &&
+          !excludedIds.has(item.id) &&
+          !isSupportSlotItem(item)
+        );
+      })
       .map((item) => ({ item, score: itemScoreForRole(item, roleKey) }))
       .sort((left, right) => right.score - left.score);
 
-    while (picks.length < 5 && fallback.length > 0) {
+    while (picks.length < count && fallback.length > 0) {
       picks.push(fallback.shift().item);
     }
 
-    return boot ? [boot, ...picks] : picks;
+    return picks;
+  }
+
+  function selectRoleBuild(roleKey) {
+    const boot = selectBoot(roleKey);
+
+    if (roleKey === "bottom") {
+      return {
+        items: selectCoreItems(roleKey, 6),
+        slots: boot ? [{ key: "boot", item: boot, labelKey: "bootSlot" }] : [],
+      };
+    }
+
+    if (roleKey === "support") {
+      const supportItem = selectSupportSlot();
+      const coreItems = selectCoreItems(roleKey, 4, [boot, supportItem]);
+
+      return {
+        items: boot ? [boot, ...coreItems] : coreItems,
+        slots: supportItem ? [{ key: "support", item: supportItem, labelKey: "supportSlot" }] : [],
+      };
+    }
+
+    const coreItems = selectCoreItems(roleKey, 5, [boot]);
+    return {
+      items: boot ? [boot, ...coreItems] : coreItems,
+      slots: [],
+    };
   }
 
   function selectSummoners(roleKey) {
@@ -809,7 +876,9 @@
       return;
     }
 
-    currentBuildItems = selectRoleBuild(selectedBuildRole);
+    const build = selectRoleBuild(selectedBuildRole);
+    currentBuildItems = build.items;
+    currentBuildSlots = build.slots;
     currentSummoners = selectSummoners(selectedBuildRole);
     renderBuildOutput();
   }
@@ -863,19 +932,42 @@
     return card;
   }
 
+  function createSlotCard(slot) {
+    const card = document.createElement("article");
+    card.className = `slot-card slot-card-${slot.key}`;
+
+    const icon = createIcon(slot.item.icon, slot.item.name, "slot-icon");
+
+    const copyBlock = document.createElement("div");
+
+    const label = document.createElement("span");
+    label.textContent = t()[slot.labelKey] || slot.labelKey;
+
+    const name = document.createElement("strong");
+    name.textContent = slot.item.name;
+
+    copyBlock.append(label, name);
+    card.append(icon, copyBlock);
+    return card;
+  }
+
   function renderBuildOutput() {
-    if (!elements.buildItems || !elements.buildSummoners) {
+    if (!elements.buildItems || !elements.buildSummoners || !elements.buildSlots) {
       return;
     }
 
     if (completedItems.length === 0) {
       elements.buildItems.innerHTML = `<p class="random-status">${t().loading}</p>`;
       elements.buildSummoners.innerHTML = "";
+      elements.buildSlots.innerHTML = "";
+      elements.buildSlotsGroup.classList.add("hidden");
       return;
     }
 
     elements.buildItems.replaceChildren(...currentBuildItems.map((item) => createLootCard(item)));
     elements.buildSummoners.replaceChildren(...currentSummoners.map((spellKey) => createSummonerCard(spellKey)));
+    elements.buildSlots.replaceChildren(...currentBuildSlots.map((slot) => createSlotCard(slot)));
+    elements.buildSlotsGroup.classList.toggle("hidden", currentBuildSlots.length === 0);
   }
 
   function renderInitialWheel() {

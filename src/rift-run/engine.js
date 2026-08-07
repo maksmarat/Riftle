@@ -14,6 +14,7 @@
     MODIFIERS,
     METRICS,
     TRAIT_RULES,
+    I18N,
   } = config;
 
   const metricById = new Map(METRICS.map((metric) => [metric.id, metric]));
@@ -52,7 +53,57 @@
     return String(value || "");
   }
 
-  function formatNumber(value, metric = {}) {
+  function dual(en, ru) {
+    return { en, ru };
+  }
+
+  function translated(collection, key, fallback) {
+    return collection?.[key] || (fallback ? dual(fallback, fallback) : dual(key, key));
+  }
+
+  function categoryLabel(category) {
+    return translated(I18N.categoryLabels, category, CATEGORY_CONFIG[category]?.label || category);
+  }
+
+  function categoryShortLabel(category) {
+    return translated(I18N.categoryShortLabels, category, CATEGORY_CONFIG[category]?.shortLabel || category);
+  }
+
+  function typeLabel(type) {
+    return translated(I18N.typeLabels, type, CHALLENGE_TYPES[type]?.label || type);
+  }
+
+  function metricLabel(metric) {
+    return translated(I18N.metricLabels, metric.id, metric.label);
+  }
+
+  function metricShortLabel(metric) {
+    return translated(I18N.metricShortLabels, metric.id, metric.shortLabel || metric.label);
+  }
+
+  function traitLabel(ruleOrId) {
+    const id = typeof ruleOrId === "string" ? ruleOrId : ruleOrId.id;
+    const fallback = typeof ruleOrId === "string" ? ruleOrId : ruleOrId.label;
+    return translated(I18N.traitLabels, id, fallback);
+  }
+
+  function traitValueLabel(value) {
+    return translated(I18N.traitValues, value, value);
+  }
+
+  function modifierLabel(id) {
+    return translated(I18N.modifierLabels, id, MODIFIERS[id]?.label || id);
+  }
+
+  function modifierDescription(id) {
+    return translated(I18N.modifierDescriptions, id, MODIFIERS[id]?.description || id);
+  }
+
+  function word(key) {
+    return translated(I18N.words, key, key);
+  }
+
+  function formatNumber(value, metric = {}, language = "en") {
     const number = Number(value);
     const digits = preciseMetrics.has(metric.id) ? 3 : 1;
     const formatted = Number.isInteger(number)
@@ -64,7 +115,7 @@
     }
 
     if (metric.unit === "gold") {
-      return `${formatted} gold`;
+      return language === "ru" ? `${formatted} золота` : `${formatted} gold`;
     }
 
     return metric.unit === "%" || percentMetrics.has(metric.id) ? `${formatted}%` : formatted;
@@ -199,6 +250,7 @@
     const profileByName = new Map(
       (rawData.champions || []).map((champion) => [normalizeText(champion.name), champion]),
     );
+    const itemTranslations = rawData.itemTranslations?.items || rawData.itemTranslations || {};
 
     const champions = (rawData.championStats?.champions || [])
       .map((champion) => {
@@ -218,7 +270,7 @@
           name: champion.name,
           title: champion.title,
           image: champion.icon || profile?.icon || "",
-          meta: localize(champion.title) || profile?.resource || "",
+          meta: dual(localize(champion.title, "en") || profile?.resource || "", localize(champion.title, "ru") || localize(traitValueLabel(profile?.resource || ""), "ru")),
           stats,
           traits: {
             resource: profile?.resource || "",
@@ -232,21 +284,27 @@
       .filter((champion) => champion.image);
 
     const items = (rawData.items?.items || [])
-      .map((item) => ({
-        id: `item:${item.id}`,
-        sourceId: String(item.id),
-        category: "items",
-        kind: "item",
-        name: item.name,
-        title: item.plaintext || "",
-        image: item.icon || "",
-        meta: `${Number(item.gold || 0)} gold`,
-        gold: Number(item.gold || 0),
-        stats: normalizeStats(item.stats),
-        traits: {
-          tags: toArray(item.tags),
-        },
-      }))
+      .map((item) => {
+        const ruItem = itemTranslations[String(item.id)] || {};
+        const tags = toArray(item.tags);
+        const primaryTag = tags.find((tag) => tag !== "Active" && tag !== "Consumable") || tags[0] || "";
+
+        return {
+          id: `item:${item.id}`,
+          sourceId: String(item.id),
+          category: "items",
+          kind: "item",
+          name: dual(item.name, ruItem.name || item.name),
+          title: dual(item.plaintext || "", ruItem.plaintext || item.plaintext || ""),
+          image: item.icon || "",
+          meta: primaryTag ? traitValueLabel(primaryTag) : categoryShortLabel("items"),
+          gold: Number(item.gold || 0),
+          stats: normalizeStats(item.stats),
+          traits: {
+            tags,
+          },
+        };
+      })
       .filter((item) => item.image && item.gold > 0);
 
     const abilities = (rawData.abilities?.abilities || [])
@@ -258,7 +316,7 @@
         name: ability.name,
         title: ability.championName,
         image: ability.icon || "",
-        meta: `${localize(ability.championName)} • ${ability.slot}`,
+        meta: dual(`${localize(ability.championName, "en")} • ${ability.slot}`, `${localize(ability.championName, "ru")} • ${ability.slot}`),
         championName: ability.championName,
         championKey: normalizeText(localize(ability.championName)),
         slot: ability.slot,
@@ -504,6 +562,7 @@
       order: generateOrder,
       exact: generateExact,
       outlier: generateOutlier,
+      pickExtreme: generatePickExtreme,
       match: generateMatch,
       identify: generateIdentify,
       constraint: generateConstraint,
@@ -528,20 +587,29 @@
     );
     const risk = clamp(route.risk + modifierRisk(route.modifiers) * 0.45, 0.05, 0.98);
     const reward = calculatePotentialReward(run, adjustedDifficulty, risk, route.special, route.modifiers);
-    const typeConfig = CHALLENGE_TYPES[route.type];
-    const categoryConfig = CATEGORY_CONFIG[route.category];
-
     return {
       ...challenge,
       id: `rr-${run.stage}-${route.type}-${Math.floor(rng.next() * 1e8).toString(36)}`,
       stage: run.stage,
       type: route.type,
-      typeLabel: typeConfig.label,
+      typeLabel: typeLabel(route.type),
       category: route.category,
-      categoryLabel: categoryConfig.label,
-      categoryShortLabel: categoryConfig.shortLabel,
+      categoryLabel: categoryLabel(route.category),
+      categoryShortLabel: categoryShortLabel(route.category),
+      metric: challenge.metric
+        ? {
+            ...challenge.metric,
+            labelText: metricLabel(challenge.metric),
+            shortLabelText: metricShortLabel(challenge.metric),
+          }
+        : challenge.metric,
       special: Boolean(route.special),
       modifiers: route.modifiers,
+      modifierLabels: route.modifiers.map((id) => ({
+        id,
+        label: modifierLabel(id),
+        description: modifierDescription(id),
+      })),
       difficulty: adjustedDifficulty,
       risk,
       reward,
@@ -591,11 +659,20 @@
     }
 
     const correctAnswer = best.rightValue > best.leftValue ? "higher" : "lower";
-    const verb = correctAnswer === "higher" ? "higher" : "lower";
+    const verbKey = correctAnswer === "higher" ? "higher" : "lower";
+    const rightName = dual(displayName(best.right, "en"), displayName(best.right, "ru"));
+    const leftName = dual(displayName(best.left, "en"), displayName(best.left, "ru"));
+    const metricName = metricLabel(metric);
 
     return {
-      title: `${CATEGORY_CONFIG[route.category].shortLabel} ${metric.shortLabel}`,
-      prompt: `Will ${displayName(best.right)} be higher or lower than ${displayName(best.left)} for ${metric.label}?`,
+      title: dual(
+        `${localize(categoryShortLabel(route.category), "en")} ${localize(metricShortLabel(metric), "en")}`,
+        `${localize(categoryShortLabel(route.category), "ru")} · ${localize(metricShortLabel(metric), "ru")}`,
+      ),
+      prompt: dual(
+        `Will ${localize(rightName, "en")} be higher or lower than ${localize(leftName, "en")} for ${localize(metricName, "en")}?`,
+        `У ${localize(rightName, "ru")} значение «${localize(metricName, "ru")}» больше или меньше, чем у ${localize(leftName, "ru")}?`,
+      ),
       metric,
       entities: [viewEntity(best.left), viewEntity(best.right)],
       values: {
@@ -603,11 +680,14 @@
         right: best.rightValue,
       },
       choices: [
-        { id: "higher", label: "Higher" },
-        { id: "lower", label: "Lower" },
+        { id: "higher", label: dual("Higher", "Больше") },
+        { id: "lower", label: dual("Lower", "Меньше") },
       ],
       correctAnswer,
-      explanation: `${displayName(best.right)} is ${formatNumber(best.rightValue, metric)}, ${verb} than ${displayName(best.left)} at ${formatNumber(best.leftValue, metric)}.`,
+      explanation: dual(
+        `${localize(rightName, "en")} has ${formatNumber(best.rightValue, metric, "en")}; that is ${localize(word(verbKey), "en")} than ${localize(leftName, "en")} at ${formatNumber(best.leftValue, metric, "en")}.`,
+        `${localize(rightName, "ru")}: ${formatNumber(best.rightValue, metric, "ru")}. Это ${localize(word(verbKey), "ru")}, чем у ${localize(leftName, "ru")} (${formatNumber(best.leftValue, metric, "ru")}).`,
+      ),
       difficulty: best.difficulty,
       signature: `higherLower:${metric.id}:${best.left.id}:${best.right.id}`,
     };
@@ -650,17 +730,29 @@
       const diff = getMetricValue(left, metric) - getMetricValue(right, metric);
       return descending ? -diff : diff;
     });
-    const direction = descending ? "highest to lowest" : "lowest to highest";
+    const directionKey = descending ? "highestToLowest" : "lowestToHighest";
+    const metricName = metricLabel(metric);
 
     return {
-      title: `${CATEGORY_CONFIG[route.category].shortLabel} Order`,
-      prompt: `Order by ${metric.label}, ${direction}.`,
+      title: dual(
+        `${localize(categoryShortLabel(route.category), "en")} Order`,
+        `${localize(categoryShortLabel(route.category), "ru")} · порядок`,
+      ),
+      prompt: dual(
+        `Order by ${localize(metricName, "en")}, ${localize(word(directionKey), "en")}.`,
+        `Расположи по параметру «${localize(metricName, "ru")}»: ${localize(word(directionKey), "ru")}.`,
+      ),
       metric,
       entities: best.entries.map(viewEntity),
       correctAnswer: sorted.map((entity) => entity.id),
-      explanation: sorted
-        .map((entity) => `${displayName(entity)} ${formatNumber(getMetricValue(entity, metric), metric)}`)
-        .join(" → "),
+      explanation: dual(
+        sorted
+          .map((entity) => `${displayName(entity, "en")} ${formatNumber(getMetricValue(entity, metric), metric, "en")}`)
+          .join(" → "),
+        sorted
+          .map((entity) => `${displayName(entity, "ru")} ${formatNumber(getMetricValue(entity, metric), metric, "ru")}`)
+          .join(" → "),
+      ),
       difficulty: best.difficulty,
       signature: `order:${metric.id}:${sorted.map((entity) => entity.id).join(":")}`,
     };
@@ -683,15 +775,25 @@
         (DIFFICULTY_CONFIG.exactToleranceEasy - DIFFICULTY_CONFIG.exactToleranceHard) * target;
     const tolerance = Math.max(metric.unit === "s" ? 1 : 3, Math.abs(value) * toleranceRatio);
     const difficulty = clamp(0.2 + target * 0.42 + metric.obscurity * 0.55);
+    const metricName = metricLabel(metric);
 
     return {
-      title: `${CATEGORY_CONFIG[route.category].shortLabel} Estimate`,
-      prompt: `Estimate ${metric.label} for ${displayName(entity)}.`,
+      title: dual(
+        `${localize(categoryShortLabel(route.category), "en")} Estimate`,
+        `${localize(categoryShortLabel(route.category), "ru")} · оценка`,
+      ),
+      prompt: dual(
+        `Estimate ${localize(metricName, "en")} for ${displayName(entity, "en")}.`,
+        `Оцени параметр «${localize(metricName, "ru")}» для ${displayName(entity, "ru")}.`,
+      ),
       metric,
       entities: [viewEntity(entity)],
       correctAnswer: value,
       tolerance,
-      explanation: `${displayName(entity)} has ${metric.label} of ${formatNumber(value, metric)}.`,
+      explanation: dual(
+        `${displayName(entity, "en")} has ${localize(metricName, "en")} of ${formatNumber(value, metric, "en")}.`,
+        `${displayName(entity, "ru")}: ${localize(metricName, "ru")} — ${formatNumber(value, metric, "ru")}.`,
+      ),
       difficulty,
       signature: `exact:${metric.id}:${entity.id}`,
     };
@@ -732,19 +834,92 @@
       return null;
     }
 
+    const ruleLabel = traitLabel(rule);
+    const valueLabel = traitValueLabel(traitValue);
     const prompt = reverse
-      ? `Find the one that matches: ${rule.label} · ${traitValue}.`
-      : `Find the outlier. Three share ${rule.label} · ${traitValue}.`;
+      ? dual(
+          `Find the one that matches: ${localize(ruleLabel, "en")} · ${localize(valueLabel, "en")}.`,
+          `Найди вариант, который подходит: ${localize(ruleLabel, "ru")} · ${localize(valueLabel, "ru")}.`,
+        )
+      : dual(
+          `Find the outlier. Three share ${localize(ruleLabel, "en")} · ${localize(valueLabel, "en")}.`,
+          `Найди лишнее. У трёх вариантов общий признак: ${localize(ruleLabel, "ru")} · ${localize(valueLabel, "ru")}.`,
+        );
 
     return {
-      title: `${CATEGORY_CONFIG[route.category].shortLabel} Outlier`,
+      title: dual(
+        `${localize(categoryShortLabel(route.category), "en")} Outlier`,
+        `${localize(categoryShortLabel(route.category), "ru")} · лишнее`,
+      ),
       prompt,
-      traitRule: { id: rule.id, label: rule.label, value: traitValue, reverse },
+      traitRule: { id: rule.id, label: ruleLabel, value: valueLabel, rawValue: traitValue, reverse },
       entities: choices.map(viewEntity),
       correctAnswer: correct.id,
-      explanation: `${displayName(correct)} is the ${reverse ? "match" : "outlier"} for ${rule.label} · ${traitValue}.`,
+      explanation: dual(
+        `${displayName(correct, "en")} is the ${reverse ? "match" : "outlier"} for ${localize(ruleLabel, "en")} · ${localize(valueLabel, "en")}.`,
+        `${displayName(correct, "ru")} — ${reverse ? "подходящий вариант" : "лишний вариант"} для признака «${localize(ruleLabel, "ru")} · ${localize(valueLabel, "ru")}».`,
+      ),
       difficulty: clamp(0.28 + targetDifficulty(run, route.special) * 0.42 + (reverse ? 0.14 : 0)),
       signature: `outlier:${rule.id}:${traitValue}:${choices.map((entity) => entity.id).join(":")}`,
+    };
+  }
+
+  function generatePickExtreme(run, data, route, rng) {
+    const metric = metricById.get(route.metricId) || metricById.get(pickMetricId(data, { ...route, run, rng }));
+    const pool = metric ? entitiesForMetric(data, metric) : [];
+    const count = route.special ? 5 : 4;
+
+    if (pool.length < count) {
+      return null;
+    }
+
+    const target = targetDifficulty(run, route.special);
+    const pickHighest = hasModifier(route, "reverse") ? false : rng.next() > 0.42;
+    let best = null;
+
+    for (let attempt = 0; attempt < 120; attempt += 1) {
+      const entries = uniqueBy(rng.shuffle(pool), (entity) => getMetricValue(entity, metric)).slice(0, count);
+
+      if (entries.length < count) {
+        continue;
+      }
+
+      const values = entries.map((entity) => getMetricValue(entity, metric));
+      const difficulty = orderDifficulty(values, count, metric) * 0.82;
+      const score = Math.abs(difficulty - target) + entityRecentPenalty(run, entries.map((entity) => entity.id));
+
+      if (!best || score < best.score) {
+        best = { entries, difficulty, score };
+      }
+    }
+
+    if (!best) {
+      return null;
+    }
+
+    const sorted = [...best.entries].sort((left, right) => getMetricValue(left, metric) - getMetricValue(right, metric));
+    const correct = pickHighest ? sorted[sorted.length - 1] : sorted[0];
+    const targetWord = pickHighest ? "highest" : "lowest";
+    const metricName = metricLabel(metric);
+
+    return {
+      title: dual(
+        `${localize(categoryShortLabel(route.category), "en")} Pick`,
+        `${localize(categoryShortLabel(route.category), "ru")} · выбор`,
+      ),
+      prompt: dual(
+        `Pick the ${localize(word(targetWord), "en")} ${localize(metricName, "en")}.`,
+        `Выбери вариант, где «${localize(metricName, "ru")}» имеет ${localize(word(targetWord), "ru")}.`,
+      ),
+      metric,
+      entities: best.entries.map(viewEntity),
+      correctAnswer: correct.id,
+      explanation: dual(
+        `${displayName(correct, "en")} is correct: ${formatNumber(getMetricValue(correct, metric), metric, "en")}.`,
+        `Правильный ответ — ${displayName(correct, "ru")}: ${formatNumber(getMetricValue(correct, metric), metric, "ru")}.`,
+      ),
+      difficulty: best.difficulty,
+      signature: `pickExtreme:${metric.id}:${pickHighest ? "high" : "low"}:${best.entries.map((entity) => entity.id).join(":")}`,
     };
   }
 
@@ -760,7 +935,7 @@
     }
 
     const championsByKey = new Map(
-      (data.entitiesByCategory.champions || []).map((champion) => [normalizeText(localize(champion.name)), champion]),
+      (data.entitiesByCategory.champions || []).map((champion) => [normalizeText(localize(champion.name, "en")), champion]),
     );
     const champions = abilities.map((ability) => championsByKey.get(ability.championKey)).filter(Boolean);
 
@@ -773,14 +948,19 @@
     );
 
     return {
-      title: "Ability Match",
-      prompt: "Match each ability to its champion.",
+      title: dual("Ability Match", "Умение → чемпион"),
+      prompt: dual("Match each ability to its champion.", "Сопоставь каждое умение с его чемпионом."),
       entities: abilities.map(viewEntity),
       choices: rng.shuffle(champions).map(viewEntity),
       correctAnswer,
-      explanation: abilities
-        .map((ability) => `${displayName(ability)} → ${localize(ability.championName)}`)
-        .join(" · "),
+      explanation: dual(
+        abilities
+          .map((ability) => `${displayName(ability, "en")} → ${localize(ability.championName, "en")}`)
+          .join(" · "),
+        abilities
+          .map((ability) => `${displayName(ability, "ru")} → ${localize(ability.championName, "ru")}`)
+          .join(" · "),
+      ),
       difficulty: clamp(0.36 + targetDifficulty(run, route.special) * 0.46 + (abilities.length - 3) * 0.1),
       signature: `match:${abilities.map((ability) => ability.id).join(":")}`,
     };
@@ -801,12 +981,18 @@
     }
 
     return {
-      title: `${CATEGORY_CONFIG[route.category].shortLabel} Identify`,
-      prompt: `Identify this ${CATEGORY_CONFIG[route.category].shortLabel.toLowerCase()}.`,
+      title: dual(
+        `${localize(categoryShortLabel(route.category), "en")} Identify`,
+        `${localize(categoryShortLabel(route.category), "ru")} · узнавание`,
+      ),
+      prompt: dual(
+        `Identify this ${localize(categoryShortLabel(route.category), "en").toLowerCase()}.`,
+        `Узнай ${localize(categoryShortLabel(route.category), "ru").toLowerCase()}.`,
+      ),
       entities: [viewEntity(target)],
       choices: rng.shuffle(choices).map(viewEntity),
       correctAnswer: target.id,
-      explanation: `That is ${displayName(target)}.`,
+      explanation: dual(`That is ${displayName(target, "en")}.`, `Это ${displayName(target, "ru")}.`),
       difficulty: clamp(0.22 + targetDifficulty(run, route.special) * 0.4 + (hasModifier(route, "closeChoices") ? 0.16 : 0)),
       signature: `identify:${route.category}:${target.id}`,
     };
@@ -839,12 +1025,15 @@
     const choices = rng.shuffle([target, ...decoys]);
 
     return {
-      title: "Constraint Search",
-      prompt: "Find a champion matching every condition.",
+      title: dual("Constraint Search", "Поиск по условиям"),
+      prompt: dual("Find a champion matching every condition.", "Найди чемпиона, который подходит под все условия."),
       entities: choices.map(viewEntity),
       conditions,
       correctAnswer: target.id,
-      explanation: `${displayName(target)} satisfies: ${conditions.map((condition) => condition.text).join(", ")}.`,
+      explanation: dual(
+        `${displayName(target, "en")} satisfies: ${conditions.map((condition) => localize(condition.text, "en")).join(", ")}.`,
+        `${displayName(target, "ru")} подходит: ${conditions.map((condition) => localize(condition.text, "ru")).join(", ")}.`,
+      ),
       difficulty: clamp(0.36 + conditions.length * 0.1 + targetDifficulty(run, route.special) * 0.3),
       signature: `constraint:${target.id}:${conditions.map((condition) => condition.id).join(":")}`,
     };
@@ -897,14 +1086,25 @@
     }
 
     return {
-      title: `${CATEGORY_CONFIG[route.category].shortLabel} Rapid Fire`,
-      prompt: `${RUN_CONFIG.rapidFireRounds} fast calls on ${metric.label}.`,
+      title: dual(
+        `${localize(categoryShortLabel(route.category), "en")} Rapid Fire`,
+        `${localize(categoryShortLabel(route.category), "ru")} · блиц`,
+      ),
+      prompt: dual(
+        `${RUN_CONFIG.rapidFireRounds} fast calls on ${localize(metricLabel(metric), "en")}.`,
+        `${RUN_CONFIG.rapidFireRounds} быстрых сравнений по параметру «${localize(metricLabel(metric), "ru")}».`,
+      ),
       metric,
       rounds,
       correctAnswer: rounds.map((round) => round.correctAnswer),
-      explanation: rounds
-        .map((round) => `${round.right.name}: ${formatNumber(round.rightValue, metric)}`)
-        .join(" · "),
+      explanation: dual(
+        rounds
+          .map((round) => `${localize(round.right.name, "en")}: ${formatNumber(round.rightValue, metric, "en")}`)
+          .join(" · "),
+        rounds
+          .map((round) => `${localize(round.right.name, "ru")}: ${formatNumber(round.rightValue, metric, "ru")}`)
+          .join(" · "),
+      ),
       difficulty: clamp(0.48 + targetDifficulty(run, true) * 0.34 + metric.obscurity * 0.24),
       signature: `rapid:${metric.id}:${rounds.map((round) => round.left.id + round.right.id).join(":")}`,
     };
@@ -975,15 +1175,15 @@
       sourceId: entity.sourceId,
       category: entity.category,
       kind: entity.kind,
-      name: localize(entity.name),
-      title: localize(entity.title),
+      name: entity.name,
+      title: entity.title,
       image: entity.image,
       meta: entity.meta || "",
     };
   }
 
-  function displayName(entity) {
-    return entity?.name ? localize(entity.name) : "";
+  function displayName(entity, language = "en") {
+    return entity?.name ? localize(entity.name, language) : "";
   }
 
   function createIdentifyChoices(data, route, target, rng) {
@@ -1056,24 +1256,22 @@
       ["position", rng.pick(target.traits.position || [])],
       ["region", rng.pick(target.traits.region || [])],
     ].filter(([, value]) => value);
-    const traitLabels = {
-      resource: "Resource",
-      rangeType: "Range type",
-      position: "Position",
-      region: "Region",
-    };
-
     rng.shuffle(traitCandidates).forEach(([key, value]) => {
       if (conditions.length >= desiredCount) {
         return;
       }
 
+      const label = traitLabel(key);
+      const traitValue = traitValueLabel(value);
       conditions.push({
         id: `${key}:${value}`,
         type: "trait",
         key,
         value,
-        text: `${traitLabels[key]} is ${value}`,
+        text: dual(
+          `${localize(label, "en")} is ${localize(traitValue, "en")}`,
+          `${localize(label, "ru")} — ${localize(traitValue, "ru")}`,
+        ),
       });
     });
 
@@ -1105,7 +1303,10 @@
         metricId: metric.id,
         operator: direction,
         threshold,
-        text: `${metric.shortLabel} ${direction} ${formatNumber(threshold, metric)}`,
+        text: dual(
+          `${localize(metricShortLabel(metric), "en")} ${direction} ${formatNumber(threshold, metric, "en")}`,
+          `${localize(metricShortLabel(metric), "ru")} ${direction} ${formatNumber(threshold, metric, "ru")}`,
+        ),
       });
     });
 
@@ -1131,7 +1332,7 @@
 
   function evaluateAnswer(challenge, answer) {
     if (!challenge) {
-      return { correct: false, partial: 0, label: "No challenge" };
+      return { correct: false, partial: 0, label: dual("No challenge", "Нет испытания") };
     }
 
     if (challenge.type === "exact") {
@@ -1141,7 +1342,15 @@
       const partialWindow = challenge.tolerance * 2.6;
       const partial = exact ? 1 : clamp(1 - delta / partialWindow, 0, 0.82);
 
-      return { correct: exact, partial, label: exact ? "Clean estimate" : partial > 0 ? "Partial estimate" : "Miss" };
+      return {
+        correct: exact,
+        partial,
+        label: exact
+          ? dual("Clean estimate", "Точная оценка")
+          : partial > 0
+            ? dual("Partial estimate", "Частичная оценка")
+            : dual("Miss", "Промах"),
+      };
     }
 
     if (challenge.type === "order") {
@@ -1153,7 +1362,12 @@
       return {
         correct: partial === 1,
         partial: partial >= 0.5 ? partial : 0,
-        label: partial === 1 ? "Perfect order" : partial >= 0.5 ? "Partial order" : "Wrong order",
+        label:
+          partial === 1
+            ? dual("Perfect order", "Идеальный порядок")
+            : partial >= 0.5
+              ? dual("Partial order", "Частичный порядок")
+              : dual("Wrong order", "Неверный порядок"),
       };
     }
 
@@ -1166,7 +1380,12 @@
       return {
         correct: partial === 1,
         partial: partial >= 0.5 ? partial : 0,
-        label: partial === 1 ? "Clean match" : partial >= 0.5 ? "Partial match" : "Mismatch",
+        label:
+          partial === 1
+            ? dual("Clean match", "Полное совпадение")
+            : partial >= 0.5
+              ? dual("Partial match", "Частичное совпадение")
+              : dual("Mismatch", "Несовпадение"),
       };
     }
 
@@ -1179,12 +1398,12 @@
       return {
         correct: partial === 1,
         partial: partial >= 0.6 ? partial : 0,
-        label: `${hits}/${correct.length} calls`,
+        label: dual(`${hits}/${correct.length} calls`, `${hits}/${correct.length} ответов`),
       };
     }
 
     const correct = answer === challenge.correctAnswer;
-    return { correct, partial: correct ? 1 : 0, label: correct ? "Correct" : "Wrong" };
+    return { correct, partial: correct ? 1 : 0, label: correct ? dual("Correct", "Верно") : dual("Wrong", "Ошибка") };
   }
 
   function resolveChallenge(run, challenge, answer, options = {}) {
@@ -1256,7 +1475,7 @@
       correct,
       partial,
       timedOut,
-      label: timedOut ? "Time lost" : evaluation.label,
+      label: timedOut ? dual("Time lost", "Время вышло") : evaluation.label,
       reward,
       scoreLoss,
       stabilityDelta,
@@ -1269,7 +1488,7 @@
     nextRun.options = [];
 
     if (nextRun.stability <= RUN_CONFIG.failStability) {
-      nextRun = finishRun(nextRun, "Stability collapsed");
+      nextRun = finishRun(nextRun, word("stabilityCollapsed"));
     } else {
       nextRun.phase = "feedback";
       nextRun.stage += 1;
@@ -1287,7 +1506,7 @@
     }
 
     if (action === "cashOut") {
-      return finishRun(bankRun(nextRun), "Cashed out");
+      return finishRun(bankRun(nextRun), word("cashedOut"));
     }
 
     if (nextRun.phase === "cashout") {
@@ -1345,7 +1564,7 @@
     return { ...run, bankedScore };
   }
 
-  function finishRun(run, reason = "Finished") {
+  function finishRun(run, reason = word("finished")) {
     return {
       ...run,
       phase: "results",
@@ -1429,10 +1648,10 @@
       depth: Math.max(0, Number(run.stage || 1) - 1),
       accuracy,
       longestCombo: Number(run.longestCombo || 0),
-      bestCategory: bestCategory ? CATEGORY_CONFIG[bestCategory.category]?.label || bestCategory.category : "None",
+      bestCategory: bestCategory ? categoryLabel(bestCategory.category) : word("none"),
       hardestCleared: run.facts?.hardestCleared,
       bestReward: Number(run.facts?.bestReward || 0),
-      reason: run.finishReason || "Finished",
+      reason: run.finishReason || word("finished"),
       durationMs: (run.endedAt || Date.now()) - Number(run.startedAt || Date.now()),
       seed: run.seed,
     };
@@ -1447,7 +1666,7 @@
       deepestStage: Math.max(Number(previous.deepestStage || 0), summary.depth),
       longestCombo: Math.max(Number(previous.longestCombo || 0), summary.longestCombo),
       totalRuns: Number(previous.totalRuns || 0) + 1,
-      bestCategory: summary.score >= Number(previous.bestScore || 0) ? summary.bestCategory : previous.bestCategory || "None",
+      bestCategory: summary.score >= Number(previous.bestScore || 0) ? summary.bestCategory : previous.bestCategory || word("none"),
       lastRun: summary,
     };
   }
@@ -1482,6 +1701,18 @@
     (challenge.entities || []).forEach((entity) => {
       if (!entity.image && !hasModifier(challenge, "noPortraits")) {
         errors.push(`empty image for ${entity.id}`);
+      }
+
+      if (challenge.metric?.id === "item.gold") {
+        const leakedText = [entity.meta]
+          .flatMap((value) => [localize(value, "en"), localize(value, "ru")])
+          .join(" ")
+          .toLowerCase();
+        const values = Object.values(challenge.values || {}).map(String);
+
+        if (/\bgold\b|золота/.test(leakedText) || values.some((value) => leakedText.includes(value))) {
+          errors.push(`item cost leaked for ${entity.id}`);
+        }
       }
     });
 

@@ -16,6 +16,7 @@ function readJson(relativePath) {
 const rawData = {
   champions: readJson("data/champions.json"),
   items: readJson("data/items.json"),
+  itemTranslations: readJson("data/item-translations-ru.json"),
   abilities: readJson("data/abilities.json"),
   championStats: readJson("data/champion-stats.json"),
 };

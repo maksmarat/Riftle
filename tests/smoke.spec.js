@@ -402,6 +402,8 @@ test("rift run starts, scores an encounter, and resumes active runs", async ({ p
   await page.locator("[data-action='start']").click();
   await expect(page.locator(".run-hud")).toBeVisible();
   await expect(page.locator(".rift-run-board")).toBeVisible();
+  const visibleEntityMeta = await page.locator(".entity-copy small").allTextContents();
+  expect(visibleEntityMeta.join(" ")).not.toMatch(/gold|золота/i);
 
   const correctAnswer = await page.evaluate(() => {
     return JSON.parse(localStorage.getItem("riftle.riftRun.v1.activeRun")).currentChallenge.correctAnswer;
@@ -415,6 +417,11 @@ test("rift run starts, scores an encounter, and resumes active runs", async ({ p
   await expect(page.locator("[data-action='resume']")).toBeVisible();
   await page.locator("[data-action='resume']").click();
   await expect(page.locator(".rift-run-feedback")).toBeVisible();
+
+  await page.locator("[data-language='ru']").click();
+  await page.locator("[data-action='continue']").click();
+  await expect(page.locator(".challenge-prompt, .rift-run-choice")).not.toContainText(/^Will /);
+  await expect(page.locator("html")).toHaveAttribute("lang", "ru");
 });
 
 test("random tools page rolls roles, build, and next item", async ({ page }) => {

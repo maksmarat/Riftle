@@ -2,7 +2,7 @@
   "use strict";
 
   const { config, engine } = window.RiftRun;
-  const { DATA_URLS, STORAGE_KEYS, MODIFIERS, CATEGORY_CONFIG } = config;
+  const { DATA_URLS, STORAGE_KEYS } = config;
 
   const LANGUAGE_KEY = "riftle-language-v1";
   const DEFAULT_LANGUAGE = "en";
@@ -80,11 +80,11 @@
       loadError: "Не удалось загрузить данные Rift Run.",
       introA: "Проходи испытания на знание League, выбирай риск и забирай score до обвала стабильности.",
       introB: "Без daily, аккаунтов и онлайна. Один чистый run.",
-      bestScore: "Лучший score",
+      bestScore: "Лучший счёт",
       deepest: "Глубина",
-      runs: "Runs",
-      stage: "Stage",
-      score: "Score",
+      runs: "Забеги",
+      stage: "Этап",
+      score: "Счёт",
       multiplier: "Множитель",
       stability: "Стабильность",
       combo: "Комбо",
@@ -92,20 +92,20 @@
       potential: "Награда",
       difficulty: "Сложность",
       risk: "Риск",
-      special: "Special",
+      special: "Особое",
       correct: "Верно",
       partial: "Частично",
       wrong: "Ошибка",
       timeLost: "Время вышло",
       continue: "Дальше",
-      cashOut: "Забрать score",
+      cashOut: "Забрать счёт",
       pushDeeper: "Рискнуть",
       runSummary: "Итоги run",
       accuracy: "Точность",
       bestCategory: "Лучшая категория",
       hardest: "Сложнейшее закрытое",
       longestCombo: "Лучшее комбо",
-      seed: "Seed",
+      seed: "Сид",
       muted: "Звук выкл.",
       sound: "Звук",
       higher: "Больше",
@@ -146,14 +146,15 @@
     renderLoading();
 
     try {
-      const [champions, items, abilities, championStats] = await Promise.all([
+      const [champions, items, itemTranslations, abilities, championStats] = await Promise.all([
         fetchJson(DATA_URLS.champions),
         fetchJson(DATA_URLS.items),
+        fetchJson(DATA_URLS.itemTranslations),
         fetchJson(DATA_URLS.abilities),
         fetchJson(DATA_URLS.championStats),
       ]);
 
-      data = engine.buildData({ champions, items, abilities, championStats });
+      data = engine.buildData({ champions, items, itemTranslations, abilities, championStats });
       run = null;
 
       bindEvents();
@@ -260,7 +261,7 @@
         </div>
         <div class="rift-run-records">
           ${recordTile(t().bestScore, formatInteger(records.bestScore || 0))}
-          ${recordTile(t().deepest, `Stage ${formatInteger(records.deepestStage || 0)}`)}
+          ${recordTile(t().deepest, `${t().stage} ${formatInteger(records.deepestStage || 0)}`)}
           ${recordTile(t().runs, formatInteger(records.totalRuns || 0))}
         </div>
       </section>
@@ -307,16 +308,16 @@
     return `
       <button class="encounter-card" type="button" data-option-id="${escapeAttr(option.id)}">
         <span class="encounter-index">${index + 1}</span>
-        <span class="encounter-meta">${escapeHtml(option.categoryLabel)} · ${escapeHtml(option.typeLabel)}</span>
-        <strong>${escapeHtml(option.title)}</strong>
-        <span class="encounter-prompt">${escapeHtml(option.prompt)}</span>
+        <span class="encounter-meta">${escapeHtml(l(option.categoryLabel))} · ${escapeHtml(l(option.typeLabel))}</span>
+        <strong>${escapeHtml(l(option.title))}</strong>
+        <span class="encounter-prompt">${escapeHtml(l(option.prompt))}</span>
         <span class="encounter-stats">
           <span>${escapeHtml(t().difficulty)} ${difficultyLabel(option.difficulty)}</span>
           <span>${escapeHtml(t().risk)} ${Math.round(option.risk * 100)}%</span>
           <span>${escapeHtml(t().potential)} ${formatInteger(option.reward)}</span>
         </span>
         ${option.special ? `<span class="encounter-special">${escapeHtml(t().special)}</span>` : ""}
-        ${renderModifierList(option.modifiers)}
+        ${renderModifierList(option.modifierLabels || option.modifiers)}
       </button>
     `;
   }
@@ -338,16 +339,16 @@
       <section class="rift-run-board ${challenge.special ? "rift-run-board-special" : ""}" data-challenge-type="${escapeAttr(challenge.type)}">
         <div class="section-title-row">
           <div>
-            <p class="rift-run-kicker">${escapeHtml(challenge.categoryLabel)} · ${escapeHtml(challenge.typeLabel)}</p>
-            <h1>${escapeHtml(challenge.title)}</h1>
+            <p class="rift-run-kicker">${escapeHtml(l(challenge.categoryLabel))} · ${escapeHtml(l(challenge.typeLabel))}</p>
+            <h1>${escapeHtml(l(challenge.title))}</h1>
           </div>
           <div class="rift-run-board-tools">
             ${challenge.timeLimit ? `<div class="run-timer" id="run-timer">${challenge.timeLimit}s</div>` : ""}
             ${renderMuteButton()}
           </div>
         </div>
-        <p class="challenge-prompt">${escapeHtml(challenge.prompt)}</p>
-        ${renderModifierList(challenge.modifiers)}
+        <p class="challenge-prompt">${escapeHtml(l(challenge.prompt))}</p>
+        ${renderModifierList(challenge.modifierLabels || challenge.modifiers)}
         <div class="challenge-body" id="challenge-body">${renderChallengeBody(challenge)}</div>
       </section>
     `;
@@ -391,7 +392,7 @@
       return renderExact(challenge);
     }
 
-    if (["identify", "outlier", "constraint"].includes(challenge.type)) {
+    if (["identify", "outlier", "constraint", "pickExtreme"].includes(challenge.type)) {
       return renderChoiceGrid(challenge);
     }
 
@@ -414,8 +415,8 @@
       <div class="run-versus">
         ${entityCard(left, {
           noPortraits,
-          value: engine.formatNumber(challenge.values.left, challenge.metric),
-          label: challenge.metric.shortLabel,
+          value: engine.formatNumber(challenge.values.left, challenge.metric, language),
+          label: l(challenge.metric.shortLabelText || challenge.metric.shortLabel),
         })}
         <div class="versus-actions">
           <button class="rift-run-primary" type="button" data-answer="higher">${escapeHtml(t().higher)}</button>
@@ -424,7 +425,7 @@
         ${entityCard(right, {
           noPortraits,
           value: "???",
-          label: challenge.metric.shortLabel,
+          label: l(challenge.metric.shortLabelText || challenge.metric.shortLabel),
           hiddenValue: true,
         })}
       </div>
@@ -462,7 +463,7 @@
 
     return `
       <div class="exact-layout">
-        ${entityCard(entity, { value: challenge.metric.shortLabel, label: challenge.categoryShortLabel })}
+        ${entityCard(entity, { value: l(challenge.metric.shortLabelText || challenge.metric.shortLabel), label: l(challenge.categoryShortLabel) })}
         <form class="exact-form" id="exact-form">
           <input class="exact-input" id="exact-input" inputmode="decimal" autocomplete="off" placeholder="${escapeAttr(t().estimatePlaceholder)}">
           <button class="rift-run-primary" type="submit">${escapeHtml(t().submit)}</button>
@@ -495,7 +496,7 @@
   function renderConditions(conditions) {
     return `
       <div class="condition-list">
-        ${conditions.map((condition) => `<span>${escapeHtml(condition.text)}</span>`).join("")}
+        ${conditions.map((condition) => `<span>${escapeHtml(l(condition.text))}</span>`).join("")}
       </div>
     `;
   }
@@ -510,8 +511,8 @@
                 <span class="match-ability">
                   <img src="${escapeAttr(ability.image)}" alt="" loading="lazy">
                   <span>
-                    <strong>${escapeHtml(challenge.modifiers.includes("noNames") ? "???" : ability.name)}</strong>
-                    <small>${escapeHtml(ability.meta)}</small>
+                    <strong>${escapeHtml(challenge.modifiers.includes("noNames") ? "???" : l(ability.name))}</strong>
+                    <small>${escapeHtml(l(ability.meta))}</small>
                   </span>
                 </span>
                 <select data-match-ability="${escapeAttr(ability.id)}">
@@ -519,7 +520,7 @@
                   ${challenge.choices
                     .map(
                       (champion) =>
-                        `<option value="${escapeAttr(champion.id)}">${escapeHtml(champion.name)}</option>`,
+                        `<option value="${escapeAttr(champion.id)}">${escapeHtml(l(champion.name))}</option>`,
                     )
                     .join("")}
                 </select>
@@ -542,8 +543,8 @@
       <div class="rapid-progress">${index + 1} / ${challenge.rounds.length}</div>
       <div class="run-versus run-versus-rapid">
         ${entityCard(round.left, {
-          value: engine.formatNumber(round.leftValue, challenge.metric),
-          label: challenge.metric.shortLabel,
+          value: engine.formatNumber(round.leftValue, challenge.metric, language),
+          label: l(challenge.metric.shortLabelText || challenge.metric.shortLabel),
           noPortraits: challenge.modifiers.includes("noPortraits"),
         })}
         <div class="versus-actions">
@@ -552,7 +553,7 @@
         </div>
         ${entityCard(round.right, {
           value: "???",
-          label: challenge.metric.shortLabel,
+          label: l(challenge.metric.shortLabelText || challenge.metric.shortLabel),
           hiddenValue: true,
           noPortraits: challenge.modifiers.includes("noPortraits"),
         })}
@@ -577,8 +578,8 @@
             : `<img src="${escapeAttr(entity.image)}" alt="" loading="lazy">`
         }
         <span class="entity-copy">
-          <strong>${escapeHtml(options.noNames ? "???" : entity.name)}</strong>
-          <small>${escapeHtml(entity.meta || entity.title || "")}</small>
+          <strong>${escapeHtml(options.noNames ? "???" : l(entity.name))}</strong>
+          <small>${escapeHtml(l(entity.meta || entity.title || ""))}</small>
         </span>
         ${
           options.value
@@ -686,7 +687,7 @@
       <section class="rift-run-feedback rift-run-feedback-${tone}">
         <p class="rift-run-kicker">${escapeHtml(label)}</p>
         <h1>${outcome.reward > 0 ? `+${formatInteger(outcome.reward)}` : outcome.scoreLoss > 0 ? `-${formatInteger(outcome.scoreLoss)}` : "0"}</h1>
-        <p>${escapeHtml(outcome.explanation || "")}</p>
+        <p>${escapeHtml(l(outcome.explanation || ""))}</p>
         <div class="feedback-facts">
           <span>${escapeHtml(t().stability)} ${outcome.stabilityDelta > 0 ? "+" : ""}${outcome.stabilityDelta || 0}</span>
           <span>${escapeHtml(t().multiplier)} x${Number(outcome.multiplier || run.multiplier).toFixed(2)}</span>
@@ -737,11 +738,11 @@
         <h1>${escapeHtml(t().runSummary)}</h1>
         <div class="result-score">${formatInteger(summary.score)}</div>
         <div class="result-grid">
-          ${recordTile(t().deepest, `Stage ${formatInteger(summary.depth)}`)}
+          ${recordTile(t().deepest, `${t().stage} ${formatInteger(summary.depth)}`)}
           ${recordTile(t().accuracy, `${summary.accuracy}%`)}
-          ${recordTile(t().bestCategory, summary.bestCategory)}
+          ${recordTile(t().bestCategory, l(summary.bestCategory))}
           ${recordTile(t().longestCombo, formatInteger(summary.longestCombo))}
-          ${recordTile(t().hardest, summary.hardestCleared ? `${summary.hardestCleared.title} · ${Math.round(summary.hardestCleared.difficulty * 100)}%` : "—")}
+          ${recordTile(t().hardest, summary.hardestCleared ? `${l(summary.hardestCleared.title)} · ${Math.round(summary.hardestCleared.difficulty * 100)}%` : "—")}
           ${recordTile(t().seed, summary.seed)}
         </div>
         <div class="rift-run-actions">
@@ -783,9 +784,12 @@
     return `
       <div class="modifier-list">
         ${modifiers
-          .map((id) => {
-            const modifier = MODIFIERS[id];
-            return modifier ? `<span title="${escapeAttr(modifier.description)}">${escapeHtml(modifier.label)}</span>` : "";
+          .map((modifier) => {
+            if (typeof modifier === "string") {
+              return `<span>${escapeHtml(modifier)}</span>`;
+            }
+
+            return `<span title="${escapeAttr(l(modifier.description))}">${escapeHtml(l(modifier.label))}</span>`;
           })
           .join("")}
       </div>
@@ -890,7 +894,7 @@
       return;
     }
 
-    if (["identify", "outlier", "constraint"].includes(run.currentChallenge.type) && /^[1-4]$/.test(key)) {
+    if (["identify", "outlier", "constraint", "pickExtreme"].includes(run.currentChallenge.type) && /^[1-4]$/.test(key)) {
       const button = dom.root.querySelectorAll("[data-entity-id]")[Number(key) - 1];
       button?.click();
     }
@@ -1040,6 +1044,10 @@
 
   function t() {
     return copy[language] || copy[DEFAULT_LANGUAGE];
+  }
+
+  function l(value) {
+    return engine.localize(value, language);
   }
 
   function readJson(key, fallback) {

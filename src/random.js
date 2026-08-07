@@ -844,11 +844,12 @@
 
     if (roleKey === "support") {
       const supportItem = selectSupportSlot();
-      const coreItems = selectCoreItems(roleKey, 4, [boot, supportItem]);
+      const coreItems = selectCoreItems(roleKey, supportItem ? 4 : 5, [boot, supportItem]);
+      const items = [supportItem, boot, ...coreItems].filter(Boolean).slice(0, 6);
 
       return {
-        items: boot ? [boot, ...coreItems] : coreItems,
-        slots: supportItem ? [{ key: "support", item: supportItem, labelKey: "supportSlot" }] : [],
+        items,
+        slots: [],
       };
     }
 

@@ -354,9 +354,11 @@ test("random tools page rolls roles, build, and next item", async ({ page }) => 
 
   await page.locator("[data-build-role='support']").click();
   await expect(page.locator("[data-build-role='support']")).toHaveClass(/role-chip-active/);
-  await expect(page.locator("#build-items .loot-card")).toHaveCount(5);
-  await expect(page.locator("#build-slots .slot-card")).toHaveCount(1);
-  await expect(page.locator("#build-slots .slot-card")).toContainText("Support slot");
+  await expect(page.locator("#build-items .loot-card")).toHaveCount(6);
+  await expect(page.locator("#build-slots .slot-card")).toHaveCount(0);
+
+  const supportItems = await page.locator("#build-items .loot-card").allTextContents();
+  expect(supportItems.some((text) => /Bloodsong|Celestial Opposition|Dream Maker|Solstice Sleigh|Zaz'Zak/.test(text))).toBe(true);
 
   await page.locator("[data-spin-speed='4']").click();
   await expect(page.locator("[data-spin-speed='4']")).toHaveClass(/speed-chip-active/);

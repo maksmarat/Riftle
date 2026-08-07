@@ -1467,6 +1467,20 @@ function renderMoreLess() {
   const answered = Boolean(duelState.lastAnswer);
   const correct = duelState.lastAnswer?.correct === true;
   const disabled = duelState.gameOver || duelState.revealed;
+  const leftValue = currentItem.stats[statKey];
+  const rightValue = challengerItem.stats[statKey];
+  const correctAnswer = rightValue > leftValue ? "more" : "less";
+  const getResultTone = (answer) => {
+    if (!answered) {
+      return "";
+    }
+
+    if (answer === correctAnswer) {
+      return "correct";
+    }
+
+    return duelState.lastAnswer?.choice === answer ? "wrong" : "";
+  };
 
   dom.moreLessStreak.textContent = duelState.streak;
   dom.moreLessBest.textContent = Math.max(duelState.best, duelState.streak);
@@ -1484,6 +1498,7 @@ function renderMoreLess() {
     revealSelectedValue: true,
     disabled,
     picked: duelState.lastAnswer?.choice === "less",
+    resultTone: getResultTone("less"),
   });
   renderMoreLessItem(dom.moreLessRightCard, challengerItem, {
     side: "right",
@@ -1493,7 +1508,7 @@ function renderMoreLess() {
     revealSelectedValue: duelState.revealed,
     disabled,
     picked: duelState.lastAnswer?.choice === "more",
-    resultTone: answered ? (correct ? "correct" : "wrong") : "",
+    resultTone: getResultTone("more"),
   });
 
   dom.moreLessResult.classList.toggle("hidden", !duelState.gameOver);

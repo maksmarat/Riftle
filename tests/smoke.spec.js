@@ -55,6 +55,29 @@ async function expectNoAdjacentRouletteDuplicates(page) {
   }
 }
 
+async function seedDuelState(page, mode, storageKey, state) {
+  await page.goto(`${BASE_URL}/`);
+  await page.evaluate(
+    ({ storageKey, state }) => {
+      localStorage.clear();
+      localStorage.setItem(
+        storageKey,
+        JSON.stringify({
+          ...state,
+          streak: 0,
+          best: 0,
+          gameOver: false,
+          revealed: false,
+          lastAnswer: null,
+          seenItemIds: [state.currentItemId, state.challengerItemId],
+        }),
+      );
+    },
+    { storageKey, state },
+  );
+  await page.goto(`${BASE_URL}/?mode=${mode}`);
+}
+
 test("classic flow uses suggestions and victory menu", async ({ page }) => {
   await page.goto(`${BASE_URL}/`);
   await page.evaluate(() => localStorage.clear());
@@ -328,6 +351,42 @@ test("stat duel mode renders champion stat comparison", async ({ page }) => {
 
   expect(nextState.currentItemId).toBe(previousState.challengerItemId);
   expect(nextState.challengerItemId).not.toBe(previousState.currentItemId);
+});
+
+test("duel result highlight follows the left correct answer", async ({ page }) => {
+  const leftCorrectCases = [
+    {
+      mode: "moreLess",
+      storageKey: "riftle-moreless-state-v1",
+      title: "Item Duel",
+      state: { currentItemId: "2522", challengerItemId: "3113", statKey: "abilityPower" },
+    },
+    {
+      mode: "spellDuel",
+      storageKey: "riftle-spell-duel-state-v1",
+      title: "Spell Duel",
+      state: { currentItemId: "Aatrox-W", challengerItemId: "Aatrox-Q", statKey: "abilityCooldown" },
+    },
+    {
+      mode: "statDuel",
+      storageKey: "riftle-stat-duel-state-v1",
+      title: "Stat Duel",
+      state: { currentItemId: "Aatrox", challengerItemId: "Ahri", statKey: "attackDamageLevel1" },
+    },
+  ];
+
+  for (const config of leftCorrectCases) {
+    await seedDuelState(page, config.mode, config.storageKey, config.state);
+
+    await expect(page.locator("#page-title")).toHaveText(config.title);
+    await expect(page.locator("#moreless-right-card .item-stat-focus strong")).toHaveText("???");
+
+    await page.locator("#moreless-left-card").click();
+
+    await expect(page.locator("#moreless-left-card")).toHaveClass(/moreless-card-correct/, { timeout: 500 });
+    await expect(page.locator("#moreless-right-card")).not.toHaveClass(/moreless-card-correct/, { timeout: 500 });
+    await expect(page.locator("#moreless-right-card .item-stat-focus strong")).not.toHaveText("???", { timeout: 500 });
+  }
 });
 
 test("random tools page rolls roles, build, and next item", async ({ page }) => {

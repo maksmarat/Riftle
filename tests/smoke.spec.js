@@ -46,6 +46,15 @@ async function auditRandomBuildForUpgradedBoots(page) {
   return UPGRADED_BOOT_NAMES.filter((name) => texts.some((text) => text.includes(name)));
 }
 
+async function expectNoAdjacentRouletteDuplicates(page) {
+  const names = await page.locator("#buy-wheel-track .roulette-card strong").allTextContents();
+  expect(names.length).toBeGreaterThan(0);
+
+  for (let index = 1; index < names.length; index += 1) {
+    expect(names[index]).not.toBe(names[index - 1]);
+  }
+}
+
 test("classic flow uses suggestions and victory menu", async ({ page }) => {
   await page.goto(`${BASE_URL}/`);
   await page.evaluate(() => localStorage.clear());
@@ -322,6 +331,9 @@ test("stat duel mode renders champion stat comparison", async ({ page }) => {
 });
 
 test("random tools page rolls roles, build, and next item", async ({ page }) => {
+  await page.addInitScript(() => {
+    Math.random = () => 0;
+  });
   await page.goto(`${BASE_URL}/random.html`);
   await page.evaluate(() => localStorage.clear());
   await page.reload();
@@ -340,6 +352,7 @@ test("random tools page rolls roles, build, and next item", async ({ page }) => 
   await expect(page.locator("#build-slots .slot-card")).toHaveCount(1);
   await expect(page.locator("#build-slots .slot-card")).toContainText("Boot slot");
   expect(await auditRandomBuildForUpgradedBoots(page)).toEqual([]);
+  await expectNoAdjacentRouletteDuplicates(page);
 
   await page.locator("[data-language='ru']").click();
   await expect(page.locator("html")).toHaveAttribute("lang", "ru");
@@ -383,6 +396,15 @@ test("random tools page rolls roles, build, and next item", async ({ page }) => 
   await page.locator("#spin-buy").click();
   await expect(page.locator("#buy-result strong")).not.toHaveText("", { timeout: 3000 });
   await expect(page.locator(".roulette-marker")).toBeVisible();
+  await expectNoAdjacentRouletteDuplicates(page);
+
+  const firstBuyResult = await page.locator("#buy-result strong").textContent();
+  await page.locator("#spin-buy").click();
+  await expect(page.locator("#buy-result strong")).not.toHaveText("", { timeout: 3000 });
+  const secondBuyResult = await page.locator("#buy-result strong").textContent();
+
+  expect(secondBuyResult).not.toBe(firstBuyResult);
+  await expectNoAdjacentRouletteDuplicates(page);
 });
 
 test("direct duel pages open their modes on static hosting", async ({ page }) => {

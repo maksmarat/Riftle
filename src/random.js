@@ -477,6 +477,43 @@
     return list[Math.floor(Math.random() * list.length)];
   }
 
+  function sampleExcluding(list, excludedItems = []) {
+    const excludedIds = new Set(excludedItems.filter(Boolean).map((item) => item.id));
+    const candidates = list.filter((item) => !excludedIds.has(item.id));
+
+    return sample(candidates.length > 0 ? candidates : list);
+  }
+
+  function buildBuyPreview(count) {
+    const items = [];
+
+    while (items.length < count) {
+      items.push(sampleExcluding(buyPool, [items[items.length - 1]]));
+    }
+
+    return items;
+  }
+
+  function buildBuyStrip(selectedItem, selectedIndex, tailCount) {
+    const items = [];
+
+    while (items.length < selectedIndex) {
+      const exclusions = [items[items.length - 1]];
+      if (items.length === selectedIndex - 1) {
+        exclusions.push(selectedItem);
+      }
+      items.push(sampleExcluding(buyPool, exclusions));
+    }
+
+    items.push(selectedItem);
+
+    while (items.length < selectedIndex + tailCount + 1) {
+      items.push(sampleExcluding(buyPool, [items[items.length - 1]]));
+    }
+
+    return items;
+  }
+
   function roleLabel(roleKey) {
     return t().roles[roleKey] || roleKey;
   }
@@ -991,7 +1028,7 @@
       return;
     }
 
-    const previewItems = Array.from({ length: 12 }, () => sample(buyPool));
+    const previewItems = buildBuyPreview(12);
     elements.buyTrack.style.transition = "none";
     elements.buyTrack.style.transform = "translateX(0)";
     elements.buyTrack.replaceChildren(...previewItems.map((item) => createLootCard(item, "roulette-card")));
@@ -1024,18 +1061,15 @@
 
     window.clearTimeout(buySpinTimer);
     isSpinning = true;
+    const previousBuyItem = currentBuyItem;
     currentBuyItem = null;
     elements.spinBuyButton.disabled = true;
     renderBuyResult();
 
-    const selectedItem = sample(buyPool);
+    const selectedItem = sampleExcluding(buyPool, [previousBuyItem]);
     const settings = spinSettings[spinSpeed] || spinSettings[DEFAULT_SPIN_SPEED];
     const selectedIndex = settings.selectedIndex;
-    const stripItems = [
-      ...Array.from({ length: selectedIndex }, () => sample(buyPool)),
-      selectedItem,
-      ...Array.from({ length: 8 }, () => sample(buyPool)),
-    ];
+    const stripItems = buildBuyStrip(selectedItem, selectedIndex, 8);
 
     elements.buyTrack.style.transition = "none";
     elements.buyTrack.style.transform = "translateX(0)";

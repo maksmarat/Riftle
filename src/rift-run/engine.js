@@ -33,6 +33,17 @@
       .replace(/[^a-z0-9]+/g, "");
   }
 
+  function tokenizeLeakText(value) {
+    return String(value || "")
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^\p{L}\p{N}]+/gu, " ")
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean);
+  }
+
   function toArray(value) {
     if (Array.isArray(value)) {
       return value.filter((item) => item !== null && item !== undefined && item !== "");
@@ -719,6 +730,10 @@
         `Choose the card that makes the right side correct for ${localize(metricName, "en")}.`,
         `Выбери карточку: у ${localize(rightName, "ru")} значение «${localize(metricName, "ru")}» выше или ниже, чем у ${localize(leftName, "ru")}.`,
       ),
+      previewPrompt: dual(
+        `Choose a comparison card for ${localize(metricName, "en")}.`,
+        `Выбери карточку сравнения по параметру «${localize(metricName, "ru")}».`,
+      ),
       metric,
       entities: [viewEntity(best.left), viewEntity(best.right)],
       values: {
@@ -788,6 +803,10 @@
         `Order by ${localize(metricName, "en")}, ${localize(word(directionKey), "en")}.`,
         `Расположи по параметру «${localize(metricName, "ru")}»: ${localize(word(directionKey), "ru")}.`,
       ),
+      previewPrompt: dual(
+        `Order hidden cards by ${localize(metricName, "en")}.`,
+        `Расположи скрытые карточки по параметру «${localize(metricName, "ru")}».`,
+      ),
       metric,
       entities: best.entries.map(viewEntity),
       correctAnswer: sorted.map((entity) => entity.id),
@@ -831,6 +850,10 @@
       prompt: dual(
         `Estimate ${localize(metricName, "en")} for ${displayName(entity, "en")}.`,
         `Оцени параметр «${localize(metricName, "ru")}» для ${displayName(entity, "ru")}.`,
+      ),
+      previewPrompt: dual(
+        `Estimate one hidden ${localize(metricName, "en")} value.`,
+        `Оцени одно скрытое значение параметра «${localize(metricName, "ru")}».`,
       ),
       metric,
       entities: [viewEntity(entity)],
@@ -898,6 +921,10 @@
         `${localize(categoryShortLabel(route.category), "ru")} · лишнее`,
       ),
       prompt,
+      previewPrompt: dual(
+        `Find the odd card by a shared trait.`,
+        `Найди лишнюю карточку по общему признаку.`,
+      ),
       traitRule: { id: rule.id, label: ruleLabel, value: valueLabel, rawValue: traitValue, reverse },
       entities: choices.map(viewEntity),
       correctAnswer: correct.id,
@@ -956,6 +983,10 @@
       prompt: dual(
         `Pick the ${localize(word(targetWord), "en")} ${localize(metricName, "en")}.`,
         `Выбери вариант, где «${localize(metricName, "ru")}» имеет ${localize(word(targetWord), "ru")}.`,
+      ),
+      previewPrompt: dual(
+        `Pick one card by ${localize(metricName, "en")}.`,
+        `Выбери одну карточку по параметру «${localize(metricName, "ru")}».`,
       ),
       metric,
       entities: best.entries.map(viewEntity),
@@ -1034,6 +1065,7 @@
     return {
       title: dual("Ability Match", "Умение → чемпион"),
       prompt: dual("Match each ability to its champion.", "Сопоставь каждое умение с его чемпионом."),
+      previewPrompt: dual("Match ability icons to champions.", "Сопоставь иконки умений с чемпионами."),
       entities: best.abilities.map(viewAbilityForMatch),
       choices: rng.shuffle(best.champions).map(viewEntity),
       correctAnswer,
@@ -1074,6 +1106,10 @@
         `Identify this ${localize(identifyNoun, "en").toLowerCase()}.`,
         `Узнай ${localize(identifyNoun, "ru").toLowerCase()}.`,
       ),
+      previewPrompt: dual(
+        `Identify a hidden ${localize(identifyNoun, "en").toLowerCase()}.`,
+        `Узнай скрытый объект.`,
+      ),
       entities: [viewEntity(target)],
       choices: rng.shuffle(choices).map(viewEntity),
       correctAnswer: target.id,
@@ -1112,6 +1148,7 @@
     return {
       title: dual("Constraint Search", "Поиск по условиям"),
       prompt: dual("Find a champion matching every condition.", "Найди чемпиона, который подходит под все условия."),
+      previewPrompt: dual("Find a champion from hidden conditions.", "Найди чемпиона по скрытым условиям."),
       entities: choices.map(viewEntity),
       conditions,
       correctAnswer: target.id,
@@ -1182,6 +1219,10 @@
       prompt: dual(
         `${RUN_CONFIG.rapidFireRounds} fast card picks on ${localize(metricLabel(metric), "en")}.`,
         `${RUN_CONFIG.rapidFireRounds} быстрых выборов карточек по параметру «${localize(metricLabel(metric), "ru")}».`,
+      ),
+      previewPrompt: dual(
+        `${RUN_CONFIG.rapidFireRounds} quick picks by ${localize(metricLabel(metric), "en")}.`,
+        `${RUN_CONFIG.rapidFireRounds} быстрых выборов по параметру «${localize(metricLabel(metric), "ru")}».`,
       ),
       metric,
       rounds,
@@ -1832,6 +1873,62 @@
     return challenge.correctAnswer;
   }
 
+  function collectVisibleEntityNameTokens(challenge) {
+    const entities = [
+      ...(challenge.entities || []),
+      ...(challenge.choices || []),
+      ...(challenge.rounds || []).flatMap((round) => [round.left, round.right]),
+    ].filter(Boolean);
+    const names = [];
+
+    entities.forEach((entity) => {
+      ["en", "ru"].forEach((language) => {
+        const tokens = tokenizeLeakText(localize(entity.name, language));
+        const normalized = tokens.join("");
+
+        if (normalized.length >= 3) {
+          names.push(tokens);
+        }
+      });
+    });
+
+    const seen = new Set();
+    return names.filter((tokens) => {
+      const key = tokens.join(" ");
+
+      if (seen.has(key)) {
+        return false;
+      }
+
+      seen.add(key);
+      return true;
+    });
+  }
+
+  function textLeaksNameTokens(text, nameTokenGroups) {
+    const tokens = tokenizeLeakText(text);
+    const tokenText = ` ${tokens.join(" ")} `;
+
+    if (!tokens.length) {
+      return false;
+    }
+
+    return nameTokenGroups.some((nameTokens) => {
+      if (nameTokens.length === 1) {
+        return tokens.includes(nameTokens[0]);
+      }
+
+      return tokenText.includes(` ${nameTokens.join(" ")} `);
+    });
+  }
+
+  function previewLeaksEntityName(challenge) {
+    return textLeaksNameTokens(
+      [localize(challenge.previewPrompt, "en"), localize(challenge.previewPrompt, "ru")].join(" "),
+      collectVisibleEntityNameTokens(challenge),
+    );
+  }
+
   function summarizeRun(run) {
     const attempts = Math.max(1, Number(run.answered || 0));
     const accuracy = Math.round((Number(run.correct || 0) / attempts) * 100);
@@ -1892,6 +1989,12 @@
       errors.push("reward is not finite");
     }
 
+    if (!challenge.previewPrompt) {
+      errors.push("preview prompt missing");
+    } else if (previewLeaksEntityName(challenge)) {
+      errors.push("preview prompt leaks entity name");
+    }
+
     extractEntityIds(challenge).forEach((id) => {
       if (!id) {
         errors.push("empty entity id");
@@ -1943,18 +2046,16 @@
       (challenge.entities || []).forEach((ability) => {
         const champion = choicesById.get(challenge.correctAnswer?.[ability.id]);
         const championNames = [localize(champion?.name, "en"), localize(champion?.name, "ru")]
-          .map(normalizeText)
-          .filter(Boolean);
+          .map(tokenizeLeakText)
+          .filter((tokens) => tokens.join("").length >= 3);
         const visibleText = [
           hasModifier(challenge, "noNames") ? "" : localize(ability.name, "en"),
           hasModifier(challenge, "noNames") ? "" : localize(ability.name, "ru"),
           localize(ability.meta, "en"),
           localize(ability.meta, "ru"),
-        ]
-          .map(normalizeText)
-          .join(" ");
+        ].join(" ");
 
-        if (championNames.some((name) => name && visibleText.includes(name))) {
+        if (textLeaksNameTokens(visibleText, championNames)) {
           errors.push(`match leaks champion for ${ability.id}`);
         }
       });
@@ -1972,6 +2073,18 @@
 
     for (let index = 0; index < maxStages && run.phase !== "results"; index += 1) {
       if (run.phase === "choice") {
+        for (const option of run.options || []) {
+          const optionErrors = validateChallenge(option);
+          if (optionErrors.length) {
+            errors.push({ stage: run.stage, id: option?.id, errors: optionErrors });
+            break;
+          }
+        }
+
+        if (errors.length) {
+          break;
+        }
+
         run = selectOption(run, run.options[0]?.id);
       }
 

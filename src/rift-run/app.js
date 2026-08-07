@@ -348,7 +348,7 @@
         <span class="encounter-index">${index + 1}</span>
         <span class="encounter-meta">${escapeHtml(l(option.categoryLabel))} · ${escapeHtml(l(option.typeLabel))}</span>
         <strong>${escapeHtml(l(option.title))}</strong>
-        <span class="encounter-prompt">${escapeHtml(l(option.prompt))}</span>
+        <span class="encounter-prompt">${escapeHtml(l(option.previewPrompt || option.prompt))}</span>
         <span class="encounter-stats">
           <span>${escapeHtml(t().difficulty)} ${difficultyLabel(option.difficulty)}</span>
           <span>${escapeHtml(t().risk)} ${Math.round(option.risk * 100)}%</span>

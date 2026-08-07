@@ -265,7 +265,7 @@
       shortLabel: "HP",
       unit: "",
       group: "core",
-      obscurity: 0.1,
+      obscurity: 0.36,
       valid: "positive",
     },
     {
@@ -275,7 +275,7 @@
       label: "Health at level 18",
       shortLabel: "HP 18",
       group: "mixedLevel",
-      obscurity: 0.25,
+      obscurity: 0.58,
       valid: "positive",
     },
     {
@@ -285,7 +285,7 @@
       label: "Attack damage at level 1",
       shortLabel: "AD",
       group: "core",
-      obscurity: 0.12,
+      obscurity: 0.46,
       valid: "positive",
     },
     {
@@ -295,7 +295,7 @@
       label: "Attack damage at level 18",
       shortLabel: "AD 18",
       group: "mixedLevel",
-      obscurity: 0.28,
+      obscurity: 0.62,
       valid: "positive",
     },
     {
@@ -305,7 +305,7 @@
       label: "Armor at level 1",
       shortLabel: "Armor",
       group: "core",
-      obscurity: 0.16,
+      obscurity: 0.44,
       valid: "positive",
     },
     {
@@ -315,7 +315,7 @@
       label: "Armor at level 18",
       shortLabel: "Armor 18",
       group: "mixedLevel",
-      obscurity: 0.3,
+      obscurity: 0.6,
       valid: "positive",
     },
     {
@@ -325,7 +325,7 @@
       label: "Magic resist at level 1",
       shortLabel: "MR",
       group: "core",
-      obscurity: 0.2,
+      obscurity: 0.48,
       valid: "positive",
     },
     {
@@ -335,7 +335,7 @@
       label: "Magic resist at level 18",
       shortLabel: "MR 18",
       group: "mixedLevel",
-      obscurity: 0.32,
+      obscurity: 0.62,
       valid: "positive",
     },
     {
@@ -345,7 +345,7 @@
       label: "Attack speed at level 1",
       shortLabel: "AS",
       group: "precision",
-      obscurity: 0.48,
+      obscurity: 0.68,
       valid: "positive",
     },
     {
@@ -355,7 +355,7 @@
       label: "Health regen at level 1",
       shortLabel: "HP regen",
       group: "stats",
-      obscurity: 0.34,
+      obscurity: 0.64,
       valid: "positive",
     },
     {
@@ -365,7 +365,7 @@
       label: "Mana regen at level 1",
       shortLabel: "Mana regen",
       group: "stats",
-      obscurity: 0.38,
+      obscurity: 0.68,
       valid: "positive",
     },
     {
@@ -375,7 +375,7 @@
       label: "Attack range",
       shortLabel: "Range",
       group: "identity",
-      obscurity: 0.18,
+      obscurity: 0.42,
       valid: "positive",
     },
     {
@@ -385,7 +385,7 @@
       label: "Move speed",
       shortLabel: "MS",
       group: "identity",
-      obscurity: 0.24,
+      obscurity: 0.56,
       valid: "positive",
     },
     {
@@ -395,7 +395,7 @@
       label: "Release year",
       shortLabel: "Year",
       group: "profile",
-      obscurity: 0.3,
+      obscurity: 0.36,
       valid: "positive",
     },
     {
@@ -406,7 +406,7 @@
       shortLabel: "Cost",
       unit: "gold",
       group: "core",
-      obscurity: 0.08,
+      obscurity: 0.25,
       valid: "positive",
     },
     {
@@ -416,7 +416,7 @@
       label: "Attack damage",
       shortLabel: "AD",
       group: "stats",
-      obscurity: 0.12,
+      obscurity: 0.28,
       valid: "positive",
     },
     {
@@ -426,7 +426,7 @@
       label: "Ability power",
       shortLabel: "AP",
       group: "stats",
-      obscurity: 0.12,
+      obscurity: 0.28,
       valid: "positive",
     },
     {
@@ -436,7 +436,7 @@
       label: "Health",
       shortLabel: "HP",
       group: "stats",
-      obscurity: 0.14,
+      obscurity: 0.3,
       valid: "positive",
     },
     {
@@ -446,7 +446,7 @@
       label: "Armor",
       shortLabel: "Armor",
       group: "stats",
-      obscurity: 0.18,
+      obscurity: 0.34,
       valid: "positive",
     },
     {
@@ -456,7 +456,7 @@
       label: "Magic resist",
       shortLabel: "MR",
       group: "stats",
-      obscurity: 0.18,
+      obscurity: 0.34,
       valid: "positive",
     },
     {
@@ -466,7 +466,7 @@
       label: "Ability haste",
       shortLabel: "Haste",
       group: "stats",
-      obscurity: 0.22,
+      obscurity: 0.38,
       valid: "positive",
     },
     {
@@ -476,7 +476,7 @@
       label: "Move speed",
       shortLabel: "MS",
       group: "stats",
-      obscurity: 0.24,
+      obscurity: 0.42,
       valid: "positive",
     },
     {
@@ -487,7 +487,7 @@
       shortLabel: "AS",
       unit: "%",
       group: "stats",
-      obscurity: 0.2,
+      obscurity: 0.4,
       valid: "positive",
     },
     {
@@ -498,7 +498,7 @@
       shortLabel: "Crit",
       unit: "%",
       group: "stats",
-      obscurity: 0.18,
+      obscurity: 0.34,
       valid: "positive",
     },
     {
@@ -509,7 +509,7 @@
       shortLabel: "Life steal",
       unit: "%",
       group: "stats",
-      obscurity: 0.24,
+      obscurity: 0.5,
       valid: "positive",
     },
     {
@@ -519,7 +519,7 @@
       label: "Lethality",
       shortLabel: "Lethality",
       group: "stats",
-      obscurity: 0.26,
+      obscurity: 0.48,
       valid: "positive",
     },
     {
@@ -530,7 +530,7 @@
       shortLabel: "Armor pen",
       unit: "%",
       group: "stats",
-      obscurity: 0.3,
+      obscurity: 0.58,
       valid: "positive",
     },
     {
@@ -541,7 +541,7 @@
       shortLabel: "H/S power",
       unit: "%",
       group: "stats",
-      obscurity: 0.34,
+      obscurity: 0.62,
       valid: "positive",
     },
     {
@@ -552,7 +552,7 @@
       shortLabel: "Cooldown",
       unit: "s",
       group: "core",
-      obscurity: 0.12,
+      obscurity: 0.36,
       valid: "positive",
     },
     {
@@ -562,7 +562,7 @@
       label: "Resource cost at rank 1",
       shortLabel: "Cost",
       group: "core",
-      obscurity: 0.18,
+      obscurity: 0.44,
       valid: "positive",
     },
     {
@@ -572,7 +572,7 @@
       label: "Cast range",
       shortLabel: "Range",
       group: "stats",
-      obscurity: 0.22,
+      obscurity: 0.48,
       valid: "positive",
     },
     {
@@ -582,7 +582,7 @@
       label: "Listed base damage",
       shortLabel: "Damage",
       group: "stats",
-      obscurity: 0.26,
+      obscurity: 0.56,
       valid: "positive",
     },
     {
@@ -593,7 +593,7 @@
       shortLabel: "Slow",
       unit: "%",
       group: "stats",
-      obscurity: 0.34,
+      obscurity: 0.62,
       valid: "positive",
     },
     {
@@ -603,7 +603,7 @@
       label: "Listed healing",
       shortLabel: "Healing",
       group: "stats",
-      obscurity: 0.36,
+      obscurity: 0.66,
       valid: "positive",
     },
     {
@@ -613,7 +613,7 @@
       label: "Listed shield",
       shortLabel: "Shield",
       group: "stats",
-      obscurity: 0.36,
+      obscurity: 0.66,
       valid: "positive",
     },
     {
@@ -624,7 +624,7 @@
       shortLabel: "MS bonus",
       unit: "%",
       group: "stats",
-      obscurity: 0.38,
+      obscurity: 0.68,
       valid: "positive",
     },
   ];

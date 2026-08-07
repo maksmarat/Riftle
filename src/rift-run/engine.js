@@ -839,7 +839,7 @@
       : DIFFICULTY_CONFIG.exactToleranceEasy -
         (DIFFICULTY_CONFIG.exactToleranceEasy - DIFFICULTY_CONFIG.exactToleranceHard) * target;
     const tolerance = Math.max(minimumExactTolerance(value, metric), Math.abs(value) * toleranceRatio);
-    const difficulty = clamp(0.2 + target * 0.26 + metric.obscurity * 0.7 + (singleDecimalMetrics.has(metric.id) ? 0.12 : 0));
+    const difficulty = clamp(0.2 + target * 0.26 + metricKnowledgeValue(metric) * 0.7 + (singleDecimalMetrics.has(metric.id) ? 0.12 : 0));
     const metricName = metricLabel(metric);
 
     return {
@@ -907,12 +907,12 @@
     const valueLabel = traitValueLabel(traitValue);
     const prompt = reverse
       ? dual(
-          `Find the one that matches: ${localize(ruleLabel, "en")} · ${localize(valueLabel, "en")}.`,
-          `Найди вариант, который подходит: ${localize(ruleLabel, "ru")} · ${localize(valueLabel, "ru")}.`,
+          "Find the card that belongs with the hidden group.",
+          "Найди карточку, которая подходит к скрытой группе.",
         )
       : dual(
-          `Find the outlier. Three share ${localize(ruleLabel, "en")} · ${localize(valueLabel, "en")}.`,
-          `Найди лишнее. У трёх вариантов общий признак: ${localize(ruleLabel, "ru")} · ${localize(valueLabel, "ru")}.`,
+          "Find the outlier. Three cards share a hidden trait.",
+          "Найди лишнее. У трёх карточек есть общий скрытый признак.",
         );
 
     return {
@@ -929,10 +929,14 @@
       entities: choices.map(viewEntity),
       correctAnswer: correct.id,
       explanation: dual(
-        `${displayName(correct, "en")} is the ${reverse ? "match" : "outlier"} for ${localize(ruleLabel, "en")} · ${localize(valueLabel, "en")}.`,
-        `${displayName(correct, "ru")} — ${reverse ? "подходящий вариант" : "лишний вариант"} для признака «${localize(ruleLabel, "ru")} · ${localize(valueLabel, "ru")}».`,
+        reverse
+          ? `${displayName(correct, "en")} is the card that belongs with the hidden group.`
+          : `${displayName(correct, "en")} is the card that does not fit the hidden group.`,
+        reverse
+          ? `${displayName(correct, "ru")} — карточка, которая подходит к скрытой группе.`
+          : `${displayName(correct, "ru")} — карточка, которая не подходит к скрытой группе.`,
       ),
-      difficulty: clamp(0.28 + targetDifficulty(run, route.special) * 0.42 + (reverse ? 0.14 : 0)),
+      difficulty: outlierDifficulty(run, route),
       signature: `outlier:${rule.id}:${traitValue}:${choices.map((entity) => entity.id).join(":")}`,
     };
   }
@@ -1253,7 +1257,7 @@
     const relative = gap / Math.max(Math.abs(leftValue), Math.abs(rightValue), 1);
     const gapDifficulty = clamp(1 - relative / 0.42, 0.05, 0.94);
 
-    return clamp(0.08 + gapDifficulty * 0.74 + Number(metric.obscurity || 0) * 0.28);
+    return clamp(0.08 + gapDifficulty * 0.58 + metricKnowledgeValue(metric) * 0.45);
   }
 
   function orderDifficulty(values, count, metric) {
@@ -1264,7 +1268,22 @@
     const closest = gaps.length ? Math.min(...gaps) : 1;
     const closeDifficulty = clamp(1 - closest / 0.32, 0.08, 0.94);
 
-    return clamp(0.12 + closeDifficulty * 0.5 + (count - 4) * 0.12 + Number(metric.obscurity || 0) * 0.28);
+    return clamp(0.1 + closeDifficulty * 0.38 + (count - 4) * 0.12 + metricKnowledgeValue(metric) * 0.46);
+  }
+
+  function metricKnowledgeValue(metric) {
+    return clamp(Number(metric?.obscurity || 0), 0, 0.86);
+  }
+
+  function outlierDifficulty(run, route) {
+    const target = targetDifficulty(run, route.special);
+    const categoryBase = route.category === "items" ? 0.2 : 0.27;
+    const reverseBonus = hasModifier(route, "reverse") ? 0.07 : 0;
+    const closeBonus = hasModifier(route, "closeChoices") ? 0.05 : 0;
+    const doubleBonus = hasModifier(route, "doubleCondition") ? 0.06 : 0;
+    const specialBonus = route.special ? 0.04 : 0;
+
+    return clamp(categoryBase + target * 0.18 + reverseBonus + closeBonus + doubleBonus + specialBonus);
   }
 
   function entityRecentPenalty(run, ids) {
@@ -1929,6 +1948,24 @@
     );
   }
 
+  function outlierLeaksTraitClue(challenge) {
+    const trait = challenge.traitRule || {};
+    const clueTokens = [trait.label, trait.value]
+      .flatMap((value) => [localize(value, "en"), localize(value, "ru")])
+      .map(tokenizeLeakText)
+      .filter((tokens) => tokens.join("").length >= 3);
+    const visibleText = [
+      localize(challenge.prompt, "en"),
+      localize(challenge.prompt, "ru"),
+      localize(challenge.previewPrompt, "en"),
+      localize(challenge.previewPrompt, "ru"),
+      localize(challenge.explanation, "en"),
+      localize(challenge.explanation, "ru"),
+    ].join(" ");
+
+    return textLeaksNameTokens(visibleText, clueTokens);
+  }
+
   function summarizeRun(run) {
     const attempts = Math.max(1, Number(run.answered || 0));
     const accuracy = Math.round((Number(run.correct || 0) / attempts) * 100);
@@ -2034,6 +2071,10 @@
 
     if (challenge.type === "order" && new Set(challenge.correctAnswer || []).size !== (challenge.correctAnswer || []).length) {
       errors.push("order has duplicate correct ids");
+    }
+
+    if (challenge.type === "outlier" && outlierLeaksTraitClue(challenge)) {
+      errors.push("outlier leaks trait clue");
     }
 
     if (challenge.type === "identify" && !(challenge.entities || [])[0]) {

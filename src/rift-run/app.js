@@ -24,8 +24,7 @@
       resume: "Resume Run",
       newRun: "New Run",
       seedLabel: "Seed",
-      seedPlaceholder: "Random seed",
-      randomSeed: "Random seed",
+      seedPlaceholder: "Leave empty for random",
       loading: "Loading Rift Run...",
       loadError: "Could not load Rift Run data.",
       introA: "Clear League knowledge encounters, choose risk, cash out before stability breaks.",
@@ -89,8 +88,7 @@
       resume: "Продолжить забег",
       newRun: "Новый забег",
       seedLabel: "Сид",
-      seedPlaceholder: "Случайный сид",
-      randomSeed: "Случайный сид",
+      seedPlaceholder: "Пусто = случайный сид",
       loading: "Загружаю Rift Run...",
       loadError: "Не удалось загрузить данные Rift Run.",
       introA: "Проходи испытания на знание League, выбирай риск и забирай счёт до обвала стабильности.",
@@ -280,7 +278,6 @@
           <label for="run-seed">${escapeHtml(t().seedLabel)}</label>
           <div class="seed-control-row">
             <input id="run-seed" autocomplete="off" spellcheck="false" placeholder="${escapeAttr(t().seedPlaceholder)}" value="${escapeAttr(seedValue)}">
-            <button class="rift-run-secondary" type="button" data-action="random-seed">${escapeHtml(t().randomSeed)}</button>
             <button class="rift-run-primary" type="submit" data-action="start">${escapeHtml(t().start)}</button>
           </div>
         </form>
@@ -301,11 +298,6 @@
     `;
 
     dom.root.querySelector("#seed-start-form").addEventListener("submit", startRun);
-    dom.root.querySelector("[data-action='random-seed']").addEventListener("click", () => {
-      const input = dom.root.querySelector("#run-seed");
-      input.value = engine.randomSeed();
-      input.focus();
-    });
     dom.root.querySelector("[data-action='resume']")?.addEventListener("click", () => {
       run = activeRun;
       saveRun();

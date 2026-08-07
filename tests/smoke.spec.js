@@ -398,6 +398,7 @@ test("rift run starts, scores an encounter, and resumes active runs", async ({ p
   await expect(page.locator(".mode-active")).toHaveText("Rift Run");
   await expect(page.locator("#rift-run-root")).toContainText("Rift Run");
   await expect(page.locator("[data-action='start']")).toBeVisible();
+  await expect(page.locator("[data-action='random-seed']")).toHaveCount(0);
   await page.locator("#run-seed").fill("smoke-seed");
 
   await page.locator("[data-action='start']").click();

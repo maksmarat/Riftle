@@ -23,6 +23,9 @@
       start: "Start Run",
       resume: "Resume Run",
       newRun: "New Run",
+      seedLabel: "Seed",
+      seedPlaceholder: "Random seed",
+      randomSeed: "Random seed",
       loading: "Loading Rift Run...",
       loadError: "Could not load Rift Run data.",
       introA: "Clear League knowledge encounters, choose risk, cash out before stability breaks.",
@@ -62,6 +65,15 @@
       estimatePlaceholder: "Value",
       cashoutTitle: "Cash Out Point",
       cashoutCopy: "Lock the run now, or continue with a stronger multiplier and less room for mistakes.",
+      difficultyLabels: {
+        calm: "Calm",
+        medium: "Medium",
+        hard: "Hard",
+        brutal: "Brutal",
+      },
+      chooseChampion: "Choose champion",
+      assignedChampion: "Champion",
+      identifyChoice: "Answer",
     },
     ru: {
       title: "Riftle Rift Run",
@@ -73,13 +85,16 @@
         riftRun: "Rift Run",
         random: "Рандом",
       },
-      start: "Начать run",
-      resume: "Продолжить run",
-      newRun: "Новый run",
+      start: "Начать забег",
+      resume: "Продолжить забег",
+      newRun: "Новый забег",
+      seedLabel: "Сид",
+      seedPlaceholder: "Случайный сид",
+      randomSeed: "Случайный сид",
       loading: "Загружаю Rift Run...",
       loadError: "Не удалось загрузить данные Rift Run.",
-      introA: "Проходи испытания на знание League, выбирай риск и забирай score до обвала стабильности.",
-      introB: "Без daily, аккаунтов и онлайна. Один чистый run.",
+      introA: "Проходи испытания на знание League, выбирай риск и забирай счёт до обвала стабильности.",
+      introB: "Без ежедневных таймеров, аккаунтов и онлайна. Один чистый забег.",
       bestScore: "Лучший счёт",
       deepest: "Глубина",
       runs: "Забеги",
@@ -97,10 +112,10 @@
       partial: "Частично",
       wrong: "Ошибка",
       timeLost: "Время вышло",
-      continue: "Дальше",
+      continue: "Продолжить",
       cashOut: "Забрать счёт",
-      pushDeeper: "Рискнуть",
-      runSummary: "Итоги run",
+      pushDeeper: "Продолжить забег",
+      runSummary: "Итоги забега",
       accuracy: "Точность",
       bestCategory: "Лучшая категория",
       hardest: "Сложнейшее закрытое",
@@ -115,6 +130,15 @@
       estimatePlaceholder: "Значение",
       cashoutTitle: "Точка выхода",
       cashoutCopy: "Можно закончить сейчас или продолжить с большим множителем и меньшим запасом на ошибки.",
+      difficultyLabels: {
+        calm: "Спокойно",
+        medium: "Средне",
+        hard: "Сложно",
+        brutal: "Жёстко",
+      },
+      chooseChampion: "Выбери чемпиона",
+      assignedChampion: "Чемпион",
+      identifyChoice: "Ответ",
     },
   };
 
@@ -243,6 +267,8 @@
     const activeRun = readJson(STORAGE_KEYS.activeRun, null);
     const canResume = activeRun && activeRun.phase !== "results";
     const records = rawRecords || {};
+    const querySeed = new URLSearchParams(window.location.search).get("seed") || "";
+    const seedValue = querySeed || settings.seed || "";
 
     dom.root.innerHTML = `
       <section class="rift-run-home">
@@ -250,8 +276,15 @@
         <h1>Rift Run</h1>
         <p>${escapeHtml(t().introA)}</p>
         <p>${escapeHtml(t().introB)}</p>
+        <form class="seed-start-form" id="seed-start-form">
+          <label for="run-seed">${escapeHtml(t().seedLabel)}</label>
+          <div class="seed-control-row">
+            <input id="run-seed" autocomplete="off" spellcheck="false" placeholder="${escapeAttr(t().seedPlaceholder)}" value="${escapeAttr(seedValue)}">
+            <button class="rift-run-secondary" type="button" data-action="random-seed">${escapeHtml(t().randomSeed)}</button>
+            <button class="rift-run-primary" type="submit" data-action="start">${escapeHtml(t().start)}</button>
+          </div>
+        </form>
         <div class="rift-run-actions">
-          <button class="rift-run-primary" type="button" data-action="start">${escapeHtml(t().start)}</button>
           ${
             canResume
               ? `<button class="rift-run-secondary" type="button" data-action="resume">${escapeHtml(t().resume)}</button>`
@@ -267,7 +300,12 @@
       </section>
     `;
 
-    dom.root.querySelector("[data-action='start']").addEventListener("click", startRun);
+    dom.root.querySelector("#seed-start-form").addEventListener("submit", startRun);
+    dom.root.querySelector("[data-action='random-seed']").addEventListener("click", () => {
+      const input = dom.root.querySelector("#run-seed");
+      input.value = engine.randomSeed();
+      input.focus();
+    });
     dom.root.querySelector("[data-action='resume']")?.addEventListener("click", () => {
       run = activeRun;
       saveRun();
@@ -392,7 +430,11 @@
       return renderExact(challenge);
     }
 
-    if (["identify", "outlier", "constraint", "pickExtreme"].includes(challenge.type)) {
+    if (challenge.type === "identify") {
+      return renderIdentify(challenge);
+    }
+
+    if (["outlier", "constraint", "pickExtreme"].includes(challenge.type)) {
       return renderChoiceGrid(challenge);
     }
 
@@ -412,21 +454,19 @@
     const noPortraits = challenge.modifiers.includes("noPortraits");
 
     return `
-      <div class="run-versus">
+      <div class="run-versus run-versus-cards">
         ${entityCard(left, {
           noPortraits,
           value: engine.formatNumber(challenge.values.left, challenge.metric, language),
           label: l(challenge.metric.shortLabelText || challenge.metric.shortLabel),
+          answer: "lower",
         })}
-        <div class="versus-actions">
-          <button class="rift-run-primary" type="button" data-answer="higher">${escapeHtml(t().higher)}</button>
-          <button class="rift-run-secondary" type="button" data-answer="lower">${escapeHtml(t().lower)}</button>
-        </div>
         ${entityCard(right, {
           noPortraits,
           value: "???",
           label: l(challenge.metric.shortLabelText || challenge.metric.shortLabel),
           hiddenValue: true,
+          answer: "higher",
         })}
       </div>
     `;
@@ -472,6 +512,39 @@
     `;
   }
 
+  function renderIdentify(challenge) {
+    const [target] = challenge.entities || [];
+
+    return `
+      <div class="identify-layout">
+        <div class="identify-clue">
+          ${target ? entityCard(target, { noNames: true, noMeta: true, noPortraits: challenge.modifiers.includes("noPortraits") }) : ""}
+        </div>
+        ${renderAnswerChoices(challenge.choices || [], { label: t().identifyChoice })}
+      </div>
+    `;
+  }
+
+  function renderAnswerChoices(choices, options = {}) {
+    return `
+      <div class="answer-choice-grid">
+        ${choices
+          .map(
+            (entity, index) => `
+              <button class="answer-choice" type="button" data-entity-id="${escapeAttr(entity.id)}">
+                <span class="answer-choice-index">${index + 1}</span>
+                <span class="answer-choice-copy">
+                  <strong>${escapeHtml(l(entity.name))}</strong>
+                  <small>${escapeHtml(options.label || l(entity.meta || entity.title || ""))}</small>
+                </span>
+              </button>
+            `,
+          )
+          .join("")}
+      </div>
+    `;
+  }
+
   function renderChoiceGrid(challenge) {
     const noNames = challenge.modifiers.includes("noNames") && challenge.type !== "constraint";
     const noPortraits = challenge.modifiers.includes("noPortraits");
@@ -502,35 +575,51 @@
   }
 
   function renderMatch(challenge) {
+    const usedChampionIds = new Set(Object.values(matchAnswers).filter(Boolean));
+
     return `
-      <div class="match-board">
-        ${challenge.entities
-          .map(
-            (ability) => `
-              <label class="match-row">
-                <span class="match-ability">
-                  <img src="${escapeAttr(ability.image)}" alt="" loading="lazy">
-                  <span>
-                    <strong>${escapeHtml(challenge.modifiers.includes("noNames") ? "???" : l(ability.name))}</strong>
-                    <small>${escapeHtml(l(ability.meta))}</small>
+      <div class="match-layout">
+        <div class="match-board" role="list">
+          ${challenge.entities
+            .map((ability) => {
+              const assigned = challenge.choices.find((champion) => champion.id === matchAnswers[ability.id]);
+              const active = activeMatchAbility === ability.id;
+
+              return `
+                <button class="match-row${active ? " match-row-active" : ""}${assigned ? " match-row-filled" : ""}" type="button" data-match-row="${escapeAttr(ability.id)}" role="listitem">
+                  <span class="match-ability">
+                    <img src="${escapeAttr(ability.image)}" alt="" loading="lazy">
+                    <span>
+                      <strong>${escapeHtml(challenge.modifiers.includes("noNames") ? "???" : l(ability.name))}</strong>
+                      <small>${escapeHtml(l(ability.meta))}</small>
+                    </span>
                   </span>
-                </span>
-                <select data-match-ability="${escapeAttr(ability.id)}">
-                  <option value=""></option>
-                  ${challenge.choices
-                    .map(
-                      (champion) =>
-                        `<option value="${escapeAttr(champion.id)}">${escapeHtml(l(champion.name))}</option>`,
-                    )
-                    .join("")}
-                </select>
-              </label>
-            `,
-          )
-          .join("")}
+                  <span class="match-assignment">
+                    <small>${escapeHtml(assigned ? t().assignedChampion : t().chooseChampion)}</small>
+                    <strong>${escapeHtml(assigned ? l(assigned.name) : "—")}</strong>
+                  </span>
+                </button>
+              `;
+            })
+            .join("")}
+        </div>
+        <div class="match-choice-grid">
+          ${challenge.choices
+            .map((champion) => {
+              const selected = usedChampionIds.has(champion.id);
+
+              return `
+                <button class="match-choice${selected ? " match-choice-selected" : ""}" type="button" data-match-choice="${escapeAttr(champion.id)}">
+                  <img src="${escapeAttr(champion.image)}" alt="" loading="lazy">
+                  <span>${escapeHtml(l(champion.name))}</span>
+                </button>
+              `;
+            })
+            .join("")}
+        </div>
       </div>
       <div class="challenge-actions">
-        <button class="rift-run-primary" type="button" data-submit-match>${escapeHtml(t().submit)}</button>
+        <button class="rift-run-primary" type="button" data-submit-match ${challenge.entities.every((ability) => matchAnswers[ability.id]) ? "" : "disabled"}>${escapeHtml(t().submit)}</button>
       </div>
     `;
   }
@@ -541,35 +630,37 @@
 
     return `
       <div class="rapid-progress">${index + 1} / ${challenge.rounds.length}</div>
-      <div class="run-versus run-versus-rapid">
+      <div class="run-versus run-versus-cards run-versus-rapid">
         ${entityCard(round.left, {
           value: engine.formatNumber(round.leftValue, challenge.metric, language),
           label: l(challenge.metric.shortLabelText || challenge.metric.shortLabel),
           noPortraits: challenge.modifiers.includes("noPortraits"),
+          rapidAnswer: "lower",
         })}
-        <div class="versus-actions">
-          <button class="rift-run-primary" type="button" data-rapid-answer="higher">${escapeHtml(t().higher)}</button>
-          <button class="rift-run-secondary" type="button" data-rapid-answer="lower">${escapeHtml(t().lower)}</button>
-        </div>
         ${entityCard(round.right, {
           value: "???",
           label: l(challenge.metric.shortLabelText || challenge.metric.shortLabel),
           hiddenValue: true,
           noPortraits: challenge.modifiers.includes("noPortraits"),
+          rapidAnswer: "higher",
         })}
       </div>
     `;
   }
 
   function entityCard(entity, options = {}) {
-    const tag = options.button ? "button" : "article";
+    const interactive = options.button || options.answer || options.rapidAnswer;
+    const tag = interactive ? "button" : "article";
     const selectedClass = options.selected ? " entity-card-selected" : "";
-    const buttonAttrs = options.button
-      ? ` type="button" data-entity-id="${escapeAttr(entity.id)}" aria-pressed="${String(Boolean(options.selected))}"`
+    const answerClass = options.answer || options.rapidAnswer ? " entity-card-answer" : "";
+    const buttonAttrs = interactive
+      ? ` type="button"${
+          options.button ? ` data-entity-id="${escapeAttr(entity.id)}" aria-pressed="${String(Boolean(options.selected))}"` : ""
+        }${options.answer ? ` data-answer="${escapeAttr(options.answer)}"` : ""}${options.rapidAnswer ? ` data-rapid-answer="${escapeAttr(options.rapidAnswer)}"` : ""}`
       : "";
 
     return `
-      <${tag} class="entity-card${selectedClass}"${buttonAttrs}>
+      <${tag} class="entity-card${selectedClass}${answerClass}"${buttonAttrs}>
         ${options.choiceIndex ? `<span class="entity-index">${options.choiceIndex}</span>` : ""}
         ${options.rank ? `<span class="entity-rank">${escapeHtml(options.rank)}</span>` : ""}
         ${
@@ -579,7 +670,7 @@
         }
         <span class="entity-copy">
           <strong>${escapeHtml(options.noNames ? "???" : l(entity.name))}</strong>
-          <small>${escapeHtml(l(entity.meta || entity.title || ""))}</small>
+          ${options.noMeta ? "" : `<small>${escapeHtml(l(entity.meta || entity.title || ""))}</small>`}
         </span>
         ${
           options.value
@@ -620,10 +711,14 @@
       renderChallenge();
     });
 
-    dom.root.querySelectorAll("[data-match-ability]").forEach((select) => {
-      select.addEventListener("change", () => {
-        matchAnswers[select.dataset.matchAbility] = select.value;
+    dom.root.querySelectorAll("[data-match-row]").forEach((button) => {
+      button.addEventListener("click", () => {
+        activeMatchAbility = button.dataset.matchRow;
+        renderChallenge();
       });
+    });
+    dom.root.querySelectorAll("[data-match-choice]").forEach((button) => {
+      button.addEventListener("click", () => assignMatchChampion(challenge, button.dataset.matchChoice));
     });
     dom.root.querySelector("[data-submit-match]")?.addEventListener("click", () => submitAnswer({ ...matchAnswers }));
 
@@ -654,6 +749,33 @@
     }
 
     renderChallenge();
+  }
+
+  function assignMatchChampion(challenge, championId) {
+    const abilityId = activeMatchAbility || challenge.entities.find((ability) => !matchAnswers[ability.id])?.id;
+
+    if (!abilityId || !championId) {
+      return;
+    }
+
+    Object.entries(matchAnswers).forEach(([existingAbilityId, existingChampionId]) => {
+      if (existingChampionId === championId && existingAbilityId !== abilityId) {
+        delete matchAnswers[existingAbilityId];
+      }
+    });
+
+    matchAnswers[abilityId] = championId;
+    activeMatchAbility = nextUnansweredMatchAbility(challenge, abilityId) || abilityId;
+    playTone("select");
+    renderChallenge();
+  }
+
+  function nextUnansweredMatchAbility(challenge, currentAbilityId) {
+    const abilities = challenge.entities || [];
+    const startIndex = Math.max(0, abilities.findIndex((ability) => ability.id === currentAbilityId));
+    const ordered = [...abilities.slice(startIndex + 1), ...abilities.slice(0, startIndex + 1)];
+
+    return ordered.find((ability) => !matchAnswers[ability.id])?.id || "";
   }
 
   function submitAnswer(answer, options = {}) {
@@ -796,8 +918,12 @@
     `;
   }
 
-  function startRun() {
-    run = engine.createRun();
+  function startRun(event) {
+    event?.preventDefault?.();
+    const seed = String(dom.root.querySelector("#run-seed")?.value || "").trim();
+    settings = { ...settings, seed };
+    localStorage.setItem(STORAGE_KEYS.settings, JSON.stringify(settings));
+    run = engine.createRun(seed || undefined);
     run = engine.advanceRun(run, data);
     saveRun();
     playTone("select");
@@ -896,6 +1022,11 @@
 
     if (["identify", "outlier", "constraint", "pickExtreme"].includes(run.currentChallenge.type) && /^[1-4]$/.test(key)) {
       const button = dom.root.querySelectorAll("[data-entity-id]")[Number(key) - 1];
+      button?.click();
+    }
+
+    if (run.currentChallenge.type === "match" && /^[1-4]$/.test(key)) {
+      const button = dom.root.querySelectorAll("[data-match-choice]")[Number(key) - 1];
       button?.click();
     }
   }
@@ -1005,18 +1136,18 @@
 
   function difficultyLabel(value) {
     if (value < 0.28) {
-      return "Calm";
+      return t().difficultyLabels.calm;
     }
 
     if (value < 0.48) {
-      return "Medium";
+      return t().difficultyLabels.medium;
     }
 
     if (value < 0.7) {
-      return "Hard";
+      return t().difficultyLabels.hard;
     }
 
-    return "Brutal";
+    return t().difficultyLabels.brutal;
   }
 
   function formatInteger(value) {

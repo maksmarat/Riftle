@@ -43,13 +43,20 @@ body[data-page="rift-run"] {
 .rift-run-home h1,
 .rift-run-results h1,
 .rift-run-cashout h1,
-.rift-run-feedback h1,
-.rift-run-choice h1,
-.rift-run-board h1 {
+.rift-run-feedback h1 {
   margin: 0;
   font-size: clamp(2rem, 4vw, 4.8rem);
   line-height: 0.95;
   letter-spacing: 0;
+}
+
+.rift-run-choice h1,
+.rift-run-board h1 {
+  margin: 0;
+  font-size: clamp(1.75rem, 3vw, 3.1rem);
+  line-height: 1.04;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
 }
 
 .rift-run-home p,
@@ -91,12 +98,16 @@ body[data-page="rift-run"] {
 .rift-run-primary,
 .rift-run-secondary,
 .sound-toggle {
+  min-width: 0;
   min-height: 42px;
   border: 1px solid rgba(240, 207, 133, 0.42);
   border-radius: var(--radius);
   padding: 0 16px;
   color: var(--text);
   font-weight: 900;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+  white-space: normal;
   transition:
     border-color 0.16s ease,
     transform 0.16s ease,
@@ -127,6 +138,43 @@ body[data-page="rift-run"] {
   min-height: 36px;
   color: var(--muted);
   font-size: 0.84rem;
+}
+
+.seed-start-form {
+  display: grid;
+  gap: 8px;
+  max-width: 760px;
+}
+
+.seed-start-form label {
+  color: var(--gold-strong);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.seed-control-row {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) auto auto;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.seed-control-row input {
+  min-width: 0;
+  min-height: 42px;
+  border: 1px solid rgba(240, 207, 133, 0.34);
+  border-radius: var(--radius);
+  padding: 0 12px;
+  background: rgba(0, 0, 0, 0.32);
+  color: var(--text);
+  font-weight: 850;
+  outline: none;
+}
+
+.seed-control-row input:focus {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 3px rgba(104, 217, 255, 0.14);
 }
 
 .rift-run-records,
@@ -328,6 +376,10 @@ body[data-page="rift-run"] {
   align-items: stretch;
 }
 
+.run-versus-cards {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .versus-actions {
   display: grid;
   align-content: center;
@@ -364,6 +416,10 @@ button.entity-card:focus-visible {
 .entity-card-selected {
   border-color: rgba(16, 185, 78, 0.72);
   box-shadow: 0 0 0 1px rgba(16, 185, 78, 0.18);
+}
+
+.entity-card-answer {
+  cursor: pointer;
 }
 
 .entity-card img,
@@ -488,9 +544,80 @@ button.entity-card:focus-visible {
   box-shadow: 0 0 0 3px rgba(104, 217, 255, 0.14);
 }
 
+.identify-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.44fr) minmax(0, 1fr);
+  gap: 12px;
+  align-items: stretch;
+}
+
+.identify-clue .entity-card {
+  height: 100%;
+  align-content: center;
+}
+
+.answer-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.answer-choice {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  min-height: 72px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius);
+  padding: 10px;
+  background: rgba(5, 7, 11, 0.62);
+  color: var(--text);
+  text-align: left;
+}
+
+.answer-choice:hover,
+.answer-choice:focus-visible {
+  border-color: rgba(240, 207, 133, 0.66);
+}
+
+.answer-choice-index {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border: 1px solid rgba(240, 207, 133, 0.5);
+  border-radius: 50%;
+  color: var(--gold-strong);
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.answer-choice-copy {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.answer-choice-copy strong,
+.answer-choice-copy small {
+  overflow-wrap: anywhere;
+}
+
+.answer-choice-copy small {
+  color: var(--muted);
+}
+
 .match-board {
   display: grid;
   gap: 10px;
+}
+
+.match-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(220px, 0.65fr);
+  gap: 12px;
+  align-items: start;
 }
 
 .match-row {
@@ -502,6 +629,20 @@ button.entity-card:focus-visible {
   border-radius: var(--radius);
   padding: 12px;
   background: rgba(5, 7, 11, 0.58);
+  color: var(--text);
+  text-align: left;
+}
+
+.match-row:hover,
+.match-row:focus-visible,
+.match-row-active {
+  border-color: rgba(104, 217, 255, 0.66);
+}
+
+.match-row-filled {
+  background:
+    linear-gradient(145deg, rgba(16, 185, 78, 0.08), transparent 42%),
+    rgba(5, 7, 11, 0.58);
 }
 
 .match-ability {
@@ -531,14 +672,65 @@ button.entity-card:focus-visible {
   color: var(--muted);
 }
 
-.match-row select {
-  width: 100%;
-  min-height: 42px;
-  border: 1px solid rgba(240, 207, 133, 0.34);
+.match-assignment {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  justify-items: end;
+  text-align: right;
+}
+
+.match-assignment small {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.match-assignment strong {
+  overflow-wrap: anywhere;
+}
+
+.match-choice-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.match-choice {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  min-height: 62px;
+  border: 1px solid rgba(240, 207, 133, 0.26);
   border-radius: var(--radius);
-  background: rgba(0, 0, 0, 0.34);
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.3);
   color: var(--text);
-  padding: 0 10px;
+  text-align: left;
+}
+
+.match-choice:hover,
+.match-choice:focus-visible,
+.match-choice-selected {
+  border-color: rgba(240, 207, 133, 0.7);
+}
+
+.match-choice-selected {
+  box-shadow: 0 0 0 1px rgba(240, 207, 133, 0.14);
+}
+
+.match-choice img {
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius);
+  object-fit: cover;
+}
+
+.match-choice span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-weight: 900;
 }
 
 .rapid-progress {
@@ -646,8 +838,15 @@ button.entity-card:focus-visible {
 
   .run-versus,
   .exact-layout,
+  .identify-layout,
+  .match-layout,
   .match-row {
     grid-template-columns: 1fr;
+  }
+
+  .match-assignment {
+    justify-items: start;
+    text-align: left;
   }
 
   .versus-actions {
@@ -664,8 +863,13 @@ button.entity-card:focus-visible {
   .encounter-options,
   .order-grid,
   .choice-grid,
+  .answer-choice-grid,
   .result-grid,
   .rift-run-records {
+    grid-template-columns: 1fr;
+  }
+
+  .seed-control-row {
     grid-template-columns: 1fr;
   }
 

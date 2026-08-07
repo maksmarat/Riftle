@@ -89,9 +89,9 @@
 
   const CHALLENGE_TYPES = {
     higherLower: {
-      label: "Higher / Lower",
+      label: "Comparison",
       shortLabel: "Compare",
-      baseWeight: 1.45,
+      baseWeight: 1.18,
       minStage: 1,
     },
     order: {
@@ -169,7 +169,7 @@
       risk: 0.18,
       difficulty: 0.12,
       reward: 0.16,
-      types: ["identify", "order", "match"],
+      types: ["order", "match"],
       description: "Names are hidden until the answer lands.",
     },
     noPortraits: {
@@ -344,8 +344,8 @@
       key: "attackSpeedLevel1",
       label: "Attack speed at level 1",
       shortLabel: "AS",
-      group: "core",
-      obscurity: 0.26,
+      group: "precision",
+      obscurity: 0.48,
       valid: "positive",
     },
     {
@@ -649,7 +649,7 @@
       abilities: { en: "Ability", ru: "Умение" },
     },
     typeLabels: {
-      higherLower: { en: "Higher / Lower", ru: "Больше / меньше" },
+      higherLower: { en: "Comparison", ru: "Сравнение" },
       order: { en: "Order", ru: "Порядок" },
       exact: { en: "Exact / Estimate", ru: "Оценка числа" },
       outlier: { en: "Find the Outlier", ru: "Найди лишнее" },
@@ -819,15 +819,15 @@
       item: { en: "item", ru: "предмет" },
       champion: { en: "champion", ru: "чемпиона" },
       ability: { en: "ability", ru: "умение" },
-      higher: { en: "higher", ru: "больше" },
-      lower: { en: "lower", ru: "меньше" },
-      highest: { en: "highest", ru: "самое большое значение" },
-      lowest: { en: "lowest", ru: "самое маленькое значение" },
+      higher: { en: "higher", ru: "выше" },
+      lower: { en: "lower", ru: "ниже" },
+      highest: { en: "highest", ru: "самое высокое значение" },
+      lowest: { en: "lowest", ru: "самое низкое значение" },
       lowestToHighest: { en: "lowest to highest", ru: "от меньшего к большему" },
       highestToLowest: { en: "highest to lowest", ru: "от большего к меньшему" },
       none: { en: "None", ru: "Нет" },
       finished: { en: "Finished", ru: "Завершено" },
-      cashedOut: { en: "Cashed out", ru: "Score забран" },
+      cashedOut: { en: "Cashed out", ru: "Счёт забран" },
       stabilityCollapsed: { en: "Stability collapsed", ru: "Стабильность обнулилась" },
     },
   };

@@ -19,7 +19,7 @@
 
   const metricById = new Map(METRICS.map((metric) => [metric.id, metric]));
   const percentMetrics = new Set(["item.attackSpeed", "ability.abilitySlow"]);
-  const preciseMetrics = new Set(["champion.attackSpeedLevel1", "champion.attackSpeedLevel18"]);
+  const singleDecimalMetrics = new Set(["champion.attackSpeedLevel1", "champion.attackSpeedLevel18"]);
 
   function clamp(value, min = 0, max = 1) {
     return Math.max(min, Math.min(max, value));
@@ -105,10 +105,12 @@
 
   function formatNumber(value, metric = {}, language = "en") {
     const number = Number(value);
-    const digits = preciseMetrics.has(metric.id) ? 3 : 1;
-    const formatted = Number.isInteger(number)
-      ? String(number)
-      : number.toFixed(digits).replace(/\.?0+$/, "");
+    const digits = singleDecimalMetrics.has(metric.id) ? 1 : 1;
+    const formatted = singleDecimalMetrics.has(metric.id)
+      ? number.toFixed(1)
+      : Number.isInteger(number)
+        ? String(number)
+        : number.toFixed(digits).replace(/\.?0+$/, "");
 
     if (metric.unit === "s") {
       return `${formatted}s`;
@@ -119,6 +121,45 @@
     }
 
     return metric.unit === "%" || percentMetrics.has(metric.id) ? `${formatted}%` : formatted;
+  }
+
+  function comparableDisplayValue(value, metric) {
+    return formatNumber(value, metric, "en");
+  }
+
+  function minimumExactTolerance(value, metric) {
+    const absolute = Math.abs(Number(value));
+
+    if (singleDecimalMetrics.has(metric.id)) {
+      return 0.06;
+    }
+
+    if (absolute > 0 && absolute < 2) {
+      return 0.1;
+    }
+
+    if (metric.unit === "s") {
+      return 1;
+    }
+
+    if (metric.unit === "%" || percentMetrics.has(metric.id)) {
+      return 2;
+    }
+
+    if (metric.id === "champion.releaseYear") {
+      return 1;
+    }
+
+    return 3;
+  }
+
+  function roundThresholdForMetric(value, metric, direction) {
+    if (singleDecimalMetrics.has(metric.id)) {
+      const scaled = Number(value) * 10;
+      return (direction === ">" ? Math.floor(scaled) : Math.ceil(scaled)) / 10;
+    }
+
+    return direction === ">" ? Math.floor(value) : Math.ceil(value);
   }
 
   function createHash(value) {
@@ -518,8 +559,9 @@
         const obscureBonus = hasModifier({ modifiers }, "obscureMetric") ? 0.8 + metric.obscurity * 2.5 : 1;
         const recentPenalty = recentMetrics.has(metric.id) ? 0.38 : 1;
         const earlyPenalty = target < 0.35 && metric.obscurity > 0.24 ? 0.42 : 1;
+        const precisionPenalty = singleDecimalMetrics.has(metric.id) ? (target > 0.58 ? 0.42 : 0.08) : 1;
 
-        return { value: metric.id, weight: Math.max(0.05, obscureBonus * recentPenalty * earlyPenalty) };
+        return { value: metric.id, weight: Math.max(0.03, obscureBonus * recentPenalty * earlyPenalty * precisionPenalty) };
       });
 
     return rng.weighted(metrics) || metrics[0]?.value || "";
@@ -645,6 +687,10 @@
         continue;
       }
 
+      if (comparableDisplayValue(leftValue, metric) === comparableDisplayValue(rightValue, metric)) {
+        continue;
+      }
+
       const difficulty = compareDifficulty(leftValue, rightValue, metric);
       const historyPenalty = entityRecentPenalty(run, [left.id, right.id]);
       const score = Math.abs(difficulty - target) + historyPenalty;
@@ -666,12 +712,12 @@
 
     return {
       title: dual(
-        `${localize(categoryShortLabel(route.category), "en")} ${localize(metricShortLabel(metric), "en")}`,
+        `${localize(categoryShortLabel(route.category), "en")} Comparison`,
         `${localize(categoryShortLabel(route.category), "ru")} · ${localize(metricShortLabel(metric), "ru")}`,
       ),
       prompt: dual(
-        `Will ${localize(rightName, "en")} be higher or lower than ${localize(leftName, "en")} for ${localize(metricName, "en")}?`,
-        `У ${localize(rightName, "ru")} значение «${localize(metricName, "ru")}» больше или меньше, чем у ${localize(leftName, "ru")}?`,
+        `Choose the card that makes the right side correct for ${localize(metricName, "en")}.`,
+        `Выбери карточку: у ${localize(rightName, "ru")} значение «${localize(metricName, "ru")}» выше или ниже, чем у ${localize(leftName, "ru")}.`,
       ),
       metric,
       entities: [viewEntity(best.left), viewEntity(best.right)],
@@ -680,8 +726,8 @@
         right: best.rightValue,
       },
       choices: [
-        { id: "higher", label: dual("Higher", "Больше") },
-        { id: "lower", label: dual("Lower", "Меньше") },
+        { id: "higher", label: dual("Higher", "Выше") },
+        { id: "lower", label: dual("Lower", "Ниже") },
       ],
       correctAnswer,
       explanation: dual(
@@ -706,7 +752,7 @@
     let best = null;
 
     for (let attempt = 0; attempt < 120; attempt += 1) {
-      const entries = uniqueBy(rng.shuffle(pool), (entity) => getMetricValue(entity, metric)).slice(0, count);
+      const entries = uniqueBy(rng.shuffle(pool), (entity) => comparableDisplayValue(getMetricValue(entity, metric), metric)).slice(0, count);
 
       if (entries.length < count) {
         continue;
@@ -773,8 +819,8 @@
       ? DIFFICULTY_CONFIG.exactToleranceHard
       : DIFFICULTY_CONFIG.exactToleranceEasy -
         (DIFFICULTY_CONFIG.exactToleranceEasy - DIFFICULTY_CONFIG.exactToleranceHard) * target;
-    const tolerance = Math.max(metric.unit === "s" ? 1 : 3, Math.abs(value) * toleranceRatio);
-    const difficulty = clamp(0.2 + target * 0.42 + metric.obscurity * 0.55);
+    const tolerance = Math.max(minimumExactTolerance(value, metric), Math.abs(value) * toleranceRatio);
+    const difficulty = clamp(0.2 + target * 0.26 + metric.obscurity * 0.7 + (singleDecimalMetrics.has(metric.id) ? 0.12 : 0));
     const metricName = metricLabel(metric);
 
     return {
@@ -878,7 +924,7 @@
     let best = null;
 
     for (let attempt = 0; attempt < 120; attempt += 1) {
-      const entries = uniqueBy(rng.shuffle(pool), (entity) => getMetricValue(entity, metric)).slice(0, count);
+      const entries = uniqueBy(rng.shuffle(pool), (entity) => comparableDisplayValue(getMetricValue(entity, metric), metric)).slice(0, count);
 
       if (entries.length < count) {
         continue;
@@ -924,45 +970,83 @@
   }
 
   function generateMatch(run, data, route, rng) {
-    const abilities = rng
-      .shuffle(data.entitiesByCategory.abilities || [])
-      .filter((ability) => ability.championKey)
-      .filter((ability, index, list) => list.findIndex((item) => item.championKey === ability.championKey) === index)
-      .slice(0, route.special ? 4 : 3);
+    const count = route.special ? 4 : 3;
+    const championsByKey = createChampionKeyMap(data);
+    const candidates = (data.entitiesByCategory.abilities || [])
+      .filter((ability) => ability.championKey && championsByKey.has(ability.championKey))
+      .filter(isAbilitySafeForChampionMatch);
 
-    if (abilities.length < 3) {
+    if (candidates.length < count) {
       return null;
     }
 
-    const championsByKey = new Map(
-      (data.entitiesByCategory.champions || []).map((champion) => [normalizeText(localize(champion.name, "en")), champion]),
-    );
-    const champions = abilities.map((ability) => championsByKey.get(ability.championKey)).filter(Boolean);
+    const target = targetDifficulty(run, route.special);
+    let best = null;
 
-    if (champions.length !== abilities.length) {
+    for (let attempt = 0; attempt < 160; attempt += 1) {
+      const pool = hasModifier(route, "closeChoices") && attempt % 2 === 0
+        ? createCloseAbilityPool(candidates, championsByKey, rng)
+        : candidates;
+      const abilities = [];
+      const usedChampionKeys = new Set();
+
+      for (const ability of rng.shuffle(pool)) {
+        if (usedChampionKeys.has(ability.championKey)) {
+          continue;
+        }
+
+        abilities.push(ability);
+        usedChampionKeys.add(ability.championKey);
+
+        if (abilities.length >= count) {
+          break;
+        }
+      }
+
+      if (abilities.length < count) {
+        continue;
+      }
+
+      const champions = abilities.map((ability) => championsByKey.get(ability.championKey)).filter(Boolean);
+
+      if (champions.length !== abilities.length) {
+        continue;
+      }
+
+      const difficulty = abilityMatchDifficulty(abilities, champions, route);
+      const score =
+        Math.abs(difficulty - target) +
+        entityRecentPenalty(run, [...abilities.map((ability) => ability.id), ...champions.map((champion) => champion.id)]);
+
+      if (!best || score < best.score) {
+        best = { abilities, champions, difficulty, score };
+      }
+    }
+
+    if (!best) {
       return null;
     }
 
     const correctAnswer = Object.fromEntries(
-      abilities.map((ability) => [ability.id, championsByKey.get(ability.championKey).id]),
+      best.abilities.map((ability) => [ability.id, championsByKey.get(ability.championKey).id]),
     );
 
     return {
       title: dual("Ability Match", "Умение → чемпион"),
       prompt: dual("Match each ability to its champion.", "Сопоставь каждое умение с его чемпионом."),
-      entities: abilities.map(viewEntity),
-      choices: rng.shuffle(champions).map(viewEntity),
+      entities: best.abilities.map(viewAbilityForMatch),
+      choices: rng.shuffle(best.champions).map(viewEntity),
       correctAnswer,
       explanation: dual(
-        abilities
+        best.abilities
           .map((ability) => `${displayName(ability, "en")} → ${localize(ability.championName, "en")}`)
           .join(" · "),
-        abilities
+        best.abilities
           .map((ability) => `${displayName(ability, "ru")} → ${localize(ability.championName, "ru")}`)
           .join(" · "),
       ),
-      difficulty: clamp(0.36 + targetDifficulty(run, route.special) * 0.46 + (abilities.length - 3) * 0.1),
-      signature: `match:${abilities.map((ability) => ability.id).join(":")}`,
+      difficulty: best.difficulty,
+      signature: `match:${best.abilities.map((ability) => ability.id).join(":")}`,
     };
   }
 
@@ -975,6 +1059,7 @@
 
     const target = pickEntityWithHistory(run, pool, rng);
     const choices = createIdentifyChoices(data, route, target, rng);
+    const identifyNoun = route.category === "champions" ? word("champion") : categoryShortLabel(route.category);
 
     if (choices.length < 4) {
       return null;
@@ -986,14 +1071,14 @@
         `${localize(categoryShortLabel(route.category), "ru")} · узнавание`,
       ),
       prompt: dual(
-        `Identify this ${localize(categoryShortLabel(route.category), "en").toLowerCase()}.`,
-        `Узнай ${localize(categoryShortLabel(route.category), "ru").toLowerCase()}.`,
+        `Identify this ${localize(identifyNoun, "en").toLowerCase()}.`,
+        `Узнай ${localize(identifyNoun, "ru").toLowerCase()}.`,
       ),
       entities: [viewEntity(target)],
       choices: rng.shuffle(choices).map(viewEntity),
       correctAnswer: target.id,
       explanation: dual(`That is ${displayName(target, "en")}.`, `Это ${displayName(target, "ru")}.`),
-      difficulty: clamp(0.22 + targetDifficulty(run, route.special) * 0.4 + (hasModifier(route, "closeChoices") ? 0.16 : 0)),
+      difficulty: identifyDifficulty(route, target, choices),
       signature: `identify:${route.category}:${target.id}`,
     };
   }
@@ -1065,6 +1150,10 @@
         continue;
       }
 
+      if (comparableDisplayValue(leftValue, metric) === comparableDisplayValue(rightValue, metric)) {
+        continue;
+      }
+
       const signature = [left.id, right.id].sort().join(":");
 
       if (usedPairs.has(signature)) {
@@ -1091,8 +1180,8 @@
         `${localize(categoryShortLabel(route.category), "ru")} · блиц`,
       ),
       prompt: dual(
-        `${RUN_CONFIG.rapidFireRounds} fast calls on ${localize(metricLabel(metric), "en")}.`,
-        `${RUN_CONFIG.rapidFireRounds} быстрых сравнений по параметру «${localize(metricLabel(metric), "ru")}».`,
+        `${RUN_CONFIG.rapidFireRounds} fast card picks on ${localize(metricLabel(metric), "en")}.`,
+        `${RUN_CONFIG.rapidFireRounds} быстрых выборов карточек по параметру «${localize(metricLabel(metric), "ru")}».`,
       ),
       metric,
       rounds,
@@ -1182,8 +1271,102 @@
     };
   }
 
+  function viewAbilityForMatch(ability) {
+    const slot = ability.slot ? String(ability.slot).toUpperCase() : "";
+    const slotLabel = slot ? dual(`Ability ${slot}`, `Умение ${slot}`) : categoryShortLabel("abilities");
+
+    return {
+      ...viewEntity(ability),
+      title: categoryShortLabel("abilities"),
+      meta: slotLabel,
+    };
+  }
+
   function displayName(entity, language = "en") {
     return entity?.name ? localize(entity.name, language) : "";
+  }
+
+  function createChampionKeyMap(data) {
+    return new Map(
+      (data.entitiesByCategory.champions || []).map((champion) => [normalizeText(localize(champion.name, "en")), champion]),
+    );
+  }
+
+  function isAbilitySafeForChampionMatch(ability) {
+    const names = [localize(ability.name, "en"), localize(ability.name, "ru")]
+      .map(normalizeText)
+      .filter(Boolean);
+    const championNames = [localize(ability.championName, "en"), localize(ability.championName, "ru")]
+      .map(normalizeText)
+      .filter(Boolean);
+
+    return !names.some((name) => championNames.some((championName) => championName && name.includes(championName)));
+  }
+
+  function createCloseAbilityPool(candidates, championsByKey, rng) {
+    const anchor = rng.pick(candidates);
+    const anchorChampion = championsByKey.get(anchor?.championKey || "");
+
+    if (!anchor || !anchorChampion) {
+      return candidates;
+    }
+
+    const close = candidates.filter((ability) => {
+      const champion = championsByKey.get(ability.championKey);
+      return champion && champion.id !== anchorChampion.id && championSimilarity(anchorChampion, champion) > 0;
+    });
+
+    return close.length >= 3 ? [anchor, ...close] : candidates;
+  }
+
+  function abilityMatchDifficulty(abilities, champions, route) {
+    const countBonus = Math.max(0, abilities.length - 3) * 0.1;
+    const noNamesBonus = hasModifier(route, "noNames") ? 0.2 : 0;
+    const closeChoicesBonus = hasModifier(route, "closeChoices") ? 0.12 : 0;
+    const specialBonus = route.special ? 0.08 : 0;
+    const slotBonus =
+      abilities.reduce((sum, ability) => sum + slotDifficulty(ability.slot), 0) / Math.max(1, abilities.length);
+    const similarityBonus = championSetSimilarity(champions);
+
+    return clamp(0.3 + countBonus + noNamesBonus + closeChoicesBonus + specialBonus + slotBonus + similarityBonus);
+  }
+
+  function slotDifficulty(slot) {
+    const normalized = String(slot || "").toUpperCase();
+    const values = {
+      P: 0.1,
+      Q: 0.04,
+      W: 0.06,
+      E: 0.07,
+      R: 0.03,
+    };
+
+    return values[normalized] ?? 0.08;
+  }
+
+  function championSetSimilarity(champions) {
+    let pairs = 0;
+    let score = 0;
+
+    champions.forEach((left, leftIndex) => {
+      champions.slice(leftIndex + 1).forEach((right) => {
+        pairs += 1;
+        score += championSimilarity(left, right);
+      });
+    });
+
+    return pairs ? clamp(score / pairs, 0, 0.14) : 0;
+  }
+
+  function championSimilarity(left, right) {
+    const leftPositions = new Set(left.traits?.position || []);
+    const rightPositions = new Set(right.traits?.position || []);
+    const leftRegions = new Set(left.traits?.region || []);
+    const rightRegions = new Set(right.traits?.region || []);
+    const sharedPosition = [...leftPositions].some((position) => rightPositions.has(position));
+    const sharedRegion = [...leftRegions].some((region) => rightRegions.has(region));
+
+    return (sharedPosition ? 0.09 : 0) + (sharedRegion ? 0.04 : 0);
   }
 
   function createIdentifyChoices(data, route, target, rng) {
@@ -1212,6 +1395,23 @@
     }
 
     return [target, ...rng.shuffle(decoyPool).slice(0, 3)];
+  }
+
+  function identifyDifficulty(route, target, choices) {
+    const baseByCategory = {
+      champions: 0.2,
+      items: 0.28,
+      abilities: 0.38,
+    };
+    const categoryBase = baseByCategory[route.category] || 0.3;
+    const closeBonus = hasModifier(route, "closeChoices") ? 0.16 : 0;
+    const specialBonus = route.special ? 0.08 : 0;
+    const sameMetaCount = (choices || []).filter((choice) => {
+      return localize(choice.meta, "en") && localize(choice.meta, "en") === localize(target.meta, "en");
+    }).length;
+    const similarityBonus = clamp((sameMetaCount - 1) * 0.035, 0, 0.1);
+
+    return clamp(categoryBase + closeBonus + specialBonus + similarityBonus);
   }
 
   function pickTraitRule(data, category, rng) {
@@ -1291,7 +1491,7 @@
       const span = Math.max(1, max - min);
       const direction = value > min + span * 0.55 ? ">" : "<";
       const offset = span * (0.12 + rng.next() * 0.12);
-      const threshold = direction === ">" ? Math.floor(value - offset) : Math.ceil(value + offset);
+      const threshold = roundThresholdForMetric(direction === ">" ? value - offset : value + offset, metric, direction);
 
       if (threshold <= min || threshold >= max) {
         return;
@@ -1724,10 +1924,40 @@
       if (challenge.values?.left === challenge.values?.right) {
         errors.push("higher/lower equal values");
       }
+      if (comparableDisplayValue(challenge.values?.left, challenge.metric) === comparableDisplayValue(challenge.values?.right, challenge.metric)) {
+        errors.push("higher/lower values look equal after formatting");
+      }
     }
 
     if (challenge.type === "order" && new Set(challenge.correctAnswer || []).size !== (challenge.correctAnswer || []).length) {
       errors.push("order has duplicate correct ids");
+    }
+
+    if (challenge.type === "identify" && !(challenge.entities || [])[0]) {
+      errors.push("identify clue missing");
+    }
+
+    if (challenge.type === "match") {
+      const choicesById = new Map((challenge.choices || []).map((choice) => [choice.id, choice]));
+
+      (challenge.entities || []).forEach((ability) => {
+        const champion = choicesById.get(challenge.correctAnswer?.[ability.id]);
+        const championNames = [localize(champion?.name, "en"), localize(champion?.name, "ru")]
+          .map(normalizeText)
+          .filter(Boolean);
+        const visibleText = [
+          hasModifier(challenge, "noNames") ? "" : localize(ability.name, "en"),
+          hasModifier(challenge, "noNames") ? "" : localize(ability.name, "ru"),
+          localize(ability.meta, "en"),
+          localize(ability.meta, "ru"),
+        ]
+          .map(normalizeText)
+          .join(" ");
+
+        if (championNames.some((name) => name && visibleText.includes(name))) {
+          errors.push(`match leaks champion for ${ability.id}`);
+        }
+      });
     }
 
     return errors;

@@ -398,10 +398,16 @@ test("rift run starts, scores an encounter, and resumes active runs", async ({ p
   await expect(page.locator(".mode-active")).toHaveText("Rift Run");
   await expect(page.locator("#rift-run-root")).toContainText("Rift Run");
   await expect(page.locator("[data-action='start']")).toBeVisible();
+  await page.locator("#run-seed").fill("smoke-seed");
 
   await page.locator("[data-action='start']").click();
   await expect(page.locator(".run-hud")).toBeVisible();
   await expect(page.locator(".rift-run-board")).toBeVisible();
+  await expect
+    .poll(() =>
+      page.evaluate(() => JSON.parse(localStorage.getItem("riftle.riftRun.v1.activeRun")).seed),
+    )
+    .toBe("smoke-seed");
   const visibleEntityMeta = await page.locator(".entity-copy small").allTextContents();
   expect(visibleEntityMeta.join(" ")).not.toMatch(/gold|золота/i);
 

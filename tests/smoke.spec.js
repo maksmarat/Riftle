@@ -96,6 +96,7 @@ test("classic flow uses suggestions and victory menu", async ({ page }) => {
   await expect(page.locator("[data-mode-link='moreLess']")).toHaveAttribute("href", "./?mode=moreLess");
   await expect(page.locator("[data-mode-link='spellDuel']")).toHaveAttribute("href", "./?mode=spellDuel");
   await expect(page.locator("[data-mode-link='statDuel']")).toHaveAttribute("href", "./?mode=statDuel");
+  await expect(page.locator("[data-page-key='riftRun']")).toHaveAttribute("href", "./rift-run.html");
 
   await page.locator("[data-language='ru']").click();
   await expect(page.locator("html")).toHaveAttribute("lang", "ru");
@@ -389,6 +390,33 @@ test("duel result highlight follows the left correct answer", async ({ page }) =
   }
 });
 
+test("rift run starts, scores an encounter, and resumes active runs", async ({ page }) => {
+  await page.goto(`${BASE_URL}/rift-run.html`);
+  await page.evaluate(() => localStorage.clear());
+  await page.reload();
+
+  await expect(page.locator(".mode-active")).toHaveText("Rift Run");
+  await expect(page.locator("#rift-run-root")).toContainText("Rift Run");
+  await expect(page.locator("[data-action='start']")).toBeVisible();
+
+  await page.locator("[data-action='start']").click();
+  await expect(page.locator(".run-hud")).toBeVisible();
+  await expect(page.locator(".rift-run-board")).toBeVisible();
+
+  const correctAnswer = await page.evaluate(() => {
+    return JSON.parse(localStorage.getItem("riftle.riftRun.v1.activeRun")).currentChallenge.correctAnswer;
+  });
+
+  await page.locator(`[data-answer='${correctAnswer}']`).click();
+  await expect(page.locator(".rift-run-feedback")).toBeVisible();
+  await expect(page.locator(".rift-run-feedback")).toContainText("Correct");
+
+  await page.reload();
+  await expect(page.locator("[data-action='resume']")).toBeVisible();
+  await page.locator("[data-action='resume']").click();
+  await expect(page.locator(".rift-run-feedback")).toBeVisible();
+});
+
 test("random tools page rolls roles, build, and next item", async ({ page }) => {
   await page.addInitScript(() => {
     Math.random = () => 0;
@@ -399,11 +427,12 @@ test("random tools page rolls roles, build, and next item", async ({ page }) => 
 
   await expect(page.locator("#random-title")).toHaveText("Random Tools");
   await expect(await auditClassicItems(page)).toEqual({ forbiddenItems: [], longIds: [] });
-  await expect(page.locator(".modes [data-mode-link]")).toHaveCount(5);
+  await expect(page.locator(".modes [data-mode-link]")).toHaveCount(6);
   await expect(page.locator("[data-mode-link='classic']")).toHaveText("Classic");
   await expect(page.locator("[data-mode-link='moreLess']")).toHaveText("Item Duel");
   await expect(page.locator("[data-mode-link='spellDuel']")).toHaveText("Spell Duel");
   await expect(page.locator("[data-mode-link='statDuel']")).toHaveText("Stat Duel");
+  await expect(page.locator("[data-mode-link='riftRun']")).toHaveText("Rift Run");
   await expect(page.locator("[data-mode-link='random']")).toHaveClass(/mode-active/);
   await expect(page.locator("[data-spin-speed='1']")).toHaveClass(/speed-chip-active/);
   await expect(page.locator("#build-items .loot-card")).toHaveCount(6);
@@ -418,6 +447,7 @@ test("random tools page rolls roles, build, and next item", async ({ page }) => 
   await expect(page.locator("#random-title")).toHaveText("Рандом для игры");
   await expect(page.locator("[data-mode-link='classic']")).toHaveText("Классика");
   await expect(page.locator("[data-mode-link='statDuel']")).toHaveText("Статы");
+  await expect(page.locator("[data-mode-link='riftRun']")).toHaveText("Rift Run");
   await expect(page.locator("[data-mode-link='random']")).toHaveText("Рандом");
 
   const names = ["Maks", "Dima", "Lena", "Ari", "Niko"];
@@ -479,4 +509,8 @@ test("direct duel pages open their modes on static hosting", async ({ page }) =>
   await expect(page.locator("#page-title")).toHaveText("Stat Duel");
   await expect(page.locator("#moreless-item-count")).toHaveText("173");
   await expect(page.locator("#moreless-item-count-label")).toHaveText("champions");
+
+  await page.goto(`${BASE_URL}/rift-run.html`);
+  await expect(page.locator(".mode-active")).toHaveText("Rift Run");
+  await expect(page.locator("[data-action='start']")).toBeVisible();
 });

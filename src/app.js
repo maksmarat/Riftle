@@ -175,6 +175,7 @@ const translations = {
       moreLess: "Item Duel",
       spellDuel: "Spell Duel",
       statDuel: "Stat Duel",
+      riftRun: "Rift Run",
       random: "Random",
     },
     columns: {
@@ -318,6 +319,7 @@ const translations = {
       moreLess: "Предметы",
       spellDuel: "Умения",
       statDuel: "Статы",
+      riftRun: "Rift Run",
       random: "Рандом",
     },
     columns: {

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07080c">
+    <title>Riftle Rift Run</title>
+    <link rel="stylesheet" href="./src/styles.css">
+    <link rel="stylesheet" href="./src/rift-run/styles.css">
+  </head>
+  <body data-page="rift-run">
+    <div class="backdrop" aria-hidden="true"></div>
+    <div class="app rift-run-app">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="Riftle">
+          <span class="brand-mark">R</span>
+          <span>Riftle</span>
+        </a>
+
+        <div class="top-actions">
+          <nav class="modes" aria-label="Modes">
+            <a class="mode" href="./?mode=classic" data-mode-link="classic">Classic</a>
+            <a class="mode" href="./?mode=moreLess" data-mode-link="moreLess">Item Duel</a>
+            <a class="mode" href="./?mode=spellDuel" data-mode-link="spellDuel">Spell Duel</a>
+            <a class="mode" href="./?mode=statDuel" data-mode-link="statDuel">Stat Duel</a>
+            <a class="mode mode-active" href="./rift-run.html" aria-current="page" data-mode-link="riftRun">Rift Run</a>
+            <a class="mode" href="./random.html" data-mode-link="random">Random</a>
+          </nav>
+
+          <div class="language-switch" id="language-switch" aria-label="Language">
+            <button class="language-option language-option-active" data-language="en" type="button" aria-pressed="true">EN</button>
+            <button class="language-option" data-language="ru" type="button" aria-pressed="false">RU</button>
+          </div>
+        </div>
+      </header>
+
+      <main class="game rift-run-page">
+        <div id="rift-run-root"></div>
+      </main>
+    </div>
+
+    <script src="./src/rift-run/config.js" defer></script>
+    <script src="./src/rift-run/engine.js" defer></script>
+    <script src="./src/rift-run/app.js" defer></script>
+  </body>
+</html>

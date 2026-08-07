@@ -1,6 +1,7 @@
 {
   "scripts": {
     "start": "python3 -m http.server 4173",
+    "test:rift-run": "node scripts/validate-rift-run.js",
     "test:smoke": "playwright test tests/smoke.spec.js --reporter=line --workers=1"
   },
   "devDependencies": {

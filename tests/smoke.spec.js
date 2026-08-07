@@ -17,6 +17,15 @@ const FORBIDDEN_CLASSIC_ITEMS = [
   "Sword of Blossoming Dawn",
   "Sword of the Divine",
 ];
+const UPGRADED_BOOT_NAMES = [
+  "Armored Advance",
+  "Chainlaced Crushers",
+  "Crimson Lucidity",
+  "Gunmetal Greaves",
+  "Immortal Path",
+  "Spellslinger's Shoes",
+  "Swiftmarch",
+];
 
 async function auditClassicItems(page) {
   return page.evaluate(async (forbiddenItems) => {
@@ -29,6 +38,12 @@ async function auditClassicItems(page) {
       longIds: data.items.filter((item) => String(item.id).length > 4).map((item) => item.name),
     };
   }, FORBIDDEN_CLASSIC_ITEMS);
+}
+
+async function auditRandomBuildForUpgradedBoots(page) {
+  const texts = await page.locator("#build-items .loot-card, #build-slots .slot-card").allTextContents();
+
+  return UPGRADED_BOOT_NAMES.filter((name) => texts.some((text) => text.includes(name)));
 }
 
 test("classic flow uses suggestions and victory menu", async ({ page }) => {
@@ -324,6 +339,7 @@ test("random tools page rolls roles, build, and next item", async ({ page }) => 
   await expect(page.locator("#build-summoners .summoner-card")).toHaveCount(2);
   await expect(page.locator("#build-slots .slot-card")).toHaveCount(1);
   await expect(page.locator("#build-slots .slot-card")).toContainText("Boot slot");
+  expect(await auditRandomBuildForUpgradedBoots(page)).toEqual([]);
 
   await page.locator("[data-language='ru']").click();
   await expect(page.locator("html")).toHaveAttribute("lang", "ru");
@@ -348,6 +364,7 @@ test("random tools page rolls roles, build, and next item", async ({ page }) => 
   await expect(page.locator("[data-build-role='jungle']")).toHaveClass(/role-chip-active/);
   await expect(page.locator("#build-items .loot-card")).toHaveCount(6);
   await expect(page.locator("#build-slots .slot-card")).toHaveCount(0);
+  expect(await auditRandomBuildForUpgradedBoots(page)).toEqual([]);
 
   const summoners = await page.locator("#build-summoners .summoner-card").allTextContents();
   expect(summoners.join(" ")).toContain("Smite");
@@ -356,6 +373,7 @@ test("random tools page rolls roles, build, and next item", async ({ page }) => 
   await expect(page.locator("[data-build-role='support']")).toHaveClass(/role-chip-active/);
   await expect(page.locator("#build-items .loot-card")).toHaveCount(6);
   await expect(page.locator("#build-slots .slot-card")).toHaveCount(0);
+  expect(await auditRandomBuildForUpgradedBoots(page)).toEqual([]);
 
   const supportItems = await page.locator("#build-items .loot-card").allTextContents();
   expect(supportItems.some((text) => /Bloodsong|Celestial Opposition|Dream Maker|Solstice Sleigh|Zaz'Zak/.test(text))).toBe(true);

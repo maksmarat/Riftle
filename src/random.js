@@ -347,6 +347,16 @@
     },
   };
 
+  const upgradedBootNames = new Set([
+    "Armored Advance",
+    "Chainlaced Crushers",
+    "Crimson Lucidity",
+    "Gunmetal Greaves",
+    "Immortal Path",
+    "Spellslinger's Shoes",
+    "Swiftmarch",
+  ]);
+
   const spellFileNames = {
     flash: "SummonerFlash.png",
     teleport: "SummonerTeleport.png",
@@ -695,6 +705,10 @@
     return item.tags.includes("Boots");
   }
 
+  function isUpgradedBoots(item) {
+    return upgradedBootNames.has(item.name);
+  }
+
   function isSupportSlotItem(item) {
     return [
       "Bloodsong",
@@ -787,7 +801,7 @@
 
   function selectBoot(roleKey) {
     const boots = completedItems
-      .filter(isBoots)
+      .filter((item) => isBoots(item) && !isUpgradedBoots(item))
       .map((item) => ({ item, score: itemScoreForRole(item, roleKey) }))
       .sort((left, right) => right.score - left.score);
 
@@ -1088,7 +1102,7 @@
 
       const data = await response.json();
       allItems = normalizeItems(data.items || []);
-      completedItems = allItems.filter(isCompletedItem);
+      completedItems = allItems.filter((item) => isCompletedItem(item) && !isUpgradedBoots(item));
       buyPool = completedItems.filter((item) => !item.tags.includes("Consumable"));
       generateBuild();
       renderInitialWheel();
